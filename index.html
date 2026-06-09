@@ -3119,6 +3119,8 @@
       <button class="tab cs-tab" onclick="switchTab('cheatsheets', this)" data-sec="cheatsheets">Шпаргалки</button>
       <button class="tab gh-tab" onclick="switchTab('github', this)" data-sec="github"><svg style="width:13px;height:13px;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg> GitHub</button>
       <button class="tab" onclick="switchTab('career', this)">💼 Карьера</button>
+      <button class="tab" onclick="switchTab('links', this)">🔗 Ссылки</button>
+      <button class="tab" onclick="switchTab('algo', this)">🧮 Алгоритмы</button>
     </div>
 
   </div>
@@ -4913,6 +4915,89 @@ img.fit-scale    { object-fit: scale-down; }  /* contain, но не увелич
 
     <button class="try-btn" onclick="sendPrompt('Дай мне задание по CSS-анимациям для новичка с примером кода')">Получить задание по CSS ↗</button>
   </div>
+
+    <div class="block" id="block-scss-basics">
+      <div class="block-title" onclick="scrollToBlock('block-scss-basics')">SCSS — переменные и вложенность <span class="badge must">основа</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">SCSS — это CSS с суперспособностями. Компилируется в обычный CSS. Используется в 80%+ коммерческих проектов.</div>
+      <div class="code"><span class="cm">// Переменные</span>
+<span class="kw">$primary:</span> <span class="str">#6366f1</span>;
+<span class="kw">$font-size-base:</span> <span class="num">16px</span>;
+<span class="kw">$radius:</span> <span class="num">8px</span>;
+
+<span class="cm">// Вложенность — не нужно повторять селекторы</span>
+<span class="kw">.card</span> {
+  padding: <span class="num">20px</span>;
+  border-radius: <span class="kw">$radius</span>;
+
+  <span class="kw">&__title</span> { font-size: <span class="num">18px</span>; }    <span class="cm">// .card__title</span>
+  <span class="kw">&__body</span>  { color: <span class="str">#666</span>; }       <span class="cm">// .card__body</span>
+
+  <span class="kw">&:hover</span>  { box-shadow: <span class="num">0 4px 20px</span> rgba(<span class="num">0,0,0,.1</span>); }
+  <span class="kw">&--dark</span>  { background: <span class="str">#1a1a2e</span>; }  <span class="cm">// .card--dark (БЭМ)</span>
+}
+
+<span class="cm">// Миксины — переиспользуемые блоки стилей</span>
+<span class="kw">@mixin</span> <span class="fn">flex-center</span> {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+<span class="kw">.hero</span> {
+  <span class="kw">@include</span> <span class="fn">flex-center</span>;
+  min-height: <span class="num">100vh</span>;
+}</div>
+      <div class="explain">
+        <strong>$переменная</strong> — цвета, размеры, шрифты. Меняешь в одном месте — меняется везде.<br>
+        <strong>&amp;</strong> — ссылка на родительский селектор. & + __element = БЭМ без повторений.<br>
+        <strong>@mixin + @include</strong> — как функции в CSS. Вынеси повторяющиеся стили один раз.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>$переменные — цвета, размеры, отступы</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Вложенность и & — ссылка на родителя</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>@mixin и @include — переиспользование стилей</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-scss-advanced">
+      <div class="block-title" onclick="scrollToBlock('block-scss-advanced')">SCSS — функции, циклы и @extend <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm">// Функции</span>
+<span class="kw">@function</span> <span class="fn">rem</span>(px) {
+  <span class="kw">@return</span> #{px / 16}rem;
+}
+<span class="kw">.title</span> { font-size: <span class="fn">rem</span>(<span class="num">24</span>); } <span class="cm">// → 1.5rem</span>
+
+<span class="cm">// Цикл @each</span>
+<span class="kw">$colors:</span> (primary: <span class="str">#6366f1</span>, success: <span class="str">#22c55e</span>, danger: <span class="str">#ef4444</span>);
+
+<span class="kw">@each</span> $name, $color <span class="kw">in</span> <span class="kw">$colors</span> {
+  <span class="kw">.btn-#{$name}</span> {
+    background: <span class="kw">$color</span>;
+    color: white;
+  }
+}
+<span class="cm">// Генерирует: .btn-primary, .btn-success, .btn-danger</span>
+
+<span class="cm">// @extend — наследование стилей</span>
+<span class="kw">%btn-base</span> {
+  padding: <span class="num">8px 16px</span>;
+  border-radius: <span class="num">6px</span>;
+  border: none;
+  cursor: pointer;
+}
+<span class="kw">.btn-primary</span> { <span class="kw">@extend</span> %btn-base; background: <span class="str">#6366f1</span>; }
+<span class="kw">.btn-danger</span>  { <span class="kw">@extend</span> %btn-base; background: <span class="str">#ef4444</span>; }</div>
+      <div class="explain">
+        <strong>@function</strong> — возвращает значение. Удобно для конвертации px → rem.<br>
+        <strong>@each</strong> — цикл по списку или map. Генерирует множество классов из одного кода.<br>
+        <strong>%placeholder + @extend</strong> — не создаёт лишнего HTML-класса, только объединяет CSS-правила.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>@function — своя функция возвращающая значение</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>@each — генерация классов из списка</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>@extend и %placeholder — наследование стилей</span></label>
+      </div>
+    </div>
 </div>
 
   <!-- ===================== JAVASCRIPT ===================== -->
@@ -7000,6 +7085,298 @@ Todo / погода / новости / фильмы
     </div>
   </div>
 
+
+  <!-- ===================== ПОЛЕЗНЫЕ ССЫЛКИ ===================== -->
+  <div class="section" id="sec-links">
+    <div class="lang-section-hero" style="background: linear-gradient(135deg, #0c1a2e 0%, #1e3a5f 50%, #1d4ed8 100%);">
+      <div class="lang-section-hero-icon" style="font-size:2.5rem;">🔗</div>
+      <div>
+        <div class="lang-section-hero-title">Полезные ссылки</div>
+        <div class="lang-section-hero-sub">Отобранные инструменты, библиотеки и сайты которые реально используются в работе. Без мусора.</div>
+        <div class="lang-section-hero-badges">
+          <span class="lang-section-hero-badge">Анимации</span>
+          <span class="lang-section-hero-badge">UI</span>
+          <span class="lang-section-hero-badge">Инструменты</span>
+          <span class="lang-section-hero-badge">Документация</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" id="block-links-animation">
+      <div class="block-title">Анимации и визуальные эффекты <span class="badge good">🔗 ссылки</span></div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
+
+        <a href="https://animejs.com" target="_blank" style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#6366f1'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:1.8rem;flex-shrink:0;">⚡</div>
+          <div>
+            <div style="font-weight:700;color:var(--text);font-size:14px;">Anime.js — animejs.com</div>
+            <div style="color:var(--text-muted);font-size:12px;margin-top:3px;">Лучшая JS-библиотека для анимаций. Лёгкая, мощная, понятный API. Анимируй CSS, SVG, DOM и JS объекты одинаково просто.</div>
+            <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="background:#4f46e5;color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;">JavaScript</span>
+              <span style="background:#0891b2;color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;">Анимации</span>
+              <span style="background:#16a34a;color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;">Бесплатно</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://gsap.com" target="_blank" style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#22c55e'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:1.8rem;flex-shrink:0;">🟢</div>
+          <div>
+            <div style="font-weight:700;color:var(--text);font-size:14px;">GSAP — gsap.com</div>
+            <div style="color:var(--text-muted);font-size:12px;margin-top:3px;">Профессиональный стандарт анимаций. Используется на крупнейших сайтах. Timeline, ScrollTrigger, морфинг SVG.</div>
+            <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="background:#15803d;color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;">JavaScript</span>
+              <span style="background:#0891b2;color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;">Scroll</span>
+              <span style="background:#9333ea;color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;">SVG</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="https://motion.dev" target="_blank" style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#f59e0b'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:1.8rem;flex-shrink:0;">🎭</div>
+          <div>
+            <div style="font-weight:700;color:var(--text);font-size:14px;">Motion — motion.dev</div>
+            <div style="color:var(--text-muted);font-size:12px;margin-top:3px;">Framer Motion для React. Декларативные анимации прямо в JSX. Стандарт для React-проектов.</div>
+            <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+              <span style="background:#0891b2;color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;">React</span>
+              <span style="background:#4f46e5;color:#fff;padding:2px 8px;border-radius:4px;font-size:11px;">Декларативно</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="block" id="block-links-css-tools">
+      <div class="block-title">CSS инструменты <span class="badge good">🔗 ссылки</span></div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
+
+        <a href="https://uiverse.io" target="_blank" style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#8b5cf6'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:1.8rem;flex-shrink:0;">🎨</div>
+          <div>
+            <div style="font-weight:700;color:var(--text);font-size:14px;">UIverse — uiverse.io</div>
+            <div style="color:var(--text-muted);font-size:12px;margin-top:3px;">Огромная библиотека CSS компонентов — кнопки, карточки, инпуты, лоадеры. Всё бесплатно и с кодом.</div>
+          </div>
+        </a>
+
+        <a href="https://cssgradient.io" target="_blank" style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#ec4899'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:1.8rem;flex-shrink:0;">🌈</div>
+          <div>
+            <div style="font-weight:700;color:var(--text);font-size:14px;">CSS Gradient — cssgradient.io</div>
+            <div style="color:var(--text-muted);font-size:12px;margin-top:3px;">Визуальный генератор градиентов. Копируешь готовый CSS в один клик.</div>
+          </div>
+        </a>
+
+        <a href="https://cubic-bezier.com" target="_blank" style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#06b6d4'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:1.8rem;flex-shrink:0;">📐</div>
+          <div>
+            <div style="font-weight:700;color:var(--text);font-size:14px;">Cubic Bezier — cubic-bezier.com</div>
+            <div style="color:var(--text-muted);font-size:12px;margin-top:3px;">Визуальный редактор кривых анимации. Незаменим для настройки transition и animation timing.</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="block" id="block-links-dev-tools">
+      <div class="block-title">Инструменты разработчика <span class="badge good">🔗 ссылки</span></div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
+
+        <a href="https://caniuse.com" target="_blank" style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#f97316'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:1.8rem;flex-shrink:0;">🌐</div>
+          <div>
+            <div style="font-weight:700;color:var(--text);font-size:14px;">Can I Use — caniuse.com</div>
+            <div style="color:var(--text-muted);font-size:12px;margin-top:3px;">Проверяй поддержку CSS и JS фич в браузерах. Открывай перед тем как использовать что-то новое.</div>
+          </div>
+        </a>
+
+        <a href="https://bundlephobia.com" target="_blank" style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#ef4444'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:1.8rem;flex-shrink:0;">📦</div>
+          <div>
+            <div style="font-weight:700;color:var(--text);font-size:14px;">Bundlephobia — bundlephobia.com</div>
+            <div style="color:var(--text-muted);font-size:12px;margin-top:3px;">Узнай вес npm-пакета до установки. Помогает не раздувать бандл лишними зависимостями.</div>
+          </div>
+        </a>
+
+        <a href="https://ray.so" target="_blank" style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;text-decoration:none;transition:border-color .2s;" onmouseover="this.style.borderColor='#8b5cf6'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:1.8rem;flex-shrink:0;">📸</div>
+          <div>
+            <div style="font-weight:700;color:var(--text);font-size:14px;">Ray.so — ray.so</div>
+            <div style="color:var(--text-muted);font-size:12px;margin-top:3px;">Красивые скриншоты кода для портфолио, README и соцсетей. Бесплатно, без регистрации.</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ===================== АЛГОРИТМЫ ===================== -->
+  <div class="section" id="sec-algo">
+    <div class="lang-section-hero" style="background: linear-gradient(135deg, #0c1a10 0%, #14532d 50%, #166534 100%);">
+      <div class="lang-section-hero-icon" style="font-size:2.5rem;">🧮</div>
+      <div>
+        <div class="lang-section-hero-title">Алгоритмы и структуры данных</div>
+        <div class="lang-section-hero-sub">Спрашивают на каждом техническом собеседовании. Не нужно знать всё — достаточно понять базу и научиться думать алгоритмически.</div>
+        <div class="lang-section-hero-badges">
+          <span class="lang-section-hero-badge">Сложность</span>
+          <span class="lang-section-hero-badge">Сортировки</span>
+          <span class="lang-section-hero-badge">Поиск</span>
+          <span class="lang-section-hero-badge">Собеседование</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" id="block-algo-complexity">
+      <div class="block-title" onclick="scrollToBlock('block-algo-complexity')">Big O — сложность алгоритмов <span class="badge must">основа</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">Big O описывает как растёт время выполнения при росте данных. Это язык на котором говорят про эффективность алгоритмов.</div>
+      <div class="code"><span class="cm">// O(1) — константное время (лучшее)</span>
+<span class="kw">const</span> getFirst = arr => arr[<span class="num">0</span>]; <span class="cm">// всегда 1 операция</span>
+
+<span class="cm">// O(n) — линейное время</span>
+<span class="kw">const</span> findMax = arr => {
+  <span class="kw">let</span> max = arr[<span class="num">0</span>];
+  <span class="kw">for</span> (<span class="kw">const</span> x <span class="kw">of</span> arr) <span class="kw">if</span> (x > max) max = x;
+  <span class="kw">return</span> max;
+}; <span class="cm">// n операций при n элементах</span>
+
+<span class="cm">// O(n²) — квадратичное (плохо для больших данных)</span>
+<span class="kw">function</span> <span class="fn">bubbleSort</span>(arr) {
+  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i < arr.length; i++)
+    <span class="kw">for</span> (<span class="kw">let</span> j = <span class="num">0</span>; j < arr.length - i; j++)
+      <span class="kw">if</span> (arr[j] > arr[j+<span class="num">1</span>]) [arr[j], arr[j+<span class="num">1</span>]] = [arr[j+<span class="num">1</span>], arr[j]];
+  <span class="kw">return</span> arr;
+}
+
+<span class="cm">// O(log n) — логарифмическое (очень быстро)</span>
+<span class="cm">// Бинарный поиск: делим пополам на каждом шаге</span>
+
+<span class="cm">// Шпаргалка сложностей</span>
+<span class="cm">// Array.push/pop     → O(1)</span>
+<span class="cm">// Array.includes     → O(n)</span>
+<span class="cm">// Array.sort         → O(n log n)</span>
+<span class="cm">// Object lookup      → O(1)</span></div>
+      <div class="explain">
+        <strong>O(1)</strong> — идеально. Не зависит от размера данных.<br>
+        <strong>O(n)</strong> — нормально. Растёт линейно с данными.<br>
+        <strong>O(n²)</strong> — осторожно. При 1000 элементах = 1 000 000 операций.<br>
+        <strong>Главное правило:</strong> если видишь цикл внутри цикла — это скорее всего O(n²).
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>O(1), O(n), O(n²), O(log n) — понимаю разницу</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Знаю сложность базовых операций с массивами и объектами</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-algo-array">
+      <div class="block-title" onclick="scrollToBlock('block-algo-array')">Задачи на массивы — топ на собесах <span class="badge must">основа</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm">// 1. Убрать дубликаты</span>
+<span class="kw">const</span> unique = arr => [...<span class="kw">new</span> Set(arr)];
+<span class="fn">unique</span>([<span class="num">1</span>,<span class="num">2</span>,<span class="num">2</span>,<span class="num">3</span>]); <span class="cm">// [1,2,3]</span>
+
+<span class="cm">// 2. Сумма элементов</span>
+<span class="kw">const</span> sum = arr => arr.<span class="fn">reduce</span>((a, b) => a + b, <span class="num">0</span>);
+
+<span class="cm">// 3. Развернуть массив (без reverse)</span>
+<span class="kw">const</span> rev = arr => arr.<span class="fn">reduceRight</span>((acc, x) => [...acc, x], []);
+
+<span class="cm">// 4. Найти два числа с суммой N (Two Sum)</span>
+<span class="kw">function</span> <span class="fn">twoSum</span>(nums, target) {
+  <span class="kw">const</span> map = <span class="kw">new</span> Map();
+  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i < nums.length; i++) {
+    <span class="kw">const</span> diff = target - nums[i];
+    <span class="kw">if</span> (map.<span class="fn">has</span>(diff)) <span class="kw">return</span> [map.<span class="fn">get</span>(diff), i];
+    map.<span class="fn">set</span>(nums[i], i);
+  }
+} <span class="cm">// O(n) вместо O(n²) — используем Map</span>
+
+<span class="cm">// 5. Группировка по свойству</span>
+<span class="kw">const</span> users = [{role:<span class="str">'admin'</span>},{role:<span class="str">'user'</span>},{role:<span class="str">'admin'</span>}];
+<span class="kw">const</span> grouped = users.<span class="fn">reduce</span>((acc, u) => {
+  (acc[u.role] ??= []).<span class="fn">push</span>(u);
+  <span class="kw">return</span> acc;
+}, {});</div>
+      <div class="explain">
+        <strong>Set</strong> — структура данных без дубликатов. Lookup O(1).<br>
+        <strong>Map</strong> — как объект, но ключом может быть что угодно. Используй для оптимизации поиска.<br>
+        <strong>TwoSum с Map</strong> — классический пример как Map превращает O(n²) в O(n).
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Set — убрать дубликаты из массива</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>reduce — сумма, группировка, накопление</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Map для оптимизации — O(n) вместо O(n²)</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-algo-string">
+      <div class="block-title" onclick="scrollToBlock('block-algo-string')">Задачи на строки <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm">// 1. Палиндром</span>
+<span class="kw">const</span> isPalin = s => s === [...s].<span class="fn">reverse</span>().<span class="fn">join</span>(<span class="str">''</span>);
+
+<span class="cm">// 2. Анаграммы</span>
+<span class="kw">const</span> isAnagram = (a, b) =>
+  [...a].<span class="fn">sort</span>().<span class="fn">join</span>(<span class="str">''</span>) === [...b].<span class="fn">sort</span>().<span class="fn">join</span>(<span class="str">''</span>);
+
+<span class="cm">// 3. Реверс строки</span>
+<span class="kw">const</span> reverse = s => [...s].<span class="fn">reverse</span>().<span class="fn">join</span>(<span class="str">''</span>);
+
+<span class="cm">// 4. Количество каждого символа</span>
+<span class="kw">const</span> <span class="fn">charCount</span> = s =>
+  [...s].<span class="fn">reduce</span>((acc, c) => ({ ...acc, [c]: (acc[c] || <span class="num">0</span>) + <span class="num">1</span> }), {});
+
+<span class="cm">// 5. Первый неповторяющийся символ</span>
+<span class="kw">const</span> <span class="fn">firstUniq</span> = s => {
+  <span class="kw">const</span> cnt = <span class="fn">charCount</span>(s);
+  <span class="kw">return</span> [...s].<span class="fn">find</span>(c => cnt[c] === <span class="num">1</span>) ?? <span class="str">''</span>;
+};</div>
+      <div class="explain">
+        <strong>[...s]</strong> — spread строки в массив символов. Нужно для корректной работы с Unicode.<br>
+        <strong>Анаграмма через sort</strong> — простое O(n log n) решение. Существует O(n) через Map.<br>
+        <strong>charCount</strong> — паттерн частотного анализа. Используется в десятках задач.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Палиндром, реверс строки</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Анаграммы — сортировка или Map</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Частотный анализ символов через reduce</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-algo-recursion">
+      <div class="block-title" onclick="scrollToBlock('block-algo-recursion')">Рекурсия <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm">// Рекурсия = функция вызывает сама себя</span>
+<span class="cm">// Обязательно: базовый случай (выход из рекурсии)</span>
+
+<span class="cm">// Факториал</span>
+<span class="kw">function</span> <span class="fn">factorial</span>(n) {
+  <span class="kw">if</span> (n <= <span class="num">1</span>) <span class="kw">return</span> <span class="num">1</span>;  <span class="cm">// базовый случай</span>
+  <span class="kw">return</span> n * <span class="fn">factorial</span>(n - <span class="num">1</span>);
+}
+
+<span class="cm">// Числа Фибоначчи (с мемоизацией)</span>
+<span class="kw">const</span> memo = {};
+<span class="kw">function</span> <span class="fn">fib</span>(n) {
+  <span class="kw">if</span> (n <= <span class="num">1</span>) <span class="kw">return</span> n;
+  <span class="kw">if</span> (memo[n]) <span class="kw">return</span> memo[n];
+  <span class="kw">return</span> memo[n] = <span class="fn">fib</span>(n-<span class="num">1</span>) + <span class="fn">fib</span>(n-<span class="num">2</span>);
+}
+
+<span class="cm">// Обход вложенного объекта (реальная задача)</span>
+<span class="kw">function</span> <span class="fn">deepSum</span>(obj) {
+  <span class="kw">return</span> Object.<span class="fn">values</span>(obj).<span class="fn">reduce</span>((sum, val) =>
+    sum + (<span class="kw">typeof</span> val === <span class="str">'object'</span> ? <span class="fn">deepSum</span>(val) : val), <span class="num">0</span>
+  );
+}</div>
+      <div class="explain">
+        <strong>Базовый случай</strong> — без него бесконечная рекурсия и Stack Overflow.<br>
+        <strong>Мемоизация</strong> — кэшируем результаты. fib(40) без memo = миллиарды вызовов, с memo = 40.<br>
+        <strong>Рекурсия для деревьев</strong> — обход DOM, файловой системы, вложенных объектов.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Рекурсия — базовый случай + рекурсивный вызов</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Мемоизация — кэш для дорогих рекурсий</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Обход вложенных структур через рекурсию</span></label>
+      </div>
+    </div>
+  </div>
+
   <!-- ===================== ГАЙДЫ ===================== -->
   <div class="section" id="sec-guides">
     <div class="block" style="margin-bottom:1rem;">
@@ -8052,6 +8429,8 @@ Next.js → Node.js
           <div class="pg-tabs-actions">
             <button class="pg-tab-add" onclick="pgAddFile()" title="Новый файл">Файл</button>
             <button class="pg-run-btn" onclick="runPlayground()">▶ Запустить</button>
+        <button class="pg-run-btn" style="background:#3b82f6;margin-left:4px;" onclick="downloadPlayground('html')" title="Скачать HTML">⬇ HTML</button>
+        <button class="pg-run-btn" style="background:#8b5cf6;margin-left:4px;" onclick="downloadPlayground('all')" title="Скачать все файлы">⬇ ZIP</button>
           </div>
         </div>
         <!-- MOBILE KEYBOARD TOOLBAR (only visible on phones) -->
@@ -17874,6 +18253,90 @@ async function githubUpload() {
     } catch(err) { show('❌ Сетевая ошибка: ' + err.message, false); }
   };
   reader.readAsDataURL(fileInput.files[0]);
+}
+
+
+// ===== PLAYGROUND DOWNLOAD =====
+function downloadPlayground(type) {
+  const tabs = window._pgTabs || [];
+  if (!tabs.length) {
+    // Fallback: читаем активные редакторы
+    const htmlEl = document.querySelector('.pg-editor[data-lang="html"] textarea, #pg-html');
+    const cssEl  = document.querySelector('.pg-editor[data-lang="css"] textarea, #pg-css');
+    const jsEl   = document.querySelector('.pg-editor[data-lang="js"] textarea, #pg-js');
+    const h = htmlEl ? htmlEl.value : '';
+    const c = cssEl  ? cssEl.value  : '';
+    const j = jsEl   ? jsEl.value   : '';
+    
+    if (type === 'html') {
+      const full = `<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<style>
+${c}
+</style>
+</head>
+<body>
+${h}
+<script>
+${j}
+<\/script>
+</body>
+</html>`;
+      _pgDownload('index.html', full);
+    } else {
+      _pgDownload('index.html', `<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+${h}
+<script src="script.js"><\/script>
+</body>
+</html>`);
+      _pgDownload('style.css', c);
+      _pgDownload('script.js', j);
+    }
+    return;
+  }
+  
+  if (type === 'html') {
+    const h = tabs.find(t=>t.lang==='html')?.content || '';
+    const c = tabs.find(t=>t.lang==='css')?.content  || '';
+    const j = tabs.find(t=>t.lang==='js')?.content   || '';
+    const full = `<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<style>
+${c}
+</style>
+</head>
+<body>
+${h}
+<script>
+${j}
+<\/script>
+</body>
+</html>`;
+    _pgDownload('index.html', full);
+  } else {
+    tabs.forEach(t => {
+      const ext = t.lang === 'html' ? 'html' : t.lang === 'css' ? 'css' : 'js';
+      _pgDownload(`${t.name || 'file'}.${ext}`, t.content || '');
+    });
+  }
+}
+
+function _pgDownload(filename, content) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content], {type: 'text/plain'}));
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
 }
 
 </script>
