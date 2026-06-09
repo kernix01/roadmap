@@ -2,9 +2,6 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,8 +45,8 @@
   body.dark .block:hover { box-shadow: 0 2px 14px rgba(0,0,0,.4); }
   body.dark .block-title { color: #e2e8f0; border-bottom-color: #2d3348; }
   body.dark .block-title:hover { color: var(--accent-light); }
-  body.dark .tab { background: #1e2540; border-color: #3d4a6b; color: #cbd5e1; }
-  body.dark .tab:hover:not(.active) { background: #2a3354; color: #e2e8f0; border-color: #4b5a80; }
+  body.dark .tab { background: #1a1f2e; border-color: #2d3348; color: #94a3b8; }
+  body.dark .tab:hover:not(.active) { background: var(--accent-bg-dark-alt); color: #e2e8f0; border-color: #3d4461; }
   body.dark .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
   body.dark .code { background: #070c16; border-color: #1e293b; }
   body.dark .explain { background: #1a1f2e; border-color: #2d3348; color: #cbd5e1; }
@@ -686,7 +683,8 @@
   /* ===== Вкладки ===== */
   .tabs { display: flex; gap: 8px; margin-bottom: 2rem; flex-wrap: wrap; }
   .tab {
-    padding: 5px 11px;
+    padding: 0 10px;
+    height: 28px;
     border-radius: 7px;
     border: 1.5px solid #e5e7eb;
     background: #fff;
@@ -698,10 +696,10 @@
     font-family: inherit;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     white-space: nowrap;
-    height: 30px;
-    line-height: 1;
+    flex-shrink: 0;
+    vertical-align: middle;
   }
   .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 600; box-shadow: 0 2px 10px var(--accent-alpha-30); }
   .tab:hover:not(.active) { background: #f3f4f6; color: #374151; border-color: #d1d5db; }
@@ -1573,8 +1571,8 @@
     .tabs::-webkit-scrollbar { display: none; }
     .tab {
       flex-shrink: 0;
-      padding: 5px 10px;
-      font-size: 11.5px;
+      padding: 8px 13px;
+      font-size: 12.5px;
       white-space: nowrap;
     }
     .tab-badge { font-size: 9px; padding: 1px 4px; }
@@ -2803,9 +2801,12 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    flex-wrap: wrap;
-    overflow-x: visible;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
+  .tabs-row::-webkit-scrollbar { display: none; }
   .tabs-row-label {
     font-size: 10px;
     font-weight: 800;
@@ -2862,25 +2863,6 @@
   }
   body.dark .prog-dash-section-title { color: #4b5563; }
   body.dark .prog-dash-section-title::after { background: #2d3348; }
-
-  /* ===== Linux, Algo, Perf tabs ===== */
-  .linux-tab.active { background: linear-gradient(135deg, #1a1a1a, #e95420) !important; border-color: #e95420 !important; }
-  .algo-tab.active  { background: linear-gradient(135deg, #1e1b4b, #4338ca) !important; border-color: #6366f1 !important; }
-  .perf-tab.active  { background: linear-gradient(135deg, #064e3b, #059669) !important; border-color: #34d399 !important; }
-
-  #sec-linux .block { border-left: 3px solid #e95420; }
-  #sec-linux .block-title { color: #e95420; }
-  body.dark #sec-linux .block { border-left-color: #e95420; background: #1a1a1a; }
-
-  #sec-algo .block { border-left: 3px solid #6366f1; }
-  #sec-algo .block-title { color: #4338ca; }
-  body.dark #sec-algo .block { border-left-color: #6366f1; background: #1e1b4b; }
-  body.dark #sec-algo .block-title { color: #818cf8; }
-
-  #sec-perf .block { border-left: 3px solid #059669; }
-  #sec-perf .block-title { color: #059669; }
-  body.dark #sec-perf .block { border-left-color: #34d399; background: #064e3b22; }
-  body.dark #sec-perf .block-title { color: #34d399; }
   /* ===== TypeScript ===== */
   #sec-ts .block { border-left: 3px solid #3178c6; }
   #sec-ts .block-title { color: #2563eb; }
@@ -3126,18 +3108,15 @@
     <!-- ROW 3: Other -->
     <div class="tabs-row">
       <span class="tabs-row-label oth">✦ Other</span>
-      <button class="tab" onclick="switchTab('guides', this)"><iconify-icon icon="tabler:movie" width="15" height="15" style="vertical-align:middle"></iconify-icon> Гайды</button>
-      <button class="tab" onclick="switchTab('practice', this)"><iconify-icon icon="tabler:pencil" width="15" height="15" style="vertical-align:middle"></iconify-icon> Практика</button>
-      <button class="tab" onclick="switchTab('mistakes', this)"><iconify-icon icon="tabler:bug" width="15" height="15" style="vertical-align:middle"></iconify-icon> Ошибки</button>
-      <button class="tab" onclick="switchTab('resources', this)"><iconify-icon icon="tabler:books" width="15" height="15" style="vertical-align:middle"></iconify-icon> Ресурсы</button>
-      <button class="tab" onclick="switchTab('roadmap', this)"><iconify-icon icon="tabler:map-2" width="15" height="15" style="vertical-align:middle"></iconify-icon> Путь развития</button>
-      <button class="tab figma-tab" onclick="switchTab('figma', this)"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" width="15" height="15" style="object-fit:contain;vertical-align:middle"> Figma</button>
-      <button class="tab playground-tab" onclick="switchTab('playground', this)" data-sec="playground"><iconify-icon icon="tabler:device-desktop-code" width="15" height="15" style="vertical-align:middle"></iconify-icon> Playground</button>
-      <button class="tab cs-tab" onclick="switchTab('cheatsheets', this)" data-sec="cheatsheets"><iconify-icon icon="tabler:notes" width="15" height="15" style="vertical-align:middle"></iconify-icon> Шпаргалки</button>
-      <button class="tab gh-tab" onclick="switchTab('github', this)" data-sec="github"><iconify-icon icon="tabler:brand-github" width="15" height="15" style="vertical-align:middle"></iconify-icon> GitHub</button>
-      <button class="tab linux-tab" onclick="switchTab('linux', this)" data-sec="linux"><iconify-icon icon="tabler:brand-ubuntu" width="15" height="15" style="vertical-align:middle"></iconify-icon> Linux</button>
-      <button class="tab algo-tab" onclick="switchTab('algo', this)" data-sec="algo"><iconify-icon icon="tabler:chart-dots" width="15" height="15" style="vertical-align:middle"></iconify-icon> Алгоритмы</button>
-      <button class="tab perf-tab" onclick="switchTab('perf', this)" data-sec="perf"><iconify-icon icon="tabler:rocket" width="15" height="15" style="vertical-align:middle"></iconify-icon> Перформанс</button>
+      <button class="tab" onclick="switchTab('guides', this)">Гайды</button>
+      <button class="tab" onclick="switchTab('practice', this)">Практика</button>
+      <button class="tab" onclick="switchTab('mistakes', this)">Ошибки</button>
+      <button class="tab" onclick="switchTab('resources', this)">Ресурсы</button>
+      <button class="tab" onclick="switchTab('roadmap', this)">Путь развития</button>
+      <button class="tab figma-tab" onclick="switchTab('figma', this)"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" style="width:13px;height:13px;object-fit:contain;flex-shrink:0"> Figma</button>
+      <button class="tab playground-tab" onclick="switchTab('playground', this)" data-sec="playground">Playground</button>
+      <button class="tab cs-tab" onclick="switchTab('cheatsheets', this)" data-sec="cheatsheets">Шпаргалки</button>
+      <button class="tab gh-tab" onclick="switchTab('github', this)" data-sec="github"><svg style="width:13px;height:13px;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg> GitHub</button>
     </div>
 
   </div>
@@ -4928,9 +4907,9 @@ img.fit-scale    { object-fit: scale-down; }  /* contain, но не увелич
 
     <button class="try-btn" onclick="sendPrompt('Дай мне задание по CSS-анимациям для новичка с примером кода')">Получить задание по CSS ↗</button>
   </div>
+</div>
 
-  </div>
-<!-- ===================== JAVASCRIPT ===================== -->
+  <!-- ===================== JAVASCRIPT ===================== -->
   <div class="section" id="sec-js">
 
     <!-- Hero -->
@@ -6470,544 +6449,6 @@ id = <span class="str">"abc"</span>; <span class="cm">// тоже ок!</span>
   </div>
 
 
-  <!-- ===================== LINUX ===================== -->
-  <div class="section" id="sec-linux">
-    <div class="lang-section-hero" style="background: linear-gradient(135deg, #1a1a1a 0%, #e95420 60%, #ff6b35 100%);">
-      <div class="lang-section-hero-icon"><iconify-icon icon="tabler:brand-ubuntu" width="52" height="52" style="color:#fff"></iconify-icon></div>
-      <div>
-        <div class="lang-section-hero-title">Linux — операционная система разработчика</div>
-        <div class="lang-section-hero-sub">Linux — это основа серверов, Docker-контейнеров и среды разработки. Каждый фронтендер рано или поздно работает с терминалом.</div>
-        <div class="lang-section-hero-badges">
-          <span class="lang-section-hero-badge">Терминал</span>
-          <span class="lang-section-hero-badge">Файловая система</span>
-          <span class="lang-section-hero-badge">Права доступа</span>
-          <span class="lang-section-hero-badge">Процессы</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="block" id="block-linux-basics">
-      <div class="block-title" onclick="scrollToBlock('block-linux-basics')">Основные команды терминала <span class="badge must">основа</span><span class="anchor-icon">🔗</span></div>
-      <div class="tip">Терминал — главный инструмент разработчика. Эти команды ты будешь использовать каждый день.</div>
-      <div class="code"><span class="cm"># Навигация</span>
-pwd                    <span class="cm"># где я сейчас?</span>
-ls -la                 <span class="cm"># список файлов с правами</span>
-cd ~/projects          <span class="cm"># перейти в папку</span>
-cd ..                  <span class="cm"># на уровень выше</span>
-
-<span class="cm"># Файлы и папки</span>
-mkdir my-project       <span class="cm"># создать папку</span>
-touch index.html       <span class="cm"># создать файл</span>
-cp file.txt backup.txt <span class="cm"># копировать</span>
-mv old.txt new.txt     <span class="cm"># переименовать/переместить</span>
-rm -rf dist/           <span class="cm"># удалить папку (осторожно!)</span>
-
-<span class="cm"># Просмотр файлов</span>
-cat package.json       <span class="cm"># вывести содержимое</span>
-less large-file.log    <span class="cm"># постраничный просмотр</span>
-grep -r "TODO" src/    <span class="cm"># найти текст рекурсивно</span>
-
-<span class="cm"># Процессы</span>
-ps aux                 <span class="cm"># все процессы</span>
-kill -9 1234           <span class="cm"># убить процесс по PID</span>
-Ctrl+C                 <span class="cm"># остановить текущий процесс</span></div>
-      <div class="explain">
-        <strong>~</strong> — домашняя папка пользователя (/home/username или /Users/username).<br>
-        <strong>ls -la</strong> — l = подробный список, a = включая скрытые файлы (начинаются с .).<br>
-        <strong>rm -rf</strong> — удаляет без подтверждения. Никогда не пиши rm -rf / !<br>
-        <strong>grep -r</strong> — рекурсивный поиск по всем файлам в папке.
-      </div>
-      <div class="items">
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>pwd, ls -la, cd — навигация по файловой системе</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>mkdir, touch, cp, mv, rm — работа с файлами</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>cat, less, grep -r — просмотр и поиск в файлах</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>ps aux, kill, Ctrl+C — управление процессами</span></label>
-      </div>
-    </div>
-
-    <div class="block" id="block-linux-permissions">
-      <div class="block-title" onclick="scrollToBlock('block-linux-permissions')">Права доступа и chmod <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
-      <div class="code"><span class="cm"># Вывод ls -la показывает права:</span>
-<span class="cm"># -rwxr-xr-- 1 user group 1024 Jan 1 deploy.sh</span>
-<span class="cm">#  |||||||||||</span>
-<span class="cm">#  |└──┘└──┘└── others: r-- (чтение)</span>
-<span class="cm">#  | └──┘└───── group:  r-x (чтение+выполнение)</span>
-<span class="cm">#  └──────────── owner:  rwx (всё)</span>
-
-<span class="cm"># chmod числом (удобнее)</span>
-chmod 755 deploy.sh    <span class="cm"># rwxr-xr-x</span>
-chmod 644 config.env   <span class="cm"># rw-r--r--</span>
-chmod +x script.sh     <span class="cm"># добавить право выполнения</span>
-
-<span class="cm"># Числа: 4=чтение, 2=запись, 1=выполнение</span>
-<span class="cm"># 7 = 4+2+1 = rwx (всё)</span>
-<span class="cm"># 5 = 4+0+1 = r-x (чтение+выполнение)</span>
-<span class="cm"># 4 = 4+0+0 = r-- (только чтение)</span>
-
-<span class="cm"># sudo — выполнить от суперпользователя</span>
-sudo apt install nginx
-sudo systemctl start nginx</div>
-      <div class="explain">
-        <strong>chmod 755</strong> — стандарт для исполняемых файлов и папок.<br>
-        <strong>chmod 644</strong> — стандарт для обычных файлов (конфиги, HTML).<br>
-        <strong>+x</strong> — быстрый способ сделать файл исполняемым.<br>
-        <strong>sudo</strong> — суперпользователь. Используй только когда необходимо.
-      </div>
-      <div class="items">
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Чтение прав: rwxr-xr-x, владелец/группа/остальные</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>chmod 755/644 — стандартные права для файлов</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>sudo — выполнение от суперпользователя</span></label>
-      </div>
-    </div>
-
-    <div class="block" id="block-linux-pipes">
-      <div class="block-title" onclick="scrollToBlock('block-linux-pipes')">Пайпы, перенаправление и полезные утилиты <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
-      <div class="code"><span class="cm"># | (pipe) — передать вывод в следующую команду</span>
-ls -la | grep ".js"              <span class="cm"># JS файлы в папке</span>
-cat access.log | grep "404"      <span class="cm"># ошибки 404 в логе</span>
-ps aux | grep node               <span class="cm"># найти node процессы</span>
-
-<span class="cm"># > и >> — перенаправление в файл</span>
-echo "Hello" > output.txt        <span class="cm"># перезаписать</span>
-npm run build >> build.log 2>&1  <span class="cm"># append + ошибки тоже</span>
-
-<span class="cm"># Полезные утилиты фронтендера</span>
-which node                       <span class="cm"># где установлен node?</span>
-curl https://api.example.com/v1  <span class="cm"># HTTP запрос</span>
-wget https://example.com/file.zip <span class="cm"># скачать файл</span>
-tar -xzf archive.tar.gz          <span class="cm"># распаковать архив</span>
-df -h                            <span class="cm"># место на диске</span>
-du -sh node_modules/             <span class="cm"># размер папки</span>
-top                              <span class="cm"># мониторинг ресурсов (q — выход)</span></div>
-      <div class="explain">
-        <strong>|</strong> — pipe соединяет команды. Вывод первой = ввод второй.<br>
-        <strong>2>&1</strong> — перенаправить stderr (ошибки) в stdout.<br>
-        <strong>curl</strong> — незаменим для тестирования API прямо из терминала.<br>
-        <strong>du -sh node_modules/</strong> — узнать сколько весит папка.
-      </div>
-      <div class="items">
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>| (pipe) — соединение команд</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>> и >> — перенаправление вывода в файл</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>curl, wget, tar, df, du — полезные утилиты</span></label>
-      </div>
-    </div>
-
-    <div class="block" id="block-linux-ssh">
-      <div class="block-title" onclick="scrollToBlock('block-linux-ssh')">SSH — удалённый доступ к серверу <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
-      <div class="code"><span class="cm"># Подключение к серверу</span>
-ssh user@192.168.1.100            <span class="cm"># по IP</span>
-ssh user@myserver.com             <span class="cm"># по домену</span>
-ssh -i ~/.ssh/mykey.pem ubuntu@ec2-... <span class="cm"># с ключом (AWS)</span>
-
-<span class="cm"># Генерация SSH ключей (один раз)</span>
-ssh-keygen -t ed25519 -C "email@mail.com"
-<span class="cm"># Создаёт ~/.ssh/id_ed25519 (приватный) и ~/.ssh/id_ed25519.pub (публичный)</span>
-
-<span class="cm"># Копировать публичный ключ на сервер</span>
-ssh-copy-id user@server.com
-
-<span class="cm"># SCP — копировать файлы через SSH</span>
-scp index.html user@server:/var/www/html/
-scp -r dist/ user@server:/var/www/myapp/
-
-<span class="cm"># ~/.ssh/config — удобные алиасы</span>
-<span class="cm"># Host myserver</span>
-<span class="cm">#   HostName 123.45.67.89</span>
-<span class="cm">#   User ubuntu</span>
-<span class="cm">#   IdentityFile ~/.ssh/mykey.pem</span>
-ssh myserver  <span class="cm"># теперь просто так!</span></div>
-      <div class="explain">
-        <strong>SSH ключи</strong> — безопаснее пароля. Приватный ключ только у тебя, публичный — на серверах.<br>
-        <strong>ed25519</strong> — современный алгоритм, лучше старого rsa.<br>
-        <strong>~/.ssh/config</strong> — настрой один раз, подключайся по имени.
-      </div>
-      <div class="items">
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>ssh user@host — подключение к серверу</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>ssh-keygen — генерация пары ключей</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>scp — копирование файлов через SSH</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>~/.ssh/config — алиасы для серверов</span></label>
-      </div>
-    </div>
-
-    <div class="block" id="block-linux-bash">
-      <div class="block-title" onclick="scrollToBlock('block-linux-bash')">Bash-скрипты для автоматизации <span class="badge">знать</span><span class="anchor-icon">🔗</span></div>
-      <div class="code"><span class="cm">#!/bin/bash</span>
-<span class="cm"># deploy.sh — простой скрипт деплоя</span>
-
-set -e  <span class="cm"># выйти при любой ошибке</span>
-
-echo "🚀 Начинаем деплой..."
-
-<span class="cm"># Переменные</span>
-SERVER="ubuntu@myserver.com"
-BUILD_DIR="./dist"
-
-<span class="cm"># Условия</span>
-if [ ! -d "$BUILD_DIR" ]; then
-  echo "❌ Папка dist не найдена! Запусти npm run build"
-  exit 1
-fi
-
-<span class="cm"># Сборка</span>
-npm run build
-echo "✅ Сборка готова"
-
-<span class="cm"># Деплой</span>
-scp -r $BUILD_DIR/* $SERVER:/var/www/html/
-echo "✅ Файлы загружены на сервер!"
-
-<span class="cm"># Запуск скрипта:</span>
-chmod +x deploy.sh
-./deploy.sh</div>
-      <div class="explain">
-        <strong>#!/bin/bash</strong> — shebang, указывает какой интерпретатор использовать.<br>
-        <strong>set -e</strong> — скрипт остановится если любая команда вернёт ошибку.<br>
-        <strong>[ -d "$dir" ]</strong> — проверка существования папки.<br>
-        Bash-скрипты — мощный инструмент для автоматизации деплоя и рутинных задач.
-      </div>
-      <div class="items">
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>#!/bin/bash + set -e — правильное начало скрипта</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Переменные, условия if/else в bash</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Написание скрипта деплоя</span></label>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===================== АЛГОРИТМЫ ===================== -->
-  <div class="section" id="sec-algo">
-    <div class="lang-section-hero" style="background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 60%, #6366f1 100%);">
-      <div class="lang-section-hero-icon"><iconify-icon icon="tabler:chart-dots" width="52" height="52" style="color:#fff"></iconify-icon></div>
-      <div>
-        <div class="lang-section-hero-title">Алгоритмы и структуры данных</div>
-        <div class="lang-section-hero-sub">Базовые алгоритмы спрашивают на собеседованиях. Понимание сложности помогает писать быстрый код в реальных проектах.</div>
-        <div class="lang-section-hero-badges">
-          <span class="lang-section-hero-badge">Big O</span>
-          <span class="lang-section-hero-badge">Сортировки</span>
-          <span class="lang-section-hero-badge">Поиск</span>
-          <span class="lang-section-hero-badge">Собесы</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="block" id="block-algo-complexity">
-      <div class="block-title" onclick="scrollToBlock('block-algo-complexity')">Big O — сложность алгоритмов <span class="badge must">основа</span><span class="anchor-icon">🔗</span></div>
-      <div class="tip">Big O описывает как растёт время/память алгоритма при росте входных данных. Это главный язык общения о производительности кода.</div>
-      <div class="code"><span class="cm">// O(1) — константное время. Не зависит от размера данных</span>
-<span class="kw">const</span> getFirst = arr => arr[<span class="num">0</span>]; <span class="cm">// всегда 1 операция</span>
-
-<span class="cm">// O(n) — линейное. Растёт пропорционально данным</span>
-<span class="kw">const</span> findMax = arr => {
-  <span class="kw">let</span> max = -Infinity;
-  <span class="kw">for</span> (<span class="kw">const</span> n <span class="kw">of</span> arr) <span class="kw">if</span> (n > max) max = n;
-  <span class="kw">return</span> max;
-}; <span class="cm">// 1000 элем → 1000 операций</span>
-
-<span class="cm">// O(n²) — квадратичное. Два вложенных цикла</span>
-<span class="kw">const</span> hasDuplicate = arr => {
-  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i < arr.length; i++)
-    <span class="kw">for</span> (<span class="kw">let</span> j = i+<span class="num">1</span>; j < arr.length; j++)
-      <span class="kw">if</span> (arr[i] === arr[j]) <span class="kw">return true</span>;
-  <span class="kw">return false</span>;
-}; <span class="cm">// 1000 элем → 1,000,000 операций! ❌</span>
-
-<span class="cm">// O(log n) — логарифмическое. Бинарный поиск</span>
-<span class="cm">// O(n log n) — быстрая сортировка (оптимально)</span>
-
-<span class="cm">// Лучше: O(n) через Set</span>
-<span class="kw">const</span> hasDuplicateFast = arr => arr.length !== <span class="kw">new</span> <span class="fn">Set</span>(arr).size;</div>
-      <div class="explain">
-        <strong>O(1)</strong> — идеально. Доступ к элементу массива, Map.get(), Set.has().<br>
-        <strong>O(n)</strong> — приемлемо. Один проход по массиву.<br>
-        <strong>O(n²)</strong> — плохо для больших данных. Два вложенных цикла — красный флаг.<br>
-        <strong>O(log n)</strong> — отлично. Каждый шаг делит данные пополам.
-      </div>
-      <div class="items">
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>O(1), O(n), O(n²) — понимание сложности</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>O(log n) — логарифмическая сложность</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Оптимизация: Set/Map вместо вложенных циклов</span></label>
-      </div>
-    </div>
-
-    <div class="block" id="block-algo-array">
-      <div class="block-title" onclick="scrollToBlock('block-algo-array')">Алгоритмы на массивах — задачи с собесов <span class="badge must">основа</span><span class="anchor-icon">🔗</span></div>
-      <div class="code"><span class="cm">// 1. Два указателя — разворот массива O(n)</span>
-<span class="kw">function</span> <span class="fn">reverse</span>(arr) {
-  <span class="kw">let</span> l = <span class="num">0</span>, r = arr.length - <span class="num">1</span>;
-  <span class="kw">while</span> (l < r) {
-    [arr[l], arr[r]] = [arr[r], arr[l]]; <span class="cm">// swap</span>
-    l++; r--;
-  }
-  <span class="kw">return</span> arr;
-}
-
-<span class="cm">// 2. Скользящее окно — максимальная сумма подмассива</span>
-<span class="kw">function</span> <span class="fn">maxSubarraySum</span>(arr, k) {
-  <span class="kw">let</span> sum = arr.slice(<span class="num">0</span>, k).<span class="fn">reduce</span>((a,b) => a+b, <span class="num">0</span>);
-  <span class="kw">let</span> max = sum;
-  <span class="kw">for</span> (<span class="kw">let</span> i = k; i < arr.length; i++) {
-    sum += arr[i] - arr[i-k]; <span class="cm">// добавляем новый, убираем старый</span>
-    max = Math.<span class="fn">max</span>(max, sum);
-  }
-  <span class="kw">return</span> max;
-}
-
-<span class="cm">// 3. Анаграммы через сортировку O(n log n)</span>
-<span class="kw">const</span> <span class="fn">isAnagram</span> = (a, b) =>
-  a.<span class="fn">split</span>(<span class="str">''</span>).<span class="fn">sort</span>().<span class="fn">join</span>(<span class="str">''</span>) === b.<span class="fn">split</span>(<span class="str">''</span>).<span class="fn">sort</span>().<span class="fn">join</span>(<span class="str">''</span>);</div>
-      <div class="explain">
-        <strong>Два указателя</strong> — l и r движутся навстречу. Классика для работы с массивами.<br>
-        <strong>Скользящее окно</strong> — вместо пересчёта суммы с нуля, обновляем на одну операцию.<br>
-        <strong>Анаграммы</strong> — отсортированные строки равны? Значит анаграммы.
-      </div>
-      <div class="items">
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Два указателя — классический паттерн</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Скользящее окно — эффективная обработка подмассивов</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Решение задач на строки (анаграммы, палиндромы)</span></label>
-      </div>
-    </div>
-
-    <div class="block" id="block-algo-structures">
-      <div class="block-title" onclick="scrollToBlock('block-algo-structures')">Структуры данных: Map, Set, Stack, Queue <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
-      <div class="code"><span class="cm">// Map — ключ-значение, любой тип ключа, O(1)</span>
-<span class="kw">const</span> freq = <span class="kw">new</span> <span class="fn">Map</span>();
-<span class="kw">for</span> (<span class="kw">const</span> ch <span class="kw">of</span> <span class="str">"hello"</span>)
-  freq.<span class="fn">set</span>(ch, (freq.<span class="fn">get</span>(ch) || <span class="num">0</span>) + <span class="num">1</span>);
-<span class="cm">// Map { h:1, e:1, l:2, o:1 }</span>
-
-<span class="cm">// Set — уникальные значения, O(1) поиск</span>
-<span class="kw">const</span> unique = [...<span class="kw">new</span> <span class="fn">Set</span>([<span class="num">1</span>,<span class="num">2</span>,<span class="num">2</span>,<span class="num">3</span>])]; <span class="cm">// [1,2,3]</span>
-
-<span class="cm">// Stack (стек) — LIFO через массив</span>
-<span class="kw">const</span> stack = [];
-stack.<span class="fn">push</span>(<span class="str">'a'</span>);  <span class="cm">// добавить</span>
-stack.<span class="fn">pop</span>();     <span class="cm">// убрать последний</span>
-
-<span class="cm">// Queue (очередь) — FIFO</span>
-<span class="kw">const</span> queue = [];
-queue.<span class="fn">push</span>(<span class="str">'task1'</span>); <span class="cm">// добавить в конец</span>
-queue.<span class="fn">shift</span>();       <span class="cm">// убрать из начала (O(n)!)</span>
-<span class="cm">// Для частых операций: двусвязный список или библиотека</span></div>
-      <div class="explain">
-        <strong>Map vs Object</strong> — Map быстрее для частых добавлений/удалений, хранит порядок вставки.<br>
-        <strong>Set</strong> — мгновенная проверка уникальности. set.has() = O(1) vs arr.includes() = O(n).<br>
-        <strong>Stack</strong> — история браузера, отмена (Ctrl+Z), рекурсия под капотом.<br>
-        <strong>Queue</strong> — очередь задач, события в браузере.
-      </div>
-      <div class="items">
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Map — подсчёт частоты, кэш, O(1) операции</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Set — уникальность, O(1) поиск</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Stack (LIFO) и Queue (FIFO) — паттерны использования</span></label>
-      </div>
-    </div>
-
-    <div class="block" id="block-algo-recursion">
-      <div class="block-title" onclick="scrollToBlock('block-algo-recursion')">Рекурсия и динамическое программирование <span class="badge">знать</span><span class="anchor-icon">🔗</span></div>
-      <div class="code"><span class="cm">// Рекурсия — функция вызывает саму себя</span>
-<span class="kw">function</span> <span class="fn">factorial</span>(n) {
-  <span class="kw">if</span> (n <= <span class="num">1</span>) <span class="kw">return</span> <span class="num">1</span>; <span class="cm">// базовый случай!</span>
-  <span class="kw">return</span> n * <span class="fn">factorial</span>(n - <span class="num">1</span>);
-}
-
-<span class="cm">// Фибоначчи — наивный O(2ⁿ) — очень медленно!</span>
-<span class="kw">const</span> <span class="fn">fib</span> = n => n <= <span class="num">1</span> ? n : <span class="fn">fib</span>(n-<span class="num">1</span>) + <span class="fn">fib</span>(n-<span class="num">2</span>);
-
-<span class="cm">// Мемоизация — кэшируем результаты O(n)</span>
-<span class="kw">function</span> <span class="fn">fibMemo</span>(n, memo = {}) {
-  <span class="kw">if</span> (n <span class="kw">in</span> memo) <span class="kw">return</span> memo[n];
-  <span class="kw">if</span> (n <= <span class="num">1</span>) <span class="kw">return</span> n;
-  memo[n] = <span class="fn">fibMemo</span>(n-<span class="num">1</span>, memo) + <span class="fn">fibMemo</span>(n-<span class="num">2</span>, memo);
-  <span class="kw">return</span> memo[n];
-}
-
-<span class="cm">// Рекурсивный обход дерева DOM</span>
-<span class="kw">function</span> <span class="fn">countNodes</span>(el) {
-  <span class="kw">let</span> count = <span class="num">1</span>;
-  <span class="kw">for</span> (<span class="kw">const</span> child <span class="kw">of</span> el.children)
-    count += <span class="fn">countNodes</span>(child);
-  <span class="kw">return</span> count;
-}</div>
-      <div class="explain">
-        <strong>Базовый случай</strong> — обязателен! Без него рекурсия уйдёт в бесконечность.<br>
-        <strong>Мемоизация</strong> — кэшируем уже вычисленные значения. Фибоначчи с кэшем: O(n) вместо O(2ⁿ).<br>
-        <strong>В реальном коде</strong> — рекурсия используется для обхода деревьев (DOM, JSON), файловых систем.
-      </div>
-      <div class="items">
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Рекурсия — базовый случай + рекурсивный вызов</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Мемоизация — кэш для рекурсивных вычислений</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Рекурсивный обход деревьев (DOM, JSON)</span></label>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===================== ПЕРФОРМАНС ===================== -->
-  <div class="section" id="sec-perf">
-    <div class="lang-section-hero" style="background: linear-gradient(135deg, #064e3b 0%, #059669 60%, #34d399 100%);">
-      <div class="lang-section-hero-icon"><iconify-icon icon="tabler:rocket" width="52" height="52" style="color:#fff"></iconify-icon></div>
-      <div>
-        <div class="lang-section-hero-title">Производительность фронтенда</div>
-        <div class="lang-section-hero-sub">Быстрые сайты = больше пользователей. Google ранжирует по Core Web Vitals. Senior-разработчик обязан понимать перформанс.</div>
-        <div class="lang-section-hero-badges">
-          <span class="lang-section-hero-badge">Core Web Vitals</span>
-          <span class="lang-section-hero-badge">Lighthouse</span>
-          <span class="lang-section-hero-badge">Оптимизация</span>
-          <span class="lang-section-hero-badge">SEO</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="block" id="block-perf-metrics">
-      <div class="block-title" onclick="scrollToBlock('block-perf-metrics')">Core Web Vitals — метрики Google <span class="badge must">основа</span><span class="anchor-icon">🔗</span></div>
-      <div class="tip">Core Web Vitals — три метрики которые Google учитывает при ранжировании. Плохие CWV = ниже в поиске.</div>
-      <div class="code"><span class="cm">// LCP — Largest Contentful Paint (загрузка)</span>
-<span class="cm">// Время до отображения самого большого элемента</span>
-<span class="cm">// ✅ Хорошо: < 2.5s  ⚠️ Нужно улучшить: < 4s  ❌ Плохо: > 4s</span>
-<span class="cm">// Как улучшить: оптимизировать изображения, preload критичных ресурсов</span>
-
-<span class="cm">// FID / INP — Interaction to Next Paint (интерактивность)</span>
-<span class="cm">// Время отклика на первое взаимодействие пользователя</span>
-<span class="cm">// ✅ INP < 200ms  ⚠️ < 500ms  ❌ > 500ms</span>
-<span class="cm">// Как улучшить: разбить тяжёлый JS, использовать Web Workers</span>
-
-<span class="cm">// CLS — Cumulative Layout Shift (стабильность)</span>
-<span class="cm">// Насколько элементы прыгают при загрузке</span>
-<span class="cm">// ✅ < 0.1  ⚠️ < 0.25  ❌ > 0.25</span>
-<span class="cm">// Как улучшить: всегда указывать width/height у img</span>
-
-<span class="cm">// Измерение через Performance API</span>
-<span class="kw">const</span> observer = <span class="kw">new</span> <span class="fn">PerformanceObserver</span>((list) => {
-  <span class="kw">for</span> (<span class="kw">const</span> entry <span class="kw">of</span> list.<span class="fn">getEntries</span>()) {
-    console.<span class="fn">log</span>(<span class="str">'LCP:'</span>, entry.startTime);
-  }
-});
-observer.<span class="fn">observe</span>({ entryTypes: [<span class="str">'largest-contentful-paint'</span>] });</div>
-      <div class="explain">
-        <strong>LCP</strong> — обычно виновато большое изображение-герой без оптимизации.<br>
-        <strong>INP</strong> — заменил FID в 2024. Измеряет все взаимодействия, не только первое.<br>
-        <strong>CLS</strong> — частая причина: шрифты подгружаются и смещают текст, картинки без размеров.<br>
-        Проверь свой сайт: <strong>PageSpeed Insights</strong> или Chrome DevTools → Lighthouse.
-      </div>
-      <div class="items">
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>LCP — Largest Contentful Paint, цель < 2.5s</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>INP — Interaction to Next Paint, цель < 200ms</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>CLS — Cumulative Layout Shift, цель < 0.1</span></label>
-      </div>
-    </div>
-
-    <div class="block" id="block-perf-images">
-      <div class="block-title" onclick="scrollToBlock('block-perf-images')">Оптимизация изображений <span class="badge must">основа</span><span class="anchor-icon">🔗</span></div>
-      <div class="code"><span class="cm">&lt;!-- Современный формат WebP --&gt;</span>
-&lt;picture&gt;
-  &lt;source srcset="hero.webp" type="image/webp"&gt;
-  &lt;img src="hero.jpg" alt="Hero" width="1200" height="600"&gt;
-&lt;/picture&gt;
-
-<span class="cm">&lt;!-- loading="lazy" — не грузить пока не видно --&gt;</span>
-&lt;img src="product.webp" loading="lazy" alt="Product"&gt;
-
-<span class="cm">&lt;!-- fetchpriority для LCP-изображения --&gt;</span>
-&lt;img src="hero.webp" fetchpriority="high" alt="Hero"&gt;
-
-<span class="cm">&lt;!-- srcset — разные размеры для разных экранов --&gt;</span>
-&lt;img
-  src="photo-800.webp"
-  srcset="photo-400.webp 400w, photo-800.webp 800w, photo-1200.webp 1200w"
-  sizes="(max-width: 600px) 400px, (max-width: 900px) 800px, 1200px"
-  alt="Photo"
-&gt;</div>
-      <div class="explain">
-        <strong>WebP</strong> — на 25-35% меньше JPG при том же качестве. Поддерживается всеми браузерами.<br>
-        <strong>loading="lazy"</strong> — не загружает картинки вне viewport. Экономит трафик.<br>
-        <strong>width + height</strong> — всегда указывай! Браузер резервирует место и CLS = 0.<br>
-        <strong>fetchpriority="high"</strong> — для главного изображения, улучшает LCP.
-      </div>
-      <div class="items">
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>WebP формат — меньше размер при том же качестве</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>loading="lazy" — ленивая загрузка изображений</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>width+height у img — предотвращает CLS</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>srcset — адаптивные изображения для разных экранов</span></label>
-      </div>
-    </div>
-
-    <div class="block" id="block-perf-js">
-      <div class="block-title" onclick="scrollToBlock('block-perf-js')">Оптимизация JavaScript <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
-      <div class="code"><span class="cm">// Code splitting — загружать только нужное</span>
-<span class="cm">// В React (lazy loading компонентов)</span>
-<span class="kw">const</span> HeavyChart = React.<span class="fn">lazy</span>(() => <span class="kw">import</span>(<span class="str">'./HeavyChart'</span>));
-
-<span class="cm">// Debounce — не вызывать слишком часто</span>
-<span class="kw">function</span> <span class="fn">debounce</span>(fn, delay) {
-  <span class="kw">let</span> timer;
-  <span class="kw">return</span> (...args) => {
-    <span class="fn">clearTimeout</span>(timer);
-    timer = <span class="fn">setTimeout</span>(() => <span class="fn">fn</span>(...args), delay);
-  };
-}
-<span class="cm">// Поиск запустится только через 300ms после остановки печати</span>
-<span class="kw">const</span> debouncedSearch = <span class="fn">debounce</span>(search, <span class="num">300</span>);
-input.<span class="fn">addEventListener</span>(<span class="str">'input'</span>, debouncedSearch);
-
-<span class="cm">// requestAnimationFrame для анимаций</span>
-<span class="kw">function</span> <span class="fn">animate</span>() {
-  el.style.transform = <span class="str">`translateX(${x}px)`</span>;
-  <span class="fn">requestAnimationFrame</span>(animate); <span class="cm">// синхронно с 60fps</span>
-}
-
-<span class="cm">// Web Worker — тяжёлые вычисления в фоне</span>
-<span class="kw">const</span> worker = <span class="kw">new</span> <span class="fn">Worker</span>(<span class="str">'heavy.js'</span>);
-worker.<span class="fn">postMessage</span>({ data: bigArray });</div>
-      <div class="explain">
-        <strong>Code splitting</strong> — разбивает бандл на чанки, загружает только нужное.<br>
-        <strong>Debounce</strong> — незаменим для поиска, resize, scroll обработчиков.<br>
-        <strong>rAF</strong> — анимации через JS должны использовать requestAnimationFrame, не setTimeout.<br>
-        <strong>Web Worker</strong> — не блокирует UI поток при тяжёлых вычислениях.
-      </div>
-      <div class="items">
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Code splitting — загрузка по требованию</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Debounce и throttle — ограничение частоты вызовов</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>requestAnimationFrame — анимации без тормозов</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Web Worker — тяжёлые вычисления в фоне</span></label>
-      </div>
-    </div>
-
-    <div class="block" id="block-perf-network">
-      <div class="block-title" onclick="scrollToBlock('block-perf-network')">Сетевая оптимизация и кэширование <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
-      <div class="code"><span class="cm">&lt;!-- Preload критичных ресурсов --&gt;</span>
-&lt;link rel="preload" href="critical.css" as="style"&gt;
-&lt;link rel="preload" href="hero.webp" as="image"&gt;
-&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
-
-<span class="cm">&lt;!-- HTTP кэширование через заголовки --&gt;</span>
-<span class="cm">Cache-Control: max-age=31536000, immutable  <!-- статика с хэшем --></span>
-<span class="cm">Cache-Control: no-cache                     <!-- HTML страницы --></span>
-
-<span class="cm">// Service Worker — кэш для офлайн работы</span>
-<span class="kw">if</span> (<span class="str">'serviceWorker'</span> <span class="kw">in</span> navigator) {
-  navigator.serviceWorker.<span class="fn">register</span>(<span class="str">'/sw.js'</span>);
-}
-
-<span class="cm">// Gzip/Brotli — сжатие на сервере (Nginx config)</span>
-<span class="cm">// gzip on;  brotli on;</span>
-<span class="cm">// Уменьшает HTML/CSS/JS на 60-80%!</span>
-
-<span class="cm">// Bundle analyzer — найди что весит лишнее</span>
-<span class="cm">// npx vite-bundle-analyzer</span>
-<span class="cm">// npx webpack-bundle-analyzer stats.json</span></div>
-      <div class="explain">
-        <strong>preload</strong> — браузер загружает ресурс заранее, до того как встретит его в HTML.<br>
-        <strong>preconnect</strong> — заранее устанавливает TCP-соединение с внешним доменом.<br>
-        <strong>Cache-Control: immutable</strong> — для файлов с хэшем в имени (main.a3f9b2.js). Кэш навсегда.<br>
-        <strong>Brotli</strong> — лучше Gzip на 15-20%. Поддерживается всеми современными браузерами.
-      </div>
-      <div class="items">
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>preload и preconnect — приоритизация загрузки</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Cache-Control заголовки — стратегии кэширования</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Gzip/Brotli — сжатие статики на сервере</span></label>
-        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Bundle analyzer — поиск лишнего веса в бандле</span></label>
-      </div>
-    </div>
-  </div>
-
-
   <!-- ===================== LINUX & TERMINAL ===================== -->
   <div class="section" id="sec-linux">
     <div class="lang-section-hero" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
@@ -7970,7 +7411,7 @@ Next.js → Node.js
 
     <!-- HERO -->
     <div class="figma-hero">
-      <div class="figma-hero-title"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" width="24" height="24" style="object-fit:contain;vertical-align:middle"> Figma для фронтендера</div>
+      <div class="figma-hero-title">🎨 Figma для фронтендера</div>
       <div class="figma-hero-sub">Figma — главный инструмент дизайна. Фронтендер работает с ней каждый день:<br>берёт макет и превращает его в HTML + CSS.</div>
       <div class="figma-hero-badges">
         <span class="figma-hero-badge">Бесплатно в браузере</span>
@@ -9718,6 +9159,57 @@ CMD ["node", "server.js"]  # команда запуска</div>
       <div class="gh-results" id="ghResults"></div>
 
     </div>
+
+    <div class="block" id="block-git-github-upload">
+      <div class="block-title" onclick="scrollToBlock('block-git-github-upload')">🚀 Загрузить файл в репозиторий GitHub <span class="badge good">практика</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">Загрузи файл напрямую в твой GitHub репозиторий через API — прямо отсюда. Токен нигде не сохраняется.</div>
+
+      <div style="background:#0d1117;border-radius:12px;padding:20px;margin-top:12px;border:1px solid #30363d;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+          <div>
+            <label style="display:block;font-size:12px;color:#8b949e;margin-bottom:5px;font-weight:600;">👤 GitHub Username</label>
+            <input id="gh-username" type="text" placeholder="your-username" style="width:100%;padding:8px 12px;background:#161b22;border:1px solid #30363d;border-radius:8px;color:#e6edf3;font-size:13px;font-family:inherit;outline:none;box-sizing:border-box;">
+          </div>
+          <div>
+            <label style="display:block;font-size:12px;color:#8b949e;margin-bottom:5px;font-weight:600;">📁 Repository Name</label>
+            <input id="gh-repo" type="text" placeholder="your-repo-name" style="width:100%;padding:8px 12px;background:#161b22;border:1px solid #30363d;border-radius:8px;color:#e6edf3;font-size:13px;font-family:inherit;outline:none;box-sizing:border-box;">
+          </div>
+        </div>
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:12px;color:#8b949e;margin-bottom:5px;font-weight:600;">🔑 Personal Access Token <a href="https://github.com/settings/tokens/new?scopes=repo&description=Roadmap+Uploader" target="_blank" style="color:#58a6ff;text-decoration:none;margin-left:8px;font-weight:400;">→ Создать токен</a></label>
+          <input id="gh-token" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="width:100%;padding:8px 12px;background:#161b22;border:1px solid #30363d;border-radius:8px;color:#e6edf3;font-size:13px;font-family:inherit;outline:none;box-sizing:border-box;">
+          <div style="font-size:11px;color:#6e7681;margin-top:4px;">🔒 Токен не сохраняется — только в памяти вкладки</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+          <div>
+            <label style="display:block;font-size:12px;color:#8b949e;margin-bottom:5px;font-weight:600;">📄 Путь к файлу в репо</label>
+            <input id="gh-filepath" type="text" placeholder="index.html" style="width:100%;padding:8px 12px;background:#161b22;border:1px solid #30363d;border-radius:8px;color:#e6edf3;font-size:13px;font-family:inherit;outline:none;box-sizing:border-box;">
+          </div>
+          <div>
+            <label style="display:block;font-size:12px;color:#8b949e;margin-bottom:5px;font-weight:600;">🌿 Ветка</label>
+            <input id="gh-branch" type="text" placeholder="main" value="main" style="width:100%;padding:8px 12px;background:#161b22;border:1px solid #30363d;border-radius:8px;color:#e6edf3;font-size:13px;font-family:inherit;outline:none;box-sizing:border-box;">
+          </div>
+        </div>
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:12px;color:#8b949e;margin-bottom:5px;font-weight:600;">💬 Сообщение коммита</label>
+          <input id="gh-message" type="text" placeholder="update: roadmap content" style="width:100%;padding:8px 12px;background:#161b22;border:1px solid #30363d;border-radius:8px;color:#e6edf3;font-size:13px;font-family:inherit;outline:none;box-sizing:border-box;">
+        </div>
+        <div style="margin-bottom:16px;">
+          <label style="display:block;font-size:12px;color:#8b949e;margin-bottom:5px;font-weight:600;">📎 Файл для загрузки</label>
+          <input id="gh-file-input" type="file" style="width:100%;padding:8px 12px;background:#161b22;border:1px solid #30363d;border-radius:8px;color:#e6edf3;font-size:13px;font-family:inherit;cursor:pointer;box-sizing:border-box;">
+        </div>
+        <button onclick="githubUpload()" style="width:100%;padding:11px;background:linear-gradient(135deg,#238636,#2ea043);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+          ↑ Push на GitHub
+        </button>
+        <div id="gh-status" style="margin-top:12px;font-size:13px;display:none;padding:10px 14px;border-radius:8px;"></div>
+      </div>
+
+      <div class="items" style="margin-top:14px;">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Создал Personal Access Token на GitHub</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Успешно загрузил файл через GitHub API</span></label>
+      </div>
+    </div>
+
   </div>
 
   <!-- ===================== КНИГИ ===================== -->
@@ -10952,13 +10444,13 @@ function toggleDark() {
 // ===== RESET PROGRESS =====
 function resetProgress() {
   if (!confirm('Сбросить весь прогресс? Это действие нельзя отменить.')) return;
-  document.querySelectorAll('.prog-cb').forEach((cb, i) => {
+  document.querySelectorAll('input[type=checkbox]').forEach((cb, i) => {
     cb.checked = false;
     localStorage.removeItem('cb_' + i);
     const item = cb.closest('.item');
     if (item) item.classList.remove('checked');
   });
-  const all = document.querySelectorAll('.prog-cb:not([disabled])');
+  const all = document.querySelectorAll('input[type=checkbox]');
   document.getElementById('prog-fill').style.width = '0%';
   document.getElementById('prog-label').textContent = `Прогресс: 0 / ${all.length} тем изучено (0%)`;
   updateTabBadges();
@@ -11021,11 +10513,8 @@ function csSwitch(id, btn) {
 function switchTab(id, btn) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  const sec = document.getElementById('sec-' + id);
-  if (!sec) { console.error('Section not found: sec-' + id); return; }
-  sec.classList.add('active');
+  document.getElementById('sec-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
   // Clear search when switching tabs
   const si = document.getElementById('searchInput');
   if (si && si.value) { si.value = ''; doSearch(''); }
@@ -17240,22 +16729,21 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Назначаем id каждому чекбоксу и восстанавливаем состояние из localStorage
-  // Сначала проходим ВСЕ prog-cb (включая locked) чтобы назначить id
-  document.querySelectorAll('.prog-cb').forEach((cb, i) => {
+  const all = document.querySelectorAll('input[type=checkbox]');
+  all.forEach((cb, i) => {
     cb.id = 'cb_' + i;
     const saved = localStorage.getItem('cb_' + i);
     if (saved === '1') {
       cb.checked = true;
       const item = cb.closest('.item');
-      if (item) item.classList.add('checked');
+         if (item) item.classList.add('checked');
     }
   });
-  // Пересчитываем прогресс при загрузке — только разблокированные
-  const allUnlocked = document.querySelectorAll('.prog-cb:not([disabled])');
-  const done = document.querySelectorAll('.prog-cb:not([disabled]):checked');
-  const pct = allUnlocked.length ? Math.round(done.length / allUnlocked.length * 100) : 0;
+  // Пересчитываем прогресс при загрузке
+  const done = document.querySelectorAll('input[type=checkbox]:checked');
+  const pct = all.length ? Math.round(done.length / all.length * 100) : 0;
   document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-label').textContent = `Прогресс: ${done.length} / ${allUnlocked.length} тем изучено (${pct}%) · v10`;
+  document.getElementById('prog-label').textContent = `Прогресс: ${done.length} / ${all.length} тем изучено (${pct}%)`;
   updateTabBadges();
   updatePdcBars();
 
@@ -17677,6 +17165,10 @@ function ghBuildRepoHeader(r) {
     <button class="gh-open-gh-btn" onclick="window.open('${r.html_url}','_blank')">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
       Открыть на GitHub
+    </button>
+    <button class="gh-open-gh-btn" style="background:linear-gradient(135deg,#1d4ed8,#3b82f6);margin-left:8px;" onclick="window.open('${r.html_url}/archive/refs/heads/${r.default_branch}.zip','_blank')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16l-6-6h4V4h4v6h4l-6 6zm-7 2h14v2H5v-2z"/></svg>
+      Скачать ZIP
     </button>`;
   return el;
 }
@@ -18008,6 +17500,69 @@ function checkQuiz(id) {
   }
 
   showToast('🎉 Тема пройдена! Отметь чекбоксы прогресса.');
+}
+
+
+// ===== GITHUB UPLOAD =====
+async function githubUpload() {
+  const username  = document.getElementById('gh-username').value.trim();
+  const repo      = document.getElementById('gh-repo').value.trim();
+  const token     = document.getElementById('gh-token').value.trim();
+  const filepath  = document.getElementById('gh-filepath').value.trim() || 'index.html';
+  const branch    = document.getElementById('gh-branch').value.trim() || 'main';
+  const message   = document.getElementById('gh-message').value.trim() || 'update: roadmap content';
+  const fileInput = document.getElementById('gh-file-input');
+  const statusEl  = document.getElementById('gh-status');
+
+  const show = (msg, ok) => {
+    statusEl.style.display = 'block';
+    statusEl.style.background = ok ? '#0d2d1a' : '#2d0d0d';
+    statusEl.style.border = '1px solid ' + (ok ? '#238636' : '#da3633');
+    statusEl.style.color = ok ? '#3fb950' : '#f85149';
+    statusEl.innerHTML = msg;
+  };
+
+  if (!username || !repo || !token) return show('❌ Заполни Username, Repository и Token', false);
+  if (!fileInput.files.length) return show('❌ Выбери файл для загрузки', false);
+
+  show('⏳ Читаем файл...', true);
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    const base64 = e.target.result.split(',')[1];
+    const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/${filepath}`;
+    const headers = {
+      'Authorization': 'Bearer ' + token,
+      'Accept': 'application/vnd.github+json',
+      'Content-Type': 'application/json',
+      'X-GitHub-Api-Version': '2022-11-28'
+    };
+    try {
+      show('⏳ Проверяем существующий файл...', true);
+      let sha = null;
+      const getRes = await fetch(apiUrl + '?ref=' + branch, { headers });
+      if (getRes.ok) { sha = (await getRes.json()).sha; show('⏳ Обновляем файл...', true); }
+      else { show('⏳ Создаём новый файл...', true); }
+
+      const body = { message, content: base64, branch };
+      if (sha) body.sha = sha;
+
+      const putRes = await fetch(apiUrl, { method: 'PUT', headers, body: JSON.stringify(body) });
+      const result = await putRes.json();
+
+      if (putRes.ok) {
+        const commitUrl = result.commit?.html_url || `https://github.com/${username}/${repo}`;
+        const pagesUrl  = `https://${username}.github.io/${repo}/`;
+        show(`✅ Push успешен! Коммит: <a href="${commitUrl}" target="_blank" style="color:#58a6ff">${result.commit?.sha?.slice(0,7)}</a><br>
+              🌐 GitHub Pages: <a href="${pagesUrl}" target="_blank" style="color:#58a6ff">${pagesUrl}</a>`, true);
+      } else {
+        const m = result.message || '';
+        if (m.includes('Bad credentials')) show('❌ Неверный токен. Нужен scope <b>repo</b>', false);
+        else if (m.includes('Not Found')) show(`❌ Репо <b>${username}/${repo}</b> не найдено`, false);
+        else show('❌ Ошибка: ' + m, false);
+      }
+    } catch(err) { show('❌ Сетевая ошибка: ' + err.message, false); }
+  };
+  reader.readAsDataURL(fileInput.files[0]);
 }
 
 </script>
