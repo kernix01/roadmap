@@ -6,7 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;700&family=Onest:wght@400;500;700&family=Rubik:wght@400;500;700&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;500;700&family=Nunito:wght@400;600;700&family=Raleway:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700&family=Lexend:wght@400;500;700&family=Work+Sans:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;700&family=Mulish:wght@400;500;700&family=Cabin:wght@400;500;700&family=Karla:wght@400;500;700&family=Quicksand:wght@400;500;700&family=Mukta:wght@400;500;700&family=Playfair+Display:wght@400;700&family=Merriweather:wght@400;700&family=Lora:wght@400;500;700&family=Cormorant+Garamond:wght@400;500;700&family=Crimson+Pro:wght@400;500;700&family=PT+Serif:wght@400;700&family=EB+Garamond:wght@400;500;700&family=Libre+Baskerville:wght@400;700&family=Bitter:wght@400;500;700&family=Source+Serif+4:wght@400;600;700&family=Spectral:wght@400;500;700&family=Bebas+Neue:wght@400&family=Anton:wght@400&family=Oswald:wght@400;500;700&family=Archivo+Black:wght@400&family=Righteous:wght@400&family=Abril+Fatface:wght@400&family=Fjalla+One:wght@400&family=Russo+One:wght@400&family=JetBrains+Mono:wght@400;500;700&family=Fira+Code:wght@400;500&family=Source+Code+Pro:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&family=Caveat:wght@400;500;700&family=Pacifico:wght@400&family=Dancing+Script:wght@400;500;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
-<title>Frontend Roadmap v27</title>
+<title>Frontend Roadmap v29</title>
 <style>
   /* ===== АКЦЕНТНЫЕ ЦВЕТА (настраиваются конструктором) ===== */
   :root {
@@ -3024,57 +3024,61 @@
     z-index: 99999;
     display: none;
     align-items: center;
-    gap: 6px;
-    padding: 7px 14px 7px 10px;
+    gap: 7px;
+    padding: 9px 16px 9px 12px;
     background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
     color: #fff;
     border: none;
-    border-radius: 20px;
-    font-size: 13px;
+    border-radius: 22px;
+    font-size: 13.5px;
     font-weight: 700;
     cursor: pointer;
     font-family: inherit;
-    box-shadow: 0 4px 20px rgba(99,102,241,.6), 0 1px 4px rgba(0,0,0,.3);
+    box-shadow: 0 6px 28px rgba(99,102,241,.75), 0 2px 8px rgba(0,0,0,.4);
     white-space: nowrap;
     pointer-events: all;
     letter-spacing: .2px;
-    animation: aiPopIn .15s cubic-bezier(.34,1.56,.64,1);
+    animation: aiPopIn .18s cubic-bezier(.34,1.56,.64,1) both;
     transform-origin: bottom center;
+    user-select: none;
   }
   .ai-sel-popup:hover {
     background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
-    box-shadow: 0 6px 24px rgba(99,102,241,.7);
-    transform: translateY(-1px);
+    box-shadow: 0 8px 32px rgba(99,102,241,.85);
+    transform: translateY(-2px);
   }
-  .ai-sel-popup:active { transform: scale(.97); }
+  .ai-sel-popup:active { transform: scale(.96); }
   .ai-sel-popup .ask-icon {
-    width: 18px; height: 18px;
-    background: rgba(255,255,255,.25);
+    width: 20px; height: 20px;
+    background: rgba(255,255,255,.22);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 11px; flex-shrink: 0;
+    font-size: 12px; flex-shrink: 0;
   }
   .ai-sel-popup .ask-label { line-height: 1; }
   .ai-sel-popup .ask-brand {
-    opacity: .75;
-    font-weight: 500;
+    background: rgba(255,255,255,.2);
+    padding: 1px 6px;
+    border-radius: 8px;
     font-size: 11px;
-    margin-left: 1px;
+    font-weight: 800;
+    letter-spacing: .5px;
   }
-  /* Стрелка вниз (хвостик как у tooltip) */
+  /* Стрелка вниз */
   .ai-sel-popup::after {
     content: '';
     position: absolute;
-    bottom: -6px;
+    bottom: -7px;
     left: 50%;
     transform: translateX(-50%);
-    border: 6px solid transparent;
+    border: 7px solid transparent;
     border-top-color: #7c3aed;
     border-bottom: none;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,.2));
   }
   @keyframes aiPopIn {
-    from { opacity: 0; transform: scale(.7) translateY(6px); }
-    to   { opacity: 1; transform: scale(1) translateY(0); }
+    from { opacity: 0; transform: scale(.6) translateY(8px); }
+    to   { opacity: 1; transform: scale(1)  translateY(0); }
   }
 
   /* Chat window */
@@ -11949,25 +11953,26 @@ model Post {
       <div id="aiModelLabel">Выбери модель →</div>
     </div>
     <select class="ai-model-select" id="aiModelSelect" onchange="aiOnModelChange()">
-      <optgroup label="Groq (быстро)">
-        <option value="groq:llama-3.3-70b-versatile">Llama 3.3 70B</option>
-        <option value="groq:llama3-8b-8192">Llama 3 8B (быстрый)</option>
-        <option value="groq:mixtral-8x7b-32768">Mixtral 8x7B</option>
+      <optgroup label="⚡ Groq (самый быстрый)">
+        <option value="groq:llama-3.3-70b-versatile" selected>Llama 3.3 70B ✓</option>
+        <option value="groq:llama3-8b-8192">Llama 3 8B (молния)</option>
         <option value="groq:gemma2-9b-it">Gemma 2 9B</option>
       </optgroup>
-      <optgroup label="Gemini">
+      <optgroup label="🌐 OpenRouter — бесплатные">
+        <option value="or:deepseek/deepseek-r1:free">DeepSeek R1 🔥</option>
+        <option value="or:deepseek/deepseek-chat-v3-0324:free">DeepSeek V3</option>
+        <option value="or:meta-llama/llama-3.3-70b-instruct:free">Llama 3.3 70B</option>
+        <option value="or:qwen/qwen3-235b-a22b:free">Qwen3 235B</option>
+        <option value="or:microsoft/phi-4-reasoning:free">Phi-4 Reasoning</option>
+        <option value="or:openrouter/optimus-alpha:free">Owl Alpha 🦉</option>
+        <option value="or:nvidia/llama-3.1-nemotron-ultra-253b-v1:free">Nemotron Ultra 253B</option>
+        <option value="or:poolside/poolside-mf-v1:free">Poolside Lagoona M.1</option>
+        <option value="or:google/gemini-2.0-flash-exp:free">Gemini 2.0 Flash Exp</option>
+      </optgroup>
+      <optgroup label="💎 Gemini">
+        <option value="gemini:gemini-2.0-flash">Gemini 2.0 Flash</option>
         <option value="gemini:gemini-1.5-flash">Gemini 1.5 Flash</option>
         <option value="gemini:gemini-1.5-pro">Gemini 1.5 Pro</option>
-        <option value="gemini:gemini-2.0-flash">Gemini 2.0 Flash</option>
-      </optgroup>
-      <optgroup label="OpenRouter (лучшие для кода)">
-        <option value="or:deepseek/deepseek-r1:free">DeepSeek R1 🔥 (бесплатно)</option>
-        <option value="or:deepseek/deepseek-chat:free">DeepSeek V3 (бесплатно)</option>
-        <option value="or:google/gemini-2.0-flash-exp:free">Gemini 2.0 Flash Exp (бесплатно)</option>
-        <option value="or:meta-llama/llama-3.3-70b-instruct:free">Llama 3.3 70B (бесплатно)</option>
-        <option value="or:qwen/qwen3-235b-a22b:free">Qwen3 235B (бесплатно)</option>
-        <option value="or:microsoft/phi-4-reasoning:free">Phi-4 Reasoning (бесплатно)</option>
-        <option value="or:anthropic/claude-3.5-haiku">Claude 3.5 Haiku</option>
       </optgroup>
     </select>
     <button class="ai-chat-close" onclick="toggleAiChat()">✕</button>
@@ -12110,7 +12115,7 @@ function updateProgress(cb) {
   const done = document.querySelectorAll('.prog-cb:not([disabled]):checked');
   const pct = all.length ? Math.round(done.length / all.length * 100) : 0;
   document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-label').textContent = `Прогресс: ${done.length} / ${all.length} тем изучено (${pct}%) · v27`;
+  document.getElementById('prog-label').textContent = `Прогресс: ${done.length} / ${all.length} тем изучено (${pct}%) · v29`;
   updateTabBadges();
   updatePdcBars();
 }
@@ -19473,23 +19478,23 @@ document.addEventListener('mouseup', (e) => {
       aiSelText = txt;
       const rect = sel.getRangeAt(0).getBoundingClientRect();
 
-      // Позиция: по центру выделения, НАД ним (как у LeetCode)
-      const popupW = 140;
-      const popupH = 36;
-      let left = rect.left + rect.width / 2 - popupW / 2;
-      // rect.top это от viewport, нужно добавить scrollY для абсолютной позиции
-      let top = rect.top + window.scrollY - popupH - 10;
+      // Позиция: по центру выделения, НАД ним (position:fixed — координаты от viewport)
+      const popupW = 148;
+      const popupH = 38;
+      const gap = 12; // отступ от выделения
 
-      // Если выделение у самого верха — показываем снизу
-      if (rect.top < 60) {
-        top = rect.bottom + window.scrollY + 8;
-        popup.style.setProperty('--arrow-top', 'auto');
-        popup.style.setProperty('--arrow-bottom', 'auto');
+      // rect.top/bottom/left — уже в координатах viewport (для position:fixed)
+      let left = rect.left + rect.width / 2 - popupW / 2;
+      let top  = rect.top - popupH - gap; // НАД выделением
+
+      // Если нет места сверху — показываем снизу
+      if (rect.top < popupH + gap + 10) {
+        top = rect.bottom + gap;
       }
 
-      // Не выходим за края экрана
+      // Не выходим за края viewport
       left = Math.max(8, Math.min(left, window.innerWidth - popupW - 8));
-      top  = Math.max(window.scrollY + 8, top);
+      top  = Math.max(8, top);
 
       popup.style.left = left + 'px';
       popup.style.top  = top + 'px';
@@ -19623,8 +19628,10 @@ async function aiSend() {
         role: m.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: m.content }]
       }));
+      // Gemini 2.0+ использует v1beta, старые — v1
+      const geminiVersion = modelId.includes('2.0') ? 'v1beta' : 'v1beta';
       const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${AI_KEYS.gemini}`,
+        `https://generativelanguage.googleapis.com/${geminiVersion}/models/${modelId}:generateContent?key=${AI_KEYS.gemini}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -19649,7 +19656,17 @@ async function aiSend() {
 
   } catch (err) {
     document.getElementById(typingId)?.remove();
-    aiAddMsg('bot', `❌ Ошибка: ${err.message}\n\nПроверь API ключ и соединение.`);
+    let errMsg = `❌ Ошибка: ${err.message}`;
+    if (err.message.includes('401') || err.message.includes('API key') || err.message.includes('credentials')) {
+      errMsg += '\n\n🔑 Проблема с API ключом. Проверь ключ в коде.';
+    } else if (err.message.includes('404') || err.message.includes('not found') || err.message.includes('No endpoints')) {
+      errMsg += '\n\n🤖 Модель не найдена или недоступна. Попробуй другую модель.';
+    } else if (err.message.includes('429') || err.message.includes('rate') || err.message.includes('limit')) {
+      errMsg += '\n\n⏱ Превышен лимит запросов. Подожди немного.';
+    } else if (err.message.includes('fetch') || err.message.includes('network') || err.message.includes('Failed')) {
+      errMsg += '\n\n🌐 Проблема с сетью. Проверь интернет.';
+    }
+    aiAddMsg('bot', errMsg);
   }
 
   aiLoading = false;
