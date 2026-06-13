@@ -6,7 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;700&family=Onest:wght@400;500;700&family=Rubik:wght@400;500;700&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;500;700&family=Nunito:wght@400;600;700&family=Raleway:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700&family=Lexend:wght@400;500;700&family=Work+Sans:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;700&family=Mulish:wght@400;500;700&family=Cabin:wght@400;500;700&family=Karla:wght@400;500;700&family=Quicksand:wght@400;500;700&family=Mukta:wght@400;500;700&family=Playfair+Display:wght@400;700&family=Merriweather:wght@400;700&family=Lora:wght@400;500;700&family=Cormorant+Garamond:wght@400;500;700&family=Crimson+Pro:wght@400;500;700&family=PT+Serif:wght@400;700&family=EB+Garamond:wght@400;500;700&family=Libre+Baskerville:wght@400;700&family=Bitter:wght@400;500;700&family=Source+Serif+4:wght@400;600;700&family=Spectral:wght@400;500;700&family=Bebas+Neue:wght@400&family=Anton:wght@400&family=Oswald:wght@400;500;700&family=Archivo+Black:wght@400&family=Righteous:wght@400&family=Abril+Fatface:wght@400&family=Fjalla+One:wght@400&family=Russo+One:wght@400&family=JetBrains+Mono:wght@400;500;700&family=Fira+Code:wght@400;500&family=Source+Code+Pro:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&family=Caveat:wght@400;500;700&family=Pacifico:wght@400&family=Dancing+Script:wght@400;500;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
-<title>HTML/CSS/JS Роадмап</title>
+<title>Frontend Roadmap v27</title>
 <style>
   /* ===== АКЦЕНТНЫЕ ЦВЕТА (настраиваются конструктором) ===== */
   :root {
@@ -2981,6 +2981,323 @@
   }
   body.dark .tab-group-sep { background: #2d3348; }
 
+
+
+
+  /* ===== AI CHAT ===== */
+  .ai-fab {
+    position: fixed;
+    bottom: 80px;
+    right: 18px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(99,102,241,.5);
+    z-index: 9998;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .ai-fab:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(99,102,241,.65); }
+  .ai-fab-badge {
+    position: absolute;
+    top: -3px; right: -3px;
+    width: 18px; height: 18px;
+    background: #ef4444;
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Selection popup */
+  /* === ASK AI popup (как Ask Leet у LeetCode) === */
+  .ai-sel-popup {
+    position: fixed;
+    z-index: 99999;
+    display: none;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px 7px 10px;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: 0 4px 20px rgba(99,102,241,.6), 0 1px 4px rgba(0,0,0,.3);
+    white-space: nowrap;
+    pointer-events: all;
+    letter-spacing: .2px;
+    animation: aiPopIn .15s cubic-bezier(.34,1.56,.64,1);
+    transform-origin: bottom center;
+  }
+  .ai-sel-popup:hover {
+    background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
+    box-shadow: 0 6px 24px rgba(99,102,241,.7);
+    transform: translateY(-1px);
+  }
+  .ai-sel-popup:active { transform: scale(.97); }
+  .ai-sel-popup .ask-icon {
+    width: 18px; height: 18px;
+    background: rgba(255,255,255,.25);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; flex-shrink: 0;
+  }
+  .ai-sel-popup .ask-label { line-height: 1; }
+  .ai-sel-popup .ask-brand {
+    opacity: .75;
+    font-weight: 500;
+    font-size: 11px;
+    margin-left: 1px;
+  }
+  /* Стрелка вниз (хвостик как у tooltip) */
+  .ai-sel-popup::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #7c3aed;
+    border-bottom: none;
+  }
+  @keyframes aiPopIn {
+    from { opacity: 0; transform: scale(.7) translateY(6px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  /* Chat window */
+  .ai-chat-win {
+    position: fixed;
+    bottom: 140px;
+    right: 18px;
+    width: 380px;
+    max-width: calc(100vw - 32px);
+    height: 540px;
+    max-height: calc(100vh - 110px);
+    background: #0f1117;
+    border: 1px solid #2d3348;
+    border-radius: 18px;
+    display: none;
+    flex-direction: column;
+    z-index: 9997;
+    box-shadow: 0 12px 48px rgba(0,0,0,.6);
+    animation: aiWinIn .2s ease;
+    overflow: hidden;
+  }
+  .ai-chat-win.open { display: flex; }
+  @keyframes aiWinIn {
+    from { opacity:0; transform: scale(.95) translateY(10px); }
+    to   { opacity:1; transform: scale(1) translateY(0); }
+  }
+  body:not(.dark) .ai-chat-win { background: #fff; border-color: #e5e7eb; box-shadow: 0 12px 48px rgba(0,0,0,.12); }
+
+  .ai-chat-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-bottom: 1px solid #2d3348;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(99,102,241,.15), rgba(139,92,246,.1));
+  }
+  body:not(.dark) .ai-chat-head { border-color: #e5e7eb; background: linear-gradient(135deg, rgba(99,102,241,.07), rgba(139,92,246,.05)); }
+
+  .ai-chat-head-icon {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+  .ai-chat-head-title { flex: 1; }
+  .ai-chat-head-title div:first-child { font-size: 13px; font-weight: 700; color: #e2e8f0; }
+  .ai-chat-head-title div:last-child  { font-size: 10px; color: #6366f1; margin-top: 1px; }
+  body:not(.dark) .ai-chat-head-title div:first-child { color: #1e293b; }
+
+  .ai-model-select {
+    padding: 4px 8px;
+    background: #1a1f2e;
+    border: 1px solid #3d4a6b;
+    border-radius: 8px;
+    color: #a5b4fc;
+    font-size: 11px;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+  }
+  body:not(.dark) .ai-model-select { background: #f1f5f9; border-color: #e2e8f0; color: #6366f1; }
+
+  .ai-chat-close {
+    width: 26px; height: 26px;
+    background: #1e2536;
+    border: none; border-radius: 7px;
+    color: #94a3b8;
+    cursor: pointer; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s;
+    flex-shrink: 0;
+  }
+  .ai-chat-close:hover { background: #2d3348; color: #fff; }
+  body:not(.dark) .ai-chat-close { background: #f1f5f9; color: #94a3b8; }
+  body:not(.dark) .ai-chat-close:hover { background: #e2e8f0; }
+
+  /* Context pill */
+  .ai-ctx {
+    margin: 8px 12px 0;
+    padding: 7px 10px;
+    background: rgba(99,102,241,.12);
+    border: 1px solid rgba(99,102,241,.25);
+    border-radius: 8px;
+    font-size: 11px;
+    color: #a5b4fc;
+    line-height: 1.4;
+    display: none;
+    flex-shrink: 0;
+    position: relative;
+    max-height: 52px;
+    overflow: hidden;
+  }
+  .ai-ctx strong { color: #818cf8; display: block; margin-bottom: 2px; font-size: 10px; text-transform: uppercase; letter-spacing: .4px; }
+
+  /* Messages */
+  .ai-chat-msgs {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #2d3348 transparent;
+  }
+  .ai-msg { display: flex; gap: 8px; align-items: flex-start; }
+  .ai-msg-av {
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0; margin-top: 2px;
+  }
+  .ai-msg.user  .ai-msg-av { background: #4f46e5; }
+  .ai-msg.bot   .ai-msg-av { background: linear-gradient(135deg,#6366f1,#8b5cf6); }
+
+  .ai-msg-bbl {
+    padding: 8px 12px;
+    border-radius: 4px 12px 12px 12px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #e2e8f0;
+    background: #1a1f2e;
+    max-width: calc(100% - 36px);
+    word-break: break-word;
+  }
+  .ai-msg.user .ai-msg-bbl {
+    background: #4f46e5;
+    border-radius: 12px 4px 12px 12px;
+    color: #fff;
+  }
+  body:not(.dark) .ai-msg.bot  .ai-msg-bbl { background: #f1f5f9; color: #1e293b; }
+  body:not(.dark) .ai-msg.user .ai-msg-bbl { background: #6366f1; }
+
+  .ai-msg-bbl code {
+    background: rgba(255,255,255,.12);
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: 'Consolas', monospace;
+    font-size: 11.5px;
+  }
+  .ai-msg-bbl pre {
+    background: rgba(0,0,0,.35);
+    padding: 8px 10px;
+    border-radius: 7px;
+    overflow-x: auto;
+    margin: 6px 0 0;
+    font-size: 11.5px;
+    font-family: 'Consolas', monospace;
+    line-height: 1.5;
+  }
+
+  .ai-typing-bbl { display: flex; gap: 4px; padding: 6px 2px; }
+  .ai-typing-bbl span {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #6366f1;
+    animation: aiBounce 1.2s infinite;
+  }
+  .ai-typing-bbl span:nth-child(2) { animation-delay: .2s; }
+  .ai-typing-bbl span:nth-child(3) { animation-delay: .4s; }
+  @keyframes aiBounce {
+    0%,60%,100% { opacity:.3; transform:translateY(0); }
+    30% { opacity:1; transform:translateY(-4px); }
+  }
+
+  /* Quick actions */
+  .ai-quick-row {
+    display: flex; gap: 5px; padding: 6px 12px; flex-wrap: wrap; flex-shrink: 0;
+  }
+  .ai-qbtn {
+    padding: 3px 9px;
+    background: #1a1f2e;
+    border: 1px solid #2d3348;
+    border-radius: 12px;
+    color: #94a3b8;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all .15s;
+  }
+  .ai-qbtn:hover { background: #6366f1; border-color: #6366f1; color: #fff; }
+  body:not(.dark) .ai-qbtn { background: #f1f5f9; border-color: #e2e8f0; color: #64748b; }
+
+  /* Input row */
+  .ai-inp-row {
+    display: flex; gap: 7px; padding: 10px 12px 12px;
+    border-top: 1px solid #2d3348; flex-shrink: 0;
+  }
+  body:not(.dark) .ai-inp-row { border-color: #e5e7eb; }
+
+  .ai-inp {
+    flex: 1;
+    padding: 8px 12px;
+    background: #1a1f2e;
+    border: 1.5px solid #2d3348;
+    border-radius: 10px;
+    color: #e2e8f0;
+    font-size: 12.5px;
+    font-family: inherit;
+    outline: none; resize: none;
+    min-height: 36px; max-height: 90px;
+    line-height: 1.5;
+    transition: border-color .2s;
+  }
+  .ai-inp:focus { border-color: #6366f1; }
+  body:not(.dark) .ai-inp { background: #f8fafc; border-color: #e2e8f0; color: #1e293b; }
+
+  .ai-send {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg,#6366f1,#8b5cf6);
+    border: none; border-radius: 10px;
+    color: #fff; cursor: pointer; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity .15s;
+  }
+  .ai-send:hover { opacity: .85; }
+  .ai-send:disabled { opacity: .35; cursor: not-allowed; }
+
+  /* Selection popup */
+  .ai-sel-popup { position: fixed; z-index: 9999; display: none; }
+
 </style>
 <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
 </head>
@@ -3077,6 +3394,11 @@
       <div class="pdc-bar"><div class="pdc-fill" id="pdc-linux" style="background:#4b5563;width:0%"></div></div>
       <div class="pdc-pct" id="pdcp-linux">0%</div>
     </div>
+    <div class="prog-dash-card" onclick="switchTabByName('pg')" style="cursor:pointer;border-left:3px solid #336791;">
+      <div class="pdc-icon"><img class="pdc-lang-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PG"></div><div class="pdc-name">PostgreSQL</div>
+      <div class="pdc-bar"><div class="pdc-fill" id="pdc-pg" style="background:#336791;width:0%"></div></div>
+      <div class="pdc-pct" id="pdcp-pg">0%</div>
+    </div>
     <div class="prog-dash-card" onclick="switchTabByName('vite')" style="cursor:pointer;border-left:3px solid #7c3aed;">
       <div class="pdc-icon" style="font-size:1.6rem;">⚡</div><div class="pdc-name">Vite</div>
       <div class="pdc-bar"><div class="pdc-fill" id="pdc-vite" style="background:#7c3aed;width:0%"></div></div>
@@ -3103,6 +3425,7 @@
       <button class="tab sql-tab" onclick="switchTab('sql', this)" data-sec="sql"><img class="tab-lang-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt=""> SQL <span class="tab-badge" id="badge-sql">0/0</span></button>
       <button class="tab devops-tab" onclick="switchTab('devops', this)" data-sec="devops"><img class="tab-lang-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt=""> Серверы <span class="tab-badge" id="badge-devops">0/0</span></button>
       <button class="tab" onclick="switchTab('linux', this)" data-sec="linux">🐧 Linux <span class="tab-badge" id="badge-linux">0/0</span></button>
+      <button class="tab" onclick="switchTab('pg', this)" data-sec="pg"><img class="tab-lang-icon" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt=""> PostgreSQL <span class="tab-badge" id="badge-pg">0/0</span></button>
       <button class="tab" onclick="switchTab('vite', this)" data-sec="vite">⚡ Vite <span class="tab-badge" id="badge-vite">0/0</span></button>
     </div>
 
@@ -3116,6 +3439,9 @@
       <button class="tab" onclick="switchTab('roadmap', this)">Путь развития</button>
       <button class="tab figma-tab" onclick="switchTab('figma', this)"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" style="width:13px;height:13px;object-fit:contain;flex-shrink:0"> Figma</button>
       <button class="tab playground-tab" onclick="switchTab('playground', this)" data-sec="playground">Playground</button>
+    </div>
+    <div class="tabs-row">
+      <span class="tabs-row-label oth" style="visibility:hidden">✦ Other</span>
       <button class="tab cs-tab" onclick="switchTab('cheatsheets', this)" data-sec="cheatsheets">Шпаргалки</button>
       <button class="tab gh-tab" onclick="switchTab('github', this)" data-sec="github"><svg style="width:13px;height:13px;flex-shrink:0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg> GitHub</button>
       <button class="tab" onclick="switchTab('career', this)">💼 Карьера</button>
@@ -6191,7 +6517,71 @@ id = <span class="str">"abc"</span>; <span class="cm">// тоже ок!</span>
         <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Типизированный fetch-хелпер с дженериком</span></label>
       </div>
     </div>
-  </div>
+  
+    <div class="block" id="block-ts-config">
+      <div class="block-title" onclick="scrollToBlock('block-ts-config')">tsconfig.json — настройка компилятора <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm">// tsconfig.json — минимальный для React+Vite</span>
+{
+  <span class="str">"compilerOptions"</span>: {
+    <span class="str">"target"</span>: <span class="str">"ES2020"</span>,        <span class="cm">// до какого JS компилировать</span>
+    <span class="str">"module"</span>: <span class="str">"ESNext"</span>,
+    <span class="str">"lib"</span>: [<span class="str">"ES2020"</span>, <span class="str">"DOM"</span>],
+    <span class="str">"jsx"</span>: <span class="str">"react-jsx"</span>,         <span class="cm">// для React</span>
+    <span class="str">"strict"</span>: <span class="kw">true</span>,              <span class="cm">// включает все строгие проверки</span>
+    <span class="str">"noUnusedLocals"</span>: <span class="kw">true</span>,     <span class="cm">// ошибка на неиспользуемые переменные</span>
+    <span class="str">"noImplicitAny"</span>: <span class="kw">true</span>,      <span class="cm">// запрет неявного any</span>
+    <span class="str">"paths"</span>: {
+      <span class="str">"@/*"</span>: [<span class="str">"./src/*"</span>]          <span class="cm">// алиас для импортов</span>
+    }
+  },
+  <span class="str">"include"</span>: [<span class="str">"src"</span>]
+}</div>
+      <div class="explain">
+        <strong>strict: true</strong> — включает 8 проверок сразу. Всегда включай в новых проектах.<br>
+        <strong>paths/@/*</strong> — вместо <code>../../components/Button</code> пишешь <code>@/components/Button</code>.<br>
+        <strong>noImplicitAny</strong> — не даст случайно написать функцию без типов.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>strict: true — знаю что включает и зачем</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>paths — алиасы для удобных импортов</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-ts-discriminated">
+      <div class="block-title" onclick="scrollToBlock('block-ts-discriminated')">Discriminated Unions и advanced типы <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm">// Discriminated Union — union с общим полем-дискриминатором</span>
+<span class="kw">type</span> Action =
+  | { type: <span class="str">'INCREMENT'</span>; amount: <span class="str">number</span> }
+  | { type: <span class="str">'SET_NAME'</span>; name: <span class="str">string</span> }
+  | { type: <span class="str">'RESET'</span> };
+
+<span class="kw">function</span> <span class="fn">reducer</span>(action: Action) {
+  <span class="kw">switch</span> (action.type) {
+    <span class="kw">case</span> <span class="str">'INCREMENT'</span>: <span class="kw">return</span> action.amount; <span class="cm">// TS знает: есть amount</span>
+    <span class="kw">case</span> <span class="str">'SET_NAME'</span>:  <span class="kw">return</span> action.name;   <span class="cm">// TS знает: есть name</span>
+    <span class="kw">case</span> <span class="str">'RESET'</span>:     <span class="kw">return</span> <span class="num">0</span>;
+  }
+}
+
+<span class="cm">// keyof и typeof — работа с типами объектов</span>
+<span class="kw">const</span> config = { host: <span class="str">'localhost'</span>, port: <span class="num">3000</span> };
+<span class="kw">type</span> ConfigKey = <span class="kw">keyof typeof</span> config; <span class="cm">// 'host' | 'port'</span>
+
+<span class="cm">// ReturnType — тип возврата функции</span>
+<span class="kw">function</span> <span class="fn">getUser</span>() { <span class="kw">return</span> { id: <span class="num">1</span>, name: <span class="str">'Ivan'</span> }; }
+<span class="kw">type</span> User = <span class="kw">ReturnType</span>&lt;<span class="kw">typeof</span> <span class="fn">getUser</span>&gt;; <span class="cm">// { id: number, name: string }</span></div>
+      <div class="explain">
+        <strong>Discriminated Union</strong> — TS автоматически сужает тип внутри switch/if по полю-дискриминатору.<br>
+        <strong>keyof typeof obj</strong> — часто используется для безопасного доступа к ключам объекта.<br>
+        <strong>ReturnType</strong> — не дублируй тип вручную, выведи его из функции.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Discriminated Union — union с полем-дискриминатором</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>keyof, typeof — работа с типами существующих объектов</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>ReturnType, Parameters — utility типы для функций</span></label>
+      </div>
+    </div>
+</div>
 
   <!-- ===================== React ===================== -->
   <div class="section" id="sec-react">
@@ -7206,11 +7596,10 @@ Todo / погода / новости / фильмы
       </div>
     </div>
 
-  </div>
+  
 
 
-  <!-- ===================== АЛГОРИТМЫ ===================== -->
-  <div class="section" id="sec-algo">
+  <!-- ===================== АЛГОРИТМЫ ===================== -->id="sec-algo">
     <div class="lang-section-hero" style="background: linear-gradient(135deg, #0c1a10 0%, #14532d 50%, #166534 100%);">
       <div class="lang-section-hero-icon" style="font-size:2.5rem;">🧮</div>
       <div>
@@ -7375,10 +7764,9 @@ Todo / погода / новости / фильмы
         <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Обход вложенных структур через рекурсию</span></label>
       </div>
     </div>
-  </div>
+  
 
-  <!-- ===================== ГАЙДЫ ===================== -->
-  <div class="section" id="sec-guides">
+id="sec-guides">
     <div class="block" style="margin-bottom:1rem;">
       <div class="block-title"><iconify-icon icon="tabler:movie" width="18" height="18" style="vertical-align:middle"></iconify-icon> Видео-гайды по темам</div>
       <div class="tip">Выбери язык слева, затем нажми на нужный гайд — откроется подробный урок с объяснением и кодом.</div>
@@ -9272,7 +9660,107 @@ fetch('/api/tasks')
       </div>
     </div>
 
-  </div><!-- /sec-node -->
+  
+    <div class="block" id="block-node-middleware">
+      <div class="block-title" onclick="scrollToBlock('block-node-middleware')">Middleware и структура Express-приложения <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm">// Middleware — функция между запросом и ответом</span>
+<span class="kw">const</span> <span class="fn">logger</span> = (req, res, next) => {
+  console.<span class="fn">log</span>(<span class="str">`${req.method} ${req.url}`</span>);
+  <span class="fn">next</span>(); <span class="cm">// обязательно — передаёт управление дальше</span>
+};
+
+<span class="cm">// Middleware для авторизации</span>
+<span class="kw">const</span> <span class="fn">auth</span> = (req, res, next) => {
+  <span class="kw">const</span> token = req.headers.authorization;
+  <span class="kw">if</span> (!token) <span class="kw">return</span> res.<span class="fn">status</span>(<span class="num">401</span>).<span class="fn">json</span>({ error: <span class="str">'Unauthorized'</span> });
+  <span class="fn">next</span>();
+};
+
+app.<span class="fn">use</span>(logger);                <span class="cm">// глобальный middleware</span>
+app.<span class="fn">use</span>(express.<span class="fn">json</span>());       <span class="cm">// парсинг JSON body</span>
+app.<span class="fn">get</span>(<span class="str">'/protected'</span>, auth, handler); <span class="cm">// middleware для роута</span>
+
+<span class="cm">// Структура проекта</span>
+src/
+  routes/    <span class="cm">→ маршруты (users.js, posts.js)</span>
+  controllers/ <span class="cm">→ логика обработки</span>
+  middleware/  <span class="cm">→ auth, logger, errorHandler</span>
+  models/    <span class="cm">→ схемы данных</span>
+  app.js     <span class="cm">→ настройка Express</span>
+  server.js  <span class="cm">→ запуск сервера</span></div>
+      <div class="explain">
+        <strong>next()</strong> — без него запрос зависнет. Всегда вызывай или возвращай ответ.<br>
+        <strong>express.json()</strong> — без него <code>req.body</code> будет undefined при POST запросах.<br>
+        <strong>Порядок middleware важен</strong> — они выполняются последовательно сверху вниз.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Middleware — (req, res, next) — понимаю и умею писать</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>express.json() — парсинг тела запроса</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Структура Express-проекта по папкам</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-node-env">
+      <div class="block-title" onclick="scrollToBlock('block-node-env')">Переменные окружения и .env <span class="badge must">основа</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm"># .env файл</span>
+PORT=3000
+DB_URL=postgresql://localhost:5432/mydb
+JWT_SECRET=supersecretkey123
+NODE_ENV=development
+
+<span class="cm">// Использование через dotenv</span>
+<span class="kw">import</span> dotenv <span class="kw">from</span> <span class="str">'dotenv'</span>;
+dotenv.<span class="fn">config</span>();
+
+<span class="kw">const</span> port = process.env.PORT || <span class="num">3000</span>;
+<span class="kw">const</span> dbUrl = process.env.DB_URL;
+
+<span class="cm">// Никогда не коммить .env!</span>
+<span class="cm"># .gitignore</span>
+.env
+.env.local
+node_modules/</div>
+      <div class="explain">
+        <strong>process.env</strong> — глобальный объект Node.js с переменными окружения.<br>
+        <strong>dotenv</strong> — загружает .env файл в process.env. Установка: <code>npm i dotenv</code>.<br>
+        <strong>.env в .gitignore</strong> — обязательно! Иначе секреты попадут в публичный репозиторий.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>process.env — переменные окружения в Node</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>dotenv — загрузка .env файла</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>.env в .gitignore — защита секретов</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-node-fs">
+      <div class="block-title" onclick="scrollToBlock('block-node-fs')">Работа с файловой системой (fs) <span class="badge">знать</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="kw">import</span> fs <span class="kw">from</span> <span class="str">'fs/promises'</span>; <span class="cm">// async версия</span>
+<span class="kw">import</span> path <span class="kw">from</span> <span class="str">'path'</span>;
+
+<span class="cm">// Чтение файла</span>
+<span class="kw">const</span> data = <span class="kw">await</span> fs.<span class="fn">readFile</span>(<span class="str">'data.json'</span>, <span class="str">'utf-8'</span>);
+<span class="kw">const</span> json = JSON.<span class="fn">parse</span>(data);
+
+<span class="cm">// Запись файла</span>
+<span class="kw">await</span> fs.<span class="fn">writeFile</span>(<span class="str">'output.json'</span>, JSON.<span class="fn">stringify</span>(json, <span class="kw">null</span>, <span class="num">2</span>));
+
+<span class="cm">// Создание папки</span>
+<span class="kw">await</span> fs.<span class="fn">mkdir</span>(<span class="str">'uploads'</span>, { recursive: <span class="kw">true</span> });
+
+<span class="cm">// Путь к файлу — используй path.join!</span>
+<span class="kw">const</span> filePath = path.<span class="fn">join</span>(__dirname, <span class="str">'data'</span>, <span class="str">'file.json'</span>);
+<span class="cm">// НЕ делай: './data/' + filename (уязвимость path traversal)</span></div>
+      <div class="explain">
+        <strong>fs/promises</strong> — используй вместо callback-версии. Работает с async/await.<br>
+        <strong>path.join</strong> — всегда собирай пути через path.join, не через конкатенацию строк.<br>
+        <strong>recursive: true</strong> — создаст все вложенные папки, не упадёт если уже существует.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>fs/promises — readFile, writeFile, mkdir</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>path.join — безопасная сборка путей</span></label>
+      </div>
+    </div>
+</div><!-- /sec-node -->
 
   <!-- ===================== SQL ===================== -->
   <div class="section" id="sec-sql">
@@ -9404,7 +9892,106 @@ CREATE TABLE posts (
       </div>
     </div>
 
-  </div><!-- /sec-sql -->
+  
+    <div class="block" id="block-sql-joins">
+      <div class="block-title" onclick="scrollToBlock('block-sql-joins')">JOIN — объединение таблиц <span class="badge must">основа</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm">-- Таблицы</span>
+users:  id, name, email
+orders: id, user_id, product, amount
+
+<span class="cm">-- INNER JOIN — только совпадающие строки</span>
+<span class="kw">SELECT</span> users.name, orders.product, orders.amount
+<span class="kw">FROM</span> users
+<span class="kw">INNER JOIN</span> orders <span class="kw">ON</span> users.id = orders.user_id;
+
+<span class="cm">-- LEFT JOIN — все пользователи, даже без заказов</span>
+<span class="kw">SELECT</span> users.name, orders.product
+<span class="kw">FROM</span> users
+<span class="kw">LEFT JOIN</span> orders <span class="kw">ON</span> users.id = orders.user_id;
+<span class="cm">-- orders.product будет NULL если заказов нет</span>
+
+<span class="cm">-- Несколько JOIN</span>
+<span class="kw">SELECT</span> u.name, o.product, c.city
+<span class="kw">FROM</span> users u
+<span class="kw">JOIN</span> orders o <span class="kw">ON</span> u.id = o.user_id
+<span class="kw">JOIN</span> cities c <span class="kw">ON</span> u.city_id = c.id;</div>
+      <div class="explain">
+        <strong>INNER JOIN</strong> — пересечение. Строки без пары отбрасываются с обеих сторон.<br>
+        <strong>LEFT JOIN</strong> — все строки из левой таблицы + совпадения из правой (NULL если нет).<br>
+        <strong>Алиасы (u, o)</strong> — сокращают запись при многих JOIN'ах.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>INNER JOIN — только совпадающие строки</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>LEFT JOIN — все из левой + NULL из правой</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Несколько JOIN в одном запросе</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-sql-aggregate">
+      <div class="block-title" onclick="scrollToBlock('block-sql-aggregate')">Агрегатные функции и GROUP BY <span class="badge must">основа</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm">-- Агрегатные функции</span>
+<span class="kw">SELECT</span>
+  <span class="fn">COUNT</span>(*) <span class="kw">AS</span> total_orders,
+  <span class="fn">SUM</span>(amount) <span class="kw">AS</span> revenue,
+  <span class="fn">AVG</span>(amount) <span class="kw">AS</span> avg_order,
+  <span class="fn">MAX</span>(amount) <span class="kw">AS</span> max_order,
+  <span class="fn">MIN</span>(amount) <span class="kw">AS</span> min_order
+<span class="kw">FROM</span> orders;
+
+<span class="cm">-- GROUP BY — группировка</span>
+<span class="kw">SELECT</span> user_id, <span class="fn">COUNT</span>(*) <span class="kw">AS</span> orders_count, <span class="fn">SUM</span>(amount)
+<span class="kw">FROM</span> orders
+<span class="kw">GROUP BY</span> user_id
+<span class="kw">ORDER BY</span> orders_count <span class="kw">DESC</span>;
+
+<span class="cm">-- HAVING — фильтр после группировки (не WHERE!)</span>
+<span class="kw">SELECT</span> user_id, <span class="fn">SUM</span>(amount) <span class="kw">AS</span> total
+<span class="kw">FROM</span> orders
+<span class="kw">GROUP BY</span> user_id
+<span class="kw">HAVING</span> <span class="fn">SUM</span>(amount) > <span class="num">1000</span>; <span class="cm">-- только крупные покупатели</span></div>
+      <div class="explain">
+        <strong>COUNT(*)</strong> — считает все строки. COUNT(column) — только не-NULL значения.<br>
+        <strong>GROUP BY</strong> — обязателен когда используешь агрегатные функции с другими колонками.<br>
+        <strong>HAVING vs WHERE</strong> — WHERE фильтрует строки ДО группировки, HAVING — ПОСЛЕ.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>COUNT, SUM, AVG, MAX, MIN — агрегатные функции</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>GROUP BY — группировка результатов</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>HAVING — фильтрация после группировки</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-sql-indexes">
+      <div class="block-title" onclick="scrollToBlock('block-sql-indexes')">Индексы и оптимизация <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm">-- Индекс ускоряет поиск (B-tree структура)</span>
+<span class="kw">CREATE INDEX</span> idx_users_email <span class="kw">ON</span> users(email);
+<span class="kw">CREATE INDEX</span> idx_orders_user_id <span class="kw">ON</span> orders(user_id);
+
+<span class="cm">-- Уникальный индекс</span>
+<span class="kw">CREATE UNIQUE INDEX</span> idx_unique_email <span class="kw">ON</span> users(email);
+
+<span class="cm">-- EXPLAIN ANALYZE — смотрим план запроса</span>
+<span class="kw">EXPLAIN ANALYZE</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> users <span class="kw">WHERE</span> email = <span class="str">'test@test.com'</span>;
+<span class="cm">-- Без индекса: Seq Scan (перебор всех строк)</span>
+<span class="cm">-- С индексом:  Index Scan (мгновенно)</span>
+
+<span class="cm">-- Когда создавать индекс:</span>
+<span class="cm">-- ✓ Колонки в WHERE, JOIN ON, ORDER BY</span>
+<span class="cm">-- ✗ Колонки которые часто обновляются</span>
+<span class="cm">-- ✗ Маленькие таблицы (< 1000 строк)</span></div>
+      <div class="explain">
+        <strong>Индекс</strong> — как оглавление в книге. Без него БД читает все строки (Seq Scan).<br>
+        <strong>PRIMARY KEY</strong> автоматически создаёт индекс.<br>
+        <strong>EXPLAIN ANALYZE</strong> — главный инструмент оптимизации. Показывает как выполняется запрос.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>CREATE INDEX — ускорение поиска по колонке</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>EXPLAIN ANALYZE — анализ плана выполнения</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Знаю когда индекс помогает, а когда нет</span></label>
+      </div>
+    </div>
+</div><!-- /sec-sql -->
 
   <!-- ===================== DEVOPS / СЕРВЕРЫ ===================== -->
   <div class="section" id="sec-devops">
@@ -9525,6 +10112,302 @@ CMD ["node", "server.js"]  # команда запуска</div>
   </div><!-- /sec-devops -->
 
   <!-- ===================== ШПАРГАЛКИ ===================== -->
+  <!-- ===================== POSTGRESQL ===================== -->
+  <div class="section" id="sec-pg">
+    <div class="lang-section-hero" style="background: linear-gradient(135deg, #0c2340 0%, #1a4480 50%, #336791 100%);">
+      <div class="lang-section-hero-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"></div>
+      <div>
+        <div class="lang-section-hero-title">PostgreSQL — мощная реляционная БД</div>
+        <div class="lang-section-hero-sub">PostgreSQL — стандарт для серьёзных проектов. Открытый исходный код, ACID-совместимость, JSON, полнотекстовый поиск. Используется везде от стартапов до банков.</div>
+        <div class="lang-section-hero-badges">
+          <span class="lang-section-hero-badge">SQL</span>
+          <span class="lang-section-hero-badge">ACID</span>
+          <span class="lang-section-hero-badge">JSON</span>
+          <span class="lang-section-hero-badge">Индексы</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="block" id="block-pg-setup">
+      <div class="block-title" onclick="scrollToBlock('block-pg-setup')">Установка и подключение <span class="badge must">основа</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm"># Установка (Ubuntu)</span>
+<span class="kw">sudo apt install</span> postgresql postgresql-contrib
+<span class="kw">sudo systemctl start</span> postgresql
+
+<span class="cm"># Создание БД и пользователя</span>
+<span class="kw">sudo -u postgres psql</span>
+<span class="kw">CREATE DATABASE</span> myapp;
+<span class="kw">CREATE USER</span> myuser <span class="kw">WITH PASSWORD</span> <span class="str">'password'</span>;
+<span class="kw">GRANT ALL PRIVILEGES ON DATABASE</span> myapp <span class="kw">TO</span> myuser;
+
+<span class="cm">// Подключение из Node.js (библиотека pg)</span>
+<span class="kw">import</span> { Pool } <span class="kw">from</span> <span class="str">'pg'</span>;
+
+<span class="kw">const</span> pool = <span class="kw">new</span> <span class="fn">Pool</span>({
+  connectionString: process.env.DATABASE_URL,
+  <span class="cm">// или:</span>
+  host: <span class="str">'localhost'</span>, port: <span class="num">5432</span>,
+  database: <span class="str">'myapp'</span>, user: <span class="str">'myuser'</span>, password: <span class="str">'password'</span>
+});
+
+<span class="kw">const</span> { rows } = <span class="kw">await</span> pool.<span class="fn">query</span>(<span class="str">'SELECT * FROM users'</span>);
+console.<span class="fn">log</span>(rows);</div>
+      <div class="explain">
+        <strong>Pool</strong> — пул соединений. Не создавай новое соединение на каждый запрос.<br>
+        <strong>DATABASE_URL</strong> — стандартный формат: <code>postgresql://user:pass@host:5432/dbname</code>.<br>
+        <strong>pg</strong> — самая популярная библиотека для Node.js + PostgreSQL. Установка: <code>npm i pg</code>.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Установил PostgreSQL, создал БД и пользователя</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Pool из библиотеки pg — подключение из Node.js</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>pool.query() — выполнение SQL запросов</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-pg-queries">
+      <div class="block-title" onclick="scrollToBlock('block-pg-queries')">Параметризованные запросы и безопасность <span class="badge must">основа</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm">// ❌ НИКОГДА так — SQL injection!</span>
+<span class="kw">const</span> query = <span class="str">`SELECT * FROM users WHERE email = '${email}'`</span>;
+
+<span class="cm">// ✅ Правильно — параметризованный запрос</span>
+<span class="kw">const</span> { rows } = <span class="kw">await</span> pool.<span class="fn">query</span>(
+  <span class="str">'SELECT * FROM users WHERE email = $1'</span>,
+  [email]  <span class="cm">// $1 — первый параметр</span>
+);
+
+<span class="cm">// Несколько параметров</span>
+<span class="kw">await</span> pool.<span class="fn">query</span>(
+  <span class="str">'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *'</span>,
+  [name, email]
+);
+
+<span class="cm">// Транзакция</span>
+<span class="kw">const</span> client = <span class="kw">await</span> pool.<span class="fn">connect</span>();
+<span class="kw">try</span> {
+  <span class="kw">await</span> client.<span class="fn">query</span>(<span class="str">'BEGIN'</span>);
+  <span class="kw">await</span> client.<span class="fn">query</span>(<span class="str">'UPDATE accounts SET balance = balance - $1 WHERE id = $2'</span>, [amount, fromId]);
+  <span class="kw">await</span> client.<span class="fn">query</span>(<span class="str">'UPDATE accounts SET balance = balance + $1 WHERE id = $2'</span>, [amount, toId]);
+  <span class="kw">await</span> client.<span class="fn">query</span>(<span class="str">'COMMIT'</span>);
+} <span class="kw">catch</span> (e) {
+  <span class="kw">await</span> client.<span class="fn">query</span>(<span class="str">'ROLLBACK'</span>);
+} <span class="kw">finally</span> { client.<span class="fn">release</span>(); }
+</div>
+      <div class="explain">
+        <strong>SQL Injection</strong> — если подставлять данные в строку напрямую, злоумышленник может выполнить произвольный SQL.<br>
+        <strong>$1, $2...</strong> — PostgreSQL-синтаксис параметров. В MySQL используется ?.<br>
+        <strong>RETURNING *</strong> — возвращает вставленную/обновлённую строку без дополнительного SELECT.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Параметризованные запросы $1, $2 — защита от SQL Injection</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>RETURNING * — получить результат после INSERT/UPDATE</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Транзакции — BEGIN / COMMIT / ROLLBACK</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-pg-schema">
+      <div class="block-title" onclick="scrollToBlock('block-pg-schema')">Схема БД и миграции <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm">-- Создание таблиц</span>
+<span class="kw">CREATE TABLE</span> users (
+  id        <span class="str">SERIAL PRIMARY KEY</span>,      <span class="cm">-- автоинкремент</span>
+  name      <span class="str">VARCHAR(100) NOT NULL</span>,
+  email     <span class="str">VARCHAR(255) UNIQUE NOT NULL</span>,
+  role      <span class="str">VARCHAR(20) DEFAULT</span> <span class="str">'user'</span>,
+  created_at <span class="str">TIMESTAMP DEFAULT NOW()</span>
+);
+
+<span class="kw">CREATE TABLE</span> posts (
+  id      <span class="str">SERIAL PRIMARY KEY</span>,
+  user_id <span class="str">INT REFERENCES</span> users(id) <span class="kw">ON DELETE CASCADE</span>,
+  title   <span class="str">TEXT NOT NULL</span>,
+  body    <span class="str">TEXT</span>,
+  tags    <span class="str">TEXT[]</span>                    <span class="cm">-- массив в PostgreSQL!</span>
+);
+
+<span class="cm">-- Миграции через node-pg-migrate или Prisma</span>
+<span class="cm">-- Никогда не меняй БД руками в production!</span>
+<span class="cm">-- Всегда через миграционные файлы</span></div>
+      <div class="explain">
+        <strong>SERIAL</strong> — автоинкрементный числовой ID. В PostgreSQL 10+ предпочитают GENERATED ALWAYS AS IDENTITY.<br>
+        <strong>ON DELETE CASCADE</strong> — при удалении пользователя удалятся все его посты.<br>
+        <strong>TEXT[]</strong> — нативный тип массива PostgreSQL. Очень удобно для тегов.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>SERIAL, VARCHAR, TEXT, TIMESTAMP — основные типы</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>REFERENCES + ON DELETE CASCADE — внешние ключи</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Миграции — изменения схемы через файлы</span></label>
+      </div>
+    </div>
+  
+    <div class="block" id="block-pg-crud">
+      <div class="block-title" onclick="scrollToBlock('block-pg-crud')">CRUD операции в PostgreSQL <span class="badge must">основа</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm">-- CREATE</span>
+<span class="kw">INSERT INTO</span> users (name, email) 
+<span class="kw">VALUES</span> (<span class="str">'Иван'</span>, <span class="str">'ivan@mail.ru'</span>)
+<span class="kw">RETURNING</span> *; <span class="cm">-- вернёт созданную строку</span>
+
+<span class="cm">-- READ с фильтрами</span>
+<span class="kw">SELECT</span> id, name, email <span class="kw">FROM</span> users
+<span class="kw">WHERE</span> role = <span class="str">'admin'</span> <span class="kw">AND</span> created_at > <span class="str">'2024-01-01'</span>
+<span class="kw">ORDER BY</span> created_at <span class="kw">DESC</span>
+<span class="kw">LIMIT</span> <span class="num">10</span> <span class="kw">OFFSET</span> <span class="num">20</span>; <span class="cm">-- пагинация</span>
+
+<span class="cm">-- UPDATE</span>
+<span class="kw">UPDATE</span> users 
+<span class="kw">SET</span> name = <span class="str">'Пётр'</span>, updated_at = <span class="kw">NOW</span>()
+<span class="kw">WHERE</span> id = <span class="num">1</span>
+<span class="kw">RETURNING</span> *;
+
+<span class="cm">-- DELETE</span>
+<span class="kw">DELETE FROM</span> users <span class="kw">WHERE</span> id = <span class="num">1</span> <span class="kw">RETURNING</span> id;</div>
+      <div class="explain">
+        <strong>RETURNING</strong> — убирает необходимость делать SELECT после INSERT/UPDATE/DELETE.<br>
+        <strong>OFFSET</strong> — пропустить N строк. Используй для пагинации: страница 2 = OFFSET 10 при LIMIT 10.<br>
+        <strong>NOW()</strong> — текущее время на сервере БД. Удобно для поля updated_at.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>INSERT INTO ... VALUES ... RETURNING *</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>SELECT с WHERE, ORDER BY, LIMIT, OFFSET</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>UPDATE ... SET ... WHERE RETURNING *</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-pg-json">
+      <div class="block-title" onclick="scrollToBlock('block-pg-json')">JSON и JSONB в PostgreSQL <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm">-- JSONB — бинарный JSON (индексируемый, быстрее)</span>
+<span class="kw">CREATE TABLE</span> products (
+  id    <span class="str">SERIAL PRIMARY KEY</span>,
+  name  <span class="str">TEXT NOT NULL</span>,
+  meta  <span class="str">JSONB</span>   <span class="cm">-- любые данные</span>
+);
+
+<span class="kw">INSERT INTO</span> products (name, meta)
+<span class="kw">VALUES</span> (<span class="str">'Ноутбук'</span>, <span class="str">'{"brand":"Apple","ram":16,"tags":["tech","sale"]}'</span>);
+
+<span class="cm">-- Доступ к полям JSONB</span>
+<span class="kw">SELECT</span> 
+  name,
+  meta-><span class="str">'brand'</span>    <span class="kw">AS</span> brand,   <span class="cm">-- возвращает JSON</span>
+  meta->><span class="str">'brand'</span>   <span class="kw">AS</span> brand_text <span class="cm">-- возвращает текст</span>
+<span class="kw">FROM</span> products
+<span class="kw">WHERE</span> meta->><span class="str">'brand'</span> = <span class="str">'Apple'</span>
+  <span class="kw">AND</span> (meta->><span class="str">'ram'</span>)::<span class="str">int</span> > <span class="num">8</span>;
+
+<span class="cm">-- Индекс по JSONB полю</span>
+<span class="kw">CREATE INDEX</span> idx_products_brand 
+  <span class="kw">ON</span> products ((meta->><span class="str">'brand'</span>));</div>
+      <div class="explain">
+        <strong>JSONB vs JSON</strong> — JSONB хранится в бинарном формате, быстрее для поиска. Используй JSONB.<br>
+        <strong>-></strong> возвращает JSON тип, <strong>->></strong> возвращает текст. Для сравнения нужен ->>.<br>
+        <strong>::int</strong> — приведение типа (cast). JSONB всегда возвращает текст, кастуй для числовых сравнений.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>JSONB — хранение гибких данных</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>-> и ->> — доступ к полям JSON</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Индекс по JSONB полю для быстрого поиска</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-pg-functions">
+      <div class="block-title" onclick="scrollToBlock('block-pg-functions')">Функции, триггеры и представления <span class="badge">знать</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm">-- VIEW — виртуальная таблица</span>
+<span class="kw">CREATE VIEW</span> active_users <span class="kw">AS</span>
+<span class="kw">SELECT</span> id, name, email <span class="kw">FROM</span> users
+<span class="kw">WHERE</span> is_active = <span class="kw">true</span>;
+
+<span class="cm">-- Использование как обычной таблицы</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> active_users <span class="kw">WHERE</span> name <span class="kw">LIKE</span> <span class="str">'И%'</span>;
+
+<span class="cm">-- FUNCTION — хранимая функция</span>
+<span class="kw">CREATE OR REPLACE FUNCTION</span> <span class="fn">get_user_orders</span>(user_id <span class="str">INT</span>)
+<span class="kw">RETURNS TABLE</span>(order_id <span class="str">INT</span>, product <span class="str">TEXT</span>, amount <span class="str">NUMERIC</span>) <span class="kw">AS</span> $$
+  <span class="kw">SELECT</span> id, product, amount <span class="kw">FROM</span> orders
+  <span class="kw">WHERE</span> orders.user_id = get_user_orders.user_id;
+$$ <span class="kw">LANGUAGE</span> sql;
+
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="fn">get_user_orders</span>(<span class="num">1</span>);
+
+<span class="cm">-- TRIGGER — автоматически при изменении</span>
+<span class="kw">CREATE OR REPLACE FUNCTION</span> <span class="fn">update_timestamp</span>()
+<span class="kw">RETURNS TRIGGER AS</span> $$
+<span class="kw">BEGIN</span>
+  NEW.updated_at = <span class="kw">NOW</span>();
+  <span class="kw">RETURN</span> NEW;
+<span class="kw">END</span>; $$ <span class="kw">LANGUAGE</span> plpgsql;
+
+<span class="kw">CREATE TRIGGER</span> set_timestamp
+  <span class="kw">BEFORE UPDATE ON</span> users
+  <span class="kw">FOR EACH ROW EXECUTE FUNCTION</span> <span class="fn">update_timestamp</span>();</div>
+      <div class="explain">
+        <strong>VIEW</strong> — сохранённый SELECT запрос. Упрощает сложные запросы и скрывает детали.<br>
+        <strong>Триггер</strong> — автоматически обновляет updated_at без изменения кода приложения.<br>
+        <strong>$$ ... $$</strong> — разделитель тела функции в PostgreSQL.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>CREATE VIEW — виртуальная таблица из SELECT</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Хранимые функции — CREATE FUNCTION</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>Триггер — автоматическое обновление полей</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-pg-prisma">
+      <div class="block-title" onclick="scrollToBlock('block-pg-prisma')">Prisma ORM — работа с PostgreSQL из Node.js <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
+      <div class="code"><span class="cm"># Установка</span>
+<span class="kw">npm install</span> prisma @prisma/client
+<span class="kw">npx prisma init</span>
+
+<span class="cm">// schema.prisma</span>
+generator client {
+  provider = <span class="str">"prisma-client-js"</span>
+}
+datasource db {
+  provider = <span class="str">"postgresql"</span>
+  url      = env(<span class="str">"DATABASE_URL"</span>)
+}
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  posts     Post[]
+  createdAt DateTime @default(now())
+}
+model Post {
+  id      Int    @id @default(autoincrement())
+  title   String
+  user    User   @relation(fields: [userId], references: [id])
+  userId  Int
+}
+
+<span class="cm">// Использование в коде</span>
+<span class="kw">import</span> { PrismaClient } <span class="kw">from</span> <span class="str">'@prisma/client'</span>;
+<span class="kw">const</span> prisma = <span class="kw">new</span> <span class="fn">PrismaClient</span>();
+
+<span class="cm">// Создать пользователя</span>
+<span class="kw">const</span> user = <span class="kw">await</span> prisma.user.<span class="fn">create</span>({
+  data: { name: <span class="str">'Иван'</span>, email: <span class="str">'ivan@mail.ru'</span> }
+});
+
+<span class="cm">// Найти с отношениями</span>
+<span class="kw">const</span> users = <span class="kw">await</span> prisma.user.<span class="fn">findMany</span>({
+  where: { email: { <span class="fn">contains</span>: <span class="str">'@mail.ru'</span> } },
+  include: { posts: <span class="kw">true</span> },
+  orderBy: { createdAt: <span class="str">'desc'</span> },
+  take: <span class="num">10</span>
+});</div>
+      <div class="explain">
+        <strong>Prisma</strong> — ORM который генерирует типизированный клиент из схемы. Популярен в TypeScript проектах.<br>
+        <strong>npx prisma migrate dev</strong> — создаёт миграцию и применяет к БД.<br>
+        <strong>include</strong> — подгружает связанные данные (аналог JOIN). <strong>take</strong> = LIMIT, <strong>skip</strong> = OFFSET.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>schema.prisma — описание моделей и связей</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>prisma.model.create/findMany/update/delete</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>include — загрузка связанных данных</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" onchange="updateProgress(this)"><span>npx prisma migrate dev — применение миграций</span></label>
+      </div>
+    </div>
+</div>
+
+
   <div class="section" id="sec-cheatsheets">
 
     <div style="background:linear-gradient(135deg,#0f766e 0%,#0d9488 50%,#14b8a6 100%);border-radius:18px;padding:2rem 2rem 1.8rem;margin-bottom:1.5rem;color:#fff;position:relative;overflow:hidden;">
@@ -11040,7 +11923,92 @@ CMD ["node", "server.js"]  # команда запуска</div>
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+<!-- ===== AI FAB ===== -->
+<button class="ai-fab" id="aiFab" onclick="toggleAiChat()" title="ИИ-помощник">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    <circle cx="9" cy="10" r="1" fill="#fff"/><circle cx="12" cy="10" r="1" fill="#fff"/><circle cx="15" cy="10" r="1" fill="#fff"/>
+  </svg>
+  <div class="ai-fab-badge" id="aiFabBadge">!</div>
+</button>
+
+<!-- ===== AI SELECTION POPUP ===== -->
+<button class="ai-sel-popup" id="aiSelPopup" onclick="aiAskFromSelection()">
+  <span class="ask-icon">✦</span>
+  <span class="ask-label">Спросить</span>
+  <span class="ask-brand">AI</span>
+</button>
+
+<!-- ===== AI CHAT WINDOW ===== -->
+<div class="ai-chat-win" id="aiChatWin">
+  <div class="ai-chat-head">
+    <div class="ai-chat-head-icon">✨</div>
+    <div class="ai-chat-head-title">
+      <div>ИИ-помощник</div>
+      <div id="aiModelLabel">Выбери модель →</div>
+    </div>
+    <select class="ai-model-select" id="aiModelSelect" onchange="aiOnModelChange()">
+      <optgroup label="Groq (быстро)">
+        <option value="groq:llama-3.3-70b-versatile">Llama 3.3 70B</option>
+        <option value="groq:llama3-8b-8192">Llama 3 8B (быстрый)</option>
+        <option value="groq:mixtral-8x7b-32768">Mixtral 8x7B</option>
+        <option value="groq:gemma2-9b-it">Gemma 2 9B</option>
+      </optgroup>
+      <optgroup label="Gemini">
+        <option value="gemini:gemini-1.5-flash">Gemini 1.5 Flash</option>
+        <option value="gemini:gemini-1.5-pro">Gemini 1.5 Pro</option>
+        <option value="gemini:gemini-2.0-flash">Gemini 2.0 Flash</option>
+      </optgroup>
+      <optgroup label="OpenRouter (лучшие для кода)">
+        <option value="or:deepseek/deepseek-r1:free">DeepSeek R1 🔥 (бесплатно)</option>
+        <option value="or:deepseek/deepseek-chat:free">DeepSeek V3 (бесплатно)</option>
+        <option value="or:google/gemini-2.0-flash-exp:free">Gemini 2.0 Flash Exp (бесплатно)</option>
+        <option value="or:meta-llama/llama-3.3-70b-instruct:free">Llama 3.3 70B (бесплатно)</option>
+        <option value="or:qwen/qwen3-235b-a22b:free">Qwen3 235B (бесплатно)</option>
+        <option value="or:microsoft/phi-4-reasoning:free">Phi-4 Reasoning (бесплатно)</option>
+        <option value="or:anthropic/claude-3.5-haiku">Claude 3.5 Haiku</option>
+      </optgroup>
+    </select>
+    <button class="ai-chat-close" onclick="toggleAiChat()">✕</button>
+  </div>
+
+  <div class="ai-ctx" id="aiCtx">
+    <strong>📌 Контекст из темы</strong>
+    <span id="aiCtxText"></span>
+  </div>
+
+  <div class="ai-chat-msgs" id="aiMsgs">
+    <div class="ai-msg bot">
+      <div class="ai-msg-av">✨</div>
+      <div class="ai-msg-bbl">
+        Привет! Я ИИ-помощник по веб-разработке 👋<br><br>
+        Выдели любой текст на странице и нажми <b>«Спросить ИИ»</b> — я объясню именно эту тему.<br><br>
+        Или просто напиши свой вопрос ниже.
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-quick-row" id="aiQuickRow">
+    <button class="ai-qbtn" onclick="aiQuick('Что такое замыкание в JS?')">Замыкания JS</button>
+    <button class="ai-qbtn" onclick="aiQuick('Объясни разницу между == и ===')">== vs ===</button>
+    <button class="ai-qbtn" onclick="aiQuick('Что такое useState в React?')">useState</button>
+    <button class="ai-qbtn" onclick="aiQuick('Как работает flexbox?')">Flexbox</button>
+  </div>
+
+  <div class="ai-inp-row">
+    <textarea class="ai-inp" id="aiInp" placeholder="Задай вопрос..." rows="1"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();aiSend()}"
+      oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,90)+'px'"></textarea>
+    <button class="ai-send" id="aiSendBtn" onclick="aiSend()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script></script><script>
 // ===== ТАБЫ =====
 // ===== DARK MODE =====
 function toggleDark() {
@@ -11068,7 +12036,7 @@ function resetProgress() {
 
 // ===== TAB BADGES =====
 function updateTabBadges() {
-  ['html','css','js','ts','react','git','node','sql','devops','linux','vite'].forEach(lang => {
+  ['html','css','js','ts','react','git','node','sql','devops','linux','vite','pg'].forEach(lang => {
     const sec = document.getElementById('sec-' + lang);
     if (!sec) return;
     const all = sec.querySelectorAll('.prog-cb:not([disabled])');
@@ -11142,14 +12110,14 @@ function updateProgress(cb) {
   const done = document.querySelectorAll('.prog-cb:not([disabled]):checked');
   const pct = all.length ? Math.round(done.length / all.length * 100) : 0;
   document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-label').textContent = `Прогресс: ${done.length} / ${all.length} тем изучено (${pct}%)`;
+  document.getElementById('prog-label').textContent = `Прогресс: ${done.length} / ${all.length} тем изучено (${pct}%) · v27`;
   updateTabBadges();
   updatePdcBars();
 }
 
 // ===== ПРОГРЕСС DASHBOARD BARS =====
 function updatePdcBars() {
-  ['html','css','js','ts','react','git','node','sql','devops','linux','vite'].forEach(lang => {
+  ['html','css','js','ts','react','git','node','sql','devops','linux','vite','pg'].forEach(lang => {
     const sec = document.getElementById('sec-' + lang);
     if (!sec) return;
     const all = sec.querySelectorAll('.prog-cb:not([disabled])');
@@ -15614,7 +16582,7 @@ function pgAddFile() {
   const t = pgFileType(name);
   let content = '';
   if (t === 'html') {
-    content = '<!DOCTYPE html>\n<html lang="ru">\n<head>\n  <meta charset="UTF-8">\n  <title>' + name + '</title>\n  <link rel="stylesheet" href="style.css">\n</head>\n<body>\n  <h1>' + name + '</h1>\n  <a href="index.html">← Назад</a>\n  <script src="script.js"></scr' + 'ipt>\n</body>\n</html>';
+    content = '<!DOCTYPE html>\n<html lang="ru">\n<head>\n  <meta charset="UTF-8">\n  <title>' + name + '</title>\n  \n</head>\n<body>\n  <h1>' + name + '</h1>\n  <a href="index.html">← Назад</a>\n  </scr' + 'ipt>\n</body>\n</html>';
   } else if (t === 'css') {
     content = '/* ' + name + ' */\nbody {\n  font-family: sans-serif;\n}\n';
   } else if (t === 'js') {
@@ -15808,7 +16776,7 @@ function loadTemplate(name) {
     // Full document — inject <link> into <head> and <script src> before </body>
     indexContent = t.html;
     if (hasCSS) {
-      const linkTag = '<link rel="stylesheet" href="style.css">';
+      const linkTag = '';
       if (/<\/head>/i.test(indexContent)) {
         indexContent = indexContent.replace(/<\/head>/i, '  ' + linkTag + '\n</head>');
       } else if (/<head[^>]*>/i.test(indexContent)) {
@@ -15826,7 +16794,7 @@ function loadTemplate(name) {
   } else {
     // Fragment — wrap in skeleton with link and script tags
     indexContent  = '<!DOCTYPE html>\n<html lang="ru">\n<head>\n  <meta charset="UTF-8">\n  <title>Превью</title>\n';
-    if (hasCSS) indexContent += '  <link rel="stylesheet" href="style.css">\n';
+    if (hasCSS) indexContent += '  \n';
     indexContent += '</head>\n<body>\n' + t.html + '\n';
     if (hasJS)  indexContent += '  <scr' + 'ipt src="script.js"></scr' + 'ipt>\n';
     indexContent += '</body>\n</html>';
@@ -15850,8 +16818,8 @@ function switchPgTab() { /* no-op, replaced by file tabs */ }
 function pgInitDefault() {
   if (pgFiles.length === 0) {
     pgFiles = [
-      { name: 'index.html', content: '<!DOCTYPE html>\n<html lang="ru">\n<head>\n  <meta charset="UTF-8">\n  <title>Главная</title>\n  <link rel="stylesheet" href="style.css">\n</head>\n<body>\n  <h1>Привет!</h1>\n  <p>Добро пожаловать. <a href="page2.html">На вторую страницу</a></p>\n  <script src="script.js"></scr' + 'ipt>\n</body>\n</html>' },
-      { name: 'page2.html', content: '<!DOCTYPE html>\n<html lang="ru">\n<head>\n  <meta charset="UTF-8">\n  <title>Вторая</title>\n  <link rel="stylesheet" href="style.css">\n</head>\n<body>\n  <h1>Вторая страница</h1>\n  <a href="index.html">← На главную</a>\n</body>\n</html>' },
+      { name: 'index.html', content: '<!DOCTYPE html>\n<html lang="ru">\n<head>\n  <meta charset="UTF-8">\n  <title>Главная</title>\n  \n</head>\n<body>\n  <h1>Привет!</h1>\n  <p>Добро пожаловать. <a href="page2.html">На вторую страницу</a></p>\n  </scr' + 'ipt>\n</body>\n</html>' },
+      { name: 'page2.html', content: '<!DOCTYPE html>\n<html lang="ru">\n<head>\n  <meta charset="UTF-8">\n  <title>Вторая</title>\n  \n</head>\n<body>\n  <h1>Вторая страница</h1>\n  <a href="index.html">← На главную</a>\n</body>\n</html>' },
       { name: 'style.css', content: 'body {\n  font-family: system-ui, sans-serif;\n  padding: 32px;\n  background: #f8fafc;\n  color: #1f2937;\n}\nh1 { color: #6366f1; }\na { color: #6366f1; text-decoration: none; }\na:hover { text-decoration: underline; }' },
       { name: 'script.js', content: 'console.log("Загружен!");' },
     ];
@@ -18282,6 +19250,118 @@ ${h}
 <script>
 ${j}
 <\/script>
+
+      <div class="ai-modal-title">ИИ-помощник по теме</div>
+      <button class="ai-modal-close" onclick="closeAiModal()">✕</button>
+    </div>
+
+    <div class="ai-context-pill" id="aiContextPill" style="display:none">
+      <div class="ai-context-label">📌 Контекст</div>
+      <div id="aiContextText"></div>
+    </div>
+
+    <div class="ai-messages" id="aiMessages"></div>
+
+    <div class="ai-quick-btns" id="aiQuickBtns">
+      <button class="ai-quick-btn" onclick="aiQuickAsk('Объясни проще, как будто мне 10 лет')">🧒 Объясни проще</button>
+      <button class="ai-quick-btn" onclick="aiQuickAsk('Дай практический пример с кодом')">💻 Пример с кодом</button>
+      <button class="ai-quick-btn" onclick="aiQuickAsk('Какие частые ошибки делают новички с этим?')">⚠️ Частые ошибки</button>
+      <button class="ai-quick-btn" onclick="aiQuickAsk('Где это применяется в реальных проектах?')">🚀 Где применяется</button>
+    </div>
+
+    <div class="ai-input-row">
+      <textarea class="ai-input" id="aiInput" placeholder="Задай любой вопрос..." rows="1"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAiMessage()}"
+        oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px'"></textarea>
+      <button class="ai-send-btn" id="aiSendBtn" onclick="sendAiMessage()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== AI FAB ===== -->
+<button class="ai-fab" id="aiFab" onclick="toggleAiChat()" title="ИИ-помощник">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    <circle cx="9" cy="10" r="1" fill="#fff"/><circle cx="12" cy="10" r="1" fill="#fff"/><circle cx="15" cy="10" r="1" fill="#fff"/>
+  </svg>
+  <div class="ai-fab-badge" id="aiFabBadge">!</div>
+</button>
+
+<!-- ===== AI SELECTION POPUP ===== -->
+<button class="ai-sel-popup" id="aiSelPopup" onclick="aiAskFromSelection()">
+  ✨ Спросить ИИ
+</button>
+
+<!-- ===== AI CHAT WINDOW ===== -->
+<div class="ai-chat-win" id="aiChatWin">
+
+  <!-- Header -->
+  <div class="ai-chat-head">
+    <div class="ai-chat-head-icon">✨</div>
+    <div class="ai-chat-head-title">
+      <div>ИИ-помощник</div>
+      <div id="aiModelLabel">Выбери модель →</div>
+    </div>
+    <select class="ai-model-select" id="aiModelSelect" onchange="aiOnModelChange()">
+      <optgroup label="Groq (быстро)">
+        <option value="groq:llama-3.3-70b-versatile">Llama 3.3 70B</option>
+        <option value="groq:llama3-8b-8192">Llama 3 8B (быстрый)</option>
+        <option value="groq:mixtral-8x7b-32768">Mixtral 8x7B</option>
+        <option value="groq:gemma2-9b-it">Gemma 2 9B</option>
+      </optgroup>
+      <optgroup label="Gemini">
+        <option value="gemini:gemini-1.5-flash">Gemini 1.5 Flash</option>
+        <option value="gemini:gemini-1.5-pro">Gemini 1.5 Pro</option>
+        <option value="gemini:gemini-2.0-flash">Gemini 2.0 Flash</option>
+      </optgroup>
+    </select>
+    <button class="ai-chat-close" onclick="toggleAiChat()">✕</button>
+  </div>
+
+  <!-- Context pill -->
+  <div class="ai-ctx" id="aiCtx">
+    <strong>📌 Контекст из темы</strong>
+    <span id="aiCtxText"></span>
+  </div>
+
+  <!-- Messages -->
+  <div class="ai-chat-msgs" id="aiMsgs">
+    <div class="ai-msg bot">
+      <div class="ai-msg-av">✨</div>
+      <div class="ai-msg-bbl">
+        Привет! Я ИИ-помощник по веб-разработке 👋<br><br>
+        Выдели любой текст на странице и нажми <b>«Спросить ИИ»</b> — я объясню именно эту тему.<br><br>
+        Или просто напиши свой вопрос ниже.
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick buttons -->
+  <div class="ai-quick-row" id="aiQuickRow">
+    <button class="ai-qbtn" onclick="aiQuick('Что такое замыкание в JS?')">Замыкания JS</button>
+    <button class="ai-qbtn" onclick="aiQuick('Объясни разницу между == и ===')">== vs ===</button>
+    <button class="ai-qbtn" onclick="aiQuick('Что такое useState в React?')">useState</button>
+    <button class="ai-qbtn" onclick="aiQuick('Как работает flexbox?')">Flexbox</button>
+  </div>
+
+  <!-- Input -->
+  <div class="ai-inp-row">
+    <textarea class="ai-inp" id="aiInp" placeholder="Задай вопрос..." rows="1"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();aiSend()}"
+      oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,90)+'px'"></textarea>
+    <button class="ai-send" id="aiSendBtn" onclick="aiSend()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
 </body>
 </html>`;
       _pgDownload('index.html', full);
@@ -18338,6 +19418,275 @@ function _pgDownload(filename, content) {
   a.click();
   URL.revokeObjectURL(a.href);
 }
+
+
+
+
+// ===== AI CHAT =====
+const AI_KEYS = {
+  groq:       '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',
+  gemini:     'AIzaSyAb8RN6KqpDUmTdA_ksZh7p-328Mj6u6us4v__Go7Tb15neGOYQ',
+  openrouter: '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'
+};
+
+let aiHistory = [];
+let aiLoading = false;
+let aiSelText  = '';
+let aiChatOpen = false;
+
+// ---- FAB toggle ----
+function toggleAiChat() {
+  aiChatOpen = !aiChatOpen;
+  const win = document.getElementById('aiChatWin');
+  if (aiChatOpen) {
+    win.classList.add('open');
+    const badge = document.getElementById('aiFabBadge');
+    if (badge) badge.style.display = 'none';
+    const inp = document.getElementById('aiInp');
+    if (inp) inp.focus();
+    // Инициализируем лейбл модели при первом открытии
+    aiOnModelChange();
+  } else {
+    win.classList.remove('open');
+  }
+}
+
+// ---- Model label ----
+function aiOnModelChange() {
+  const sel = document.getElementById('aiModelSelect');
+  const lbl = document.getElementById('aiModelLabel');
+  if (!sel || !lbl) return;
+  const label = sel.selectedOptions[0]?.text || '';
+  lbl.textContent = label;
+}
+// aiOnModelChange called on first open
+
+// ---- Text selection popup ----
+document.addEventListener('mouseup', (e) => {
+  setTimeout(() => {
+    const sel = window.getSelection();
+    const txt = sel ? sel.toString().trim() : '';
+    const popup = document.getElementById('aiSelPopup');
+    if (!popup) return;
+
+    if (txt.length > 15 && txt.length < 1500) {
+      aiSelText = txt;
+      const rect = sel.getRangeAt(0).getBoundingClientRect();
+
+      // Позиция: по центру выделения, НАД ним (как у LeetCode)
+      const popupW = 140;
+      const popupH = 36;
+      let left = rect.left + rect.width / 2 - popupW / 2;
+      // rect.top это от viewport, нужно добавить scrollY для абсолютной позиции
+      let top = rect.top + window.scrollY - popupH - 10;
+
+      // Если выделение у самого верха — показываем снизу
+      if (rect.top < 60) {
+        top = rect.bottom + window.scrollY + 8;
+        popup.style.setProperty('--arrow-top', 'auto');
+        popup.style.setProperty('--arrow-bottom', 'auto');
+      }
+
+      // Не выходим за края экрана
+      left = Math.max(8, Math.min(left, window.innerWidth - popupW - 8));
+      top  = Math.max(window.scrollY + 8, top);
+
+      popup.style.left = left + 'px';
+      popup.style.top  = top + 'px';
+      popup.style.display = 'flex';
+
+      // Рестарт анимации
+      popup.style.animation = 'none';
+      popup.offsetHeight; // reflow
+      popup.style.animation = '';
+
+    } else if (!document.getElementById('aiChatWin')?.classList.contains('open')) {
+      popup.style.display = 'none';
+    }
+  }, 20);
+});
+
+document.addEventListener('mousedown', (e) => {
+  const popup = document.getElementById('aiSelPopup');
+  if (e.target !== popup && !popup.contains(e.target)) {
+    popup.style.display = 'none';
+  }
+});
+
+function aiAskFromSelection() {
+  document.getElementById('aiSelPopup').style.display = 'none';
+  if (!aiChatOpen) toggleAiChat();
+
+  // Показать контекст
+  const ctx = document.getElementById('aiCtx');
+  const ctxTxt = document.getElementById('aiCtxText');
+  ctx.style.display = 'block';
+  ctxTxt.textContent = aiSelText.length > 180 ? aiSelText.slice(0,180) + '...' : aiSelText;
+
+  // Автоматически задаём вопрос с контекстом
+  const q = `Объясни мне следующее из темы по веб-разработке: "${aiSelText.slice(0,300)}"`;
+  document.getElementById('aiInp').value = q;
+  document.getElementById('aiInp').focus();
+}
+
+function aiQuick(q) {
+  document.getElementById('aiInp').value = q;
+  aiSend();
+}
+
+// ---- Send message ----
+async function aiSend() {
+  if (aiLoading) return;
+  const inp = document.getElementById('aiInp');
+  const text = inp.value.trim();
+  if (!text) return;
+
+  inp.value = '';
+  inp.style.height = 'auto';
+  document.getElementById('aiQuickRow').style.display = 'none';
+
+  aiAddMsg('user', text);
+  aiHistory.push({ role: 'user', content: text });
+
+  // Typing indicator
+  const typingId = 'aiTyping_' + Date.now();
+  const typEl = document.createElement('div');
+  typEl.className = 'ai-msg bot';
+  typEl.id = typingId;
+  typEl.innerHTML = `<div class="ai-msg-av">✨</div><div class="ai-msg-bbl"><div class="ai-typing-bbl"><span></span><span></span><span></span></div></div>`;
+  document.getElementById('aiMsgs').appendChild(typEl);
+  aiScrollBottom();
+
+  aiLoading = true;
+  document.getElementById('aiSendBtn').disabled = true;
+
+  const selEl = document.getElementById('aiModelSelect');
+  const modelVal = selEl ? selEl.value : 'groq:llama-3.3-70b-versatile';
+  const [provider, modelId] = modelVal.split(':');
+
+  const systemPrompt = `Ты — дружелюбный наставник по веб-разработке. Отвечаешь строго на русском языке.
+Помогаешь изучать HTML, CSS, JavaScript, TypeScript, React, Git, Node.js, PostgreSQL, Linux и связанные технологии.
+Объясняй кратко, понятно, как старший разработчик junior-у. Используй примеры кода когда нужно.
+Код оформляй в тройные обратные кавычки с названием языка.`;
+
+  try {
+    let reply = '';
+
+    if (provider === 'or') {
+      // OpenRouter — совместим с OpenAI API
+      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + AI_KEYS.openrouter,
+          'HTTP-Referer': window.location.href,
+          'X-Title': 'Frontend Roadmap'
+        },
+        body: JSON.stringify({
+          model: modelId,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            ...aiHistory
+          ],
+          max_tokens: 1024,
+          temperature: 0.7
+        })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      reply = data.choices?.[0]?.message?.content || 'Нет ответа';
+
+    } else if (provider === 'groq') {
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + AI_KEYS.groq
+        },
+        body: JSON.stringify({
+          model: modelId,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            ...aiHistory
+          ],
+          max_tokens: 1024,
+          temperature: 0.7
+        })
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      reply = data.choices?.[0]?.message?.content || 'Нет ответа';
+
+    } else if (provider === 'gemini') {
+      // Конвертируем историю в формат Gemini
+      const geminiHistory = aiHistory.slice(0, -1).map(m => ({
+        role: m.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: m.content }]
+      }));
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${AI_KEYS.gemini}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system_instruction: { parts: [{ text: systemPrompt }] },
+            contents: [
+              ...geminiHistory,
+              { role: 'user', parts: [{ text: text }] }
+            ],
+            generationConfig: { maxOutputTokens: 1024, temperature: 0.7 }
+          })
+        }
+      );
+      const data = await res.json();
+      if (data.error) throw new Error(data.error.message);
+      reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Нет ответа';
+    }
+
+    document.getElementById(typingId)?.remove();
+    aiHistory.push({ role: 'assistant', content: reply });
+    aiAddMsg('bot', reply);
+
+  } catch (err) {
+    document.getElementById(typingId)?.remove();
+    aiAddMsg('bot', `❌ Ошибка: ${err.message}\n\nПроверь API ключ и соединение.`);
+  }
+
+  aiLoading = false;
+  document.getElementById('aiSendBtn').disabled = false;
+  document.getElementById('aiInp').focus();
+}
+
+function aiAddMsg(role, text) {
+  const container = document.getElementById('aiMsgs');
+  const el = document.createElement('div');
+  el.className = `ai-msg ${role}`;
+
+  // Форматирование: код, жирный, переносы
+  const fmt = text
+    .replace(/```([\w]*)?\n?([\s\S]*?)```/g, (_, lang, code) =>
+      `<pre><code>${code.replace(/</g,'&lt;').replace(/>/g,'&gt;').trim()}</code></pre>`)
+    .replace(/`([^`\n]+)`/g, '<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br>');
+
+  el.innerHTML = `
+    <div class="ai-msg-av">${role === 'user' ? '👤' : '✨'}</div>
+    <div class="ai-msg-bbl">${fmt}</div>
+  `;
+  container.appendChild(el);
+  aiScrollBottom();
+}
+
+function aiScrollBottom() {
+  const c = document.getElementById('aiMsgs');
+  if (c) c.scrollTop = c.scrollHeight;
+}
+
+// Закрытие по Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && aiChatOpen) toggleAiChat();
+});
 
 </script>
 </body>
