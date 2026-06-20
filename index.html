@@ -6,7 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;700&family=Onest:wght@400;500;700&family=Rubik:wght@400;500;700&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;500;700&family=Nunito:wght@400;600;700&family=Raleway:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700&family=Lexend:wght@400;500;700&family=Work+Sans:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;700&family=Mulish:wght@400;500;700&family=Cabin:wght@400;500;700&family=Karla:wght@400;500;700&family=Quicksand:wght@400;500;700&family=Mukta:wght@400;500;700&family=Playfair+Display:wght@400;700&family=Merriweather:wght@400;700&family=Lora:wght@400;500;700&family=Cormorant+Garamond:wght@400;500;700&family=Crimson+Pro:wght@400;500;700&family=PT+Serif:wght@400;700&family=EB+Garamond:wght@400;500;700&family=Libre+Baskerville:wght@400;700&family=Bitter:wght@400;500;700&family=Source+Serif+4:wght@400;600;700&family=Spectral:wght@400;500;700&family=Bebas+Neue:wght@400&family=Anton:wght@400&family=Oswald:wght@400;500;700&family=Archivo+Black:wght@400&family=Righteous:wght@400&family=Abril+Fatface:wght@400&family=Fjalla+One:wght@400&family=Russo+One:wght@400&family=JetBrains+Mono:wght@400;500;700&family=Fira+Code:wght@400;500&family=Source+Code+Pro:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&family=Caveat:wght@400;500;700&family=Pacifico:wght@400&family=Dancing+Script:wght@400;500;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
-<title>Frontend Roadmap v44</title>
+<title>Frontend Roadmap v45</title>
 <style>
   /* ===== АКЦЕНТНЫЕ ЦВЕТА (настраиваются конструктором) ===== */
   :root {
@@ -13192,7 +13192,7 @@ function resetProgress() {
   const fillEl = document.getElementById('prog-fill');
   const lblEl = document.getElementById('prog-label');
   if (fillEl) fillEl.style.width = '0%';
-  if (lblEl) lblEl.textContent = `Прогресс: 0 / ${all.length} тем изучено (0%) · v44`;
+  if (lblEl) lblEl.textContent = `Прогресс: 0 / ${all.length} тем изучено (0%) · v45`;
   updateTabBadges();
   updatePdcBars();
   showToast('Прогресс сброшен — перезагрузи страницу чтобы вернуть заблокированные темы');
@@ -18234,9 +18234,11 @@ const EMMET_JS = {
 };
 
 function getActivePgLang() {
-  const tabs = document.querySelectorAll('.pg-tab');
-  for (const t of tabs) {
-    if (t.classList.contains('active')) return t.textContent.trim().toLowerCase();
+  // Определяем язык по активному файлу в playground (pgActiveFile + pgFileType),
+  // а не по старому несуществующему классу .pg-tab
+  if (typeof pgActiveFile !== 'undefined' && pgActiveFile && typeof pgFileType === 'function') {
+    const t = pgFileType(pgActiveFile);
+    if (t === 'html' || t === 'css' || t === 'js') return t;
   }
   return 'html';
 }
@@ -18319,6 +18321,7 @@ function showAc(ta) {
   acState.items = matches;
   acState.selectedIdx = 0;
   acState.visible = true;
+  acState.ta = ta; // запоминаем редактор, чтобы клик по подсказке работал даже после потери фокуса
   renderAc(ta, map);
 }
 
@@ -18362,7 +18365,7 @@ function renderAc(ta, map) {
 }
 
 function hideAc() {
-  acState.visible = false; acState.items = []; acState.selectedIdx = -1;
+  acState.visible = false; acState.items = []; acState.selectedIdx = -1; acState.ta = null;
   const dd = document.getElementById('pg-autocomplete');
   if (dd) dd.style.display = 'none';
 }
@@ -18382,10 +18385,14 @@ function applyAcSuggestion(idx) {
   const key = acState.items[idx];
   const lang = getActivePgLang();
   const map = lang === 'html' ? EMMET_HTML : lang === 'css' ? EMMET_CSS : EMMET_JS;
-  const ta = ['html','css','js'].map(l => document.getElementById('pg-' + l)).find(t => t && t.style.display !== 'none');
+  // Единственный редактор сейчас — #pg-editor (а не отдельные pg-html/pg-css/pg-js)
+  const ta = acState.ta || document.getElementById('pg-editor');
   if (!ta) return false;
   const word = getWordBefore(ta);
-  const start = ta.selectionStart - word.length;
+  // Удаляем слово + ведущий < если пользователь написал <h1 вместо h1
+  const charBeforeWord = ta.value[ta.selectionStart - word.length - 1];
+  const extraLen = charBeforeWord === '<' && lang === 'html' ? 1 : 0;
+  const start = ta.selectionStart - word.length - extraLen;
   ta.value = ta.value.substring(0, start) + ta.value.substring(ta.selectionStart);
   ta.selectionStart = ta.selectionEnd = start;
   insertSnippet(ta, map[key]);
