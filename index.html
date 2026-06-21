@@ -6,7 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;700&family=Onest:wght@400;500;700&family=Rubik:wght@400;500;700&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;500;700&family=Nunito:wght@400;600;700&family=Raleway:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;700&family=Lexend:wght@400;500;700&family=Work+Sans:wght@400;500;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;700&family=Mulish:wght@400;500;700&family=Cabin:wght@400;500;700&family=Karla:wght@400;500;700&family=Quicksand:wght@400;500;700&family=Mukta:wght@400;500;700&family=Playfair+Display:wght@400;700&family=Merriweather:wght@400;700&family=Lora:wght@400;500;700&family=Cormorant+Garamond:wght@400;500;700&family=Crimson+Pro:wght@400;500;700&family=PT+Serif:wght@400;700&family=EB+Garamond:wght@400;500;700&family=Libre+Baskerville:wght@400;700&family=Bitter:wght@400;500;700&family=Source+Serif+4:wght@400;600;700&family=Spectral:wght@400;500;700&family=Bebas+Neue:wght@400&family=Anton:wght@400&family=Oswald:wght@400;500;700&family=Archivo+Black:wght@400&family=Righteous:wght@400&family=Abril+Fatface:wght@400&family=Fjalla+One:wght@400&family=Russo+One:wght@400&family=JetBrains+Mono:wght@400;500;700&family=Fira+Code:wght@400;500&family=Source+Code+Pro:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&family=Caveat:wght@400;500;700&family=Pacifico:wght@400&family=Dancing+Script:wght@400;500;700&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
-<title>Frontend Roadmap v45</title>
+<title>Frontend Roadmap v48</title>
 <style>
   /* ===== АКЦЕНТНЫЕ ЦВЕТА (настраиваются конструктором) ===== */
   :root {
@@ -3375,6 +3375,19 @@
     font-family: inherit;
     flex-shrink: 0;
   }
+
+
+  .pomo-dur-btn {
+    width: 22px; height: 22px;
+    background: rgba(255,255,255,.15);
+    border: none; border-radius: 6px;
+    color: #fff; cursor: pointer;
+    font-size: 14px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background .15s;
+  }
+  .pomo-dur-btn:hover { background: rgba(255,255,255,.28); }
 
 </style>
 <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
@@ -12995,6 +13008,9 @@ model Post {
 
 <button class="settings-btn" onclick="toggleSettings()" title="Настройки">⚙️</button>
 <div class="settings-mini" id="settingsMini">
+  <div id="settingsDragHandle" style="display:flex;align-items:center;gap:6px;padding:2px 2px 8px;margin:-2px -2px 4px;border-bottom:1px solid var(--border,#e5e7eb);font-size:11px;font-weight:700;color:#9ca3af;letter-spacing:.4px;cursor:move;">
+    <span style="font-size:13px;">⠿</span> НАСТРОЙКИ
+  </div>
   <div class="settings-mini-label">ВНЕШНИЙ ВИД</div>
   <label class="settings-mini-row" onclick="toggleClickSounds(this)">
     🔊 Звуки кликов
@@ -13048,7 +13064,23 @@ model Post {
     <span style="flex:1;font-size:12px;color:#9ca3af;">Убрать фон</span>
     <button class="settings-bg-clear" onclick="clearCustomBg()">Очистить</button>
   </div>
+  <div class="settings-mini-divider"></div>
+  <div class="settings-mini-label">СВОЙ CSS</div>
+  <div class="settings-mini-row" style="cursor:default;flex-direction:column;align-items:stretch;gap:6px;">
+    <span style="font-size:11.5px;color:#6b7280;line-height:1.4;">Пиши любой CSS — применится сразу ко всей странице</span>
+    <textarea id="customCssInput" placeholder=".tab { border-radius: 20px; }" spellcheck="false"
+      style="width:100%;min-height:90px;padding:8px 10px;font-family:'Consolas',monospace;font-size:12px;
+      background:#0d1117;color:#e6edf3;border:1px solid #30363d;border-radius:8px;resize:vertical;
+      box-sizing:border-box;outline:none;" oninput="applyCustomCss(this.value)"></textarea>
+    <div style="display:flex;gap:6px;">
+      <button onclick="saveCustomCss()" style="flex:1;padding:6px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">💾 Сохранить</button>
+      <button onclick="clearCustomCss()" style="padding:6px 10px;background:#e5e7eb;color:#374151;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">🗑</button>
+    </div>
+    <div id="customCssStatus" style="font-size:11px;color:#22c55e;display:none;"></div>
+  </div>
 </div>
+
+<style id="customCssStyleTag"></style>
 
 <button class="pomo-btn" onclick="togglePomo()" title="Помодоро таймер">⏱️</button>
 <div class="pomo-widget" id="pomoWidget">
@@ -13069,6 +13101,20 @@ model Post {
   <div class="pomo-controls">
     <button class="pomo-ctrl primary" id="pomoStartBtn" onclick="pomoToggle()">▶ Старт</button>
     <button class="pomo-ctrl" onclick="pomoReset()">↺ Сброс</button>
+  </div>
+  <div class="pomo-duration-settings" style="display:flex;flex-direction:column;gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.1);">
+    <div style="display:flex;align-items:center;gap:8px;font-size:11.5px;">
+      <span style="flex:1;opacity:.85;">🎯 Фокус</span>
+      <button class="pomo-dur-btn" onclick="pomoAdjustDuration('work', -5)">−</button>
+      <span id="pomoWorkMin" style="min-width:42px;text-align:center;font-weight:700;">25 мин</span>
+      <button class="pomo-dur-btn" onclick="pomoAdjustDuration('work', 5)">+</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:11.5px;">
+      <span style="flex:1;opacity:.85;">☕ Перерыв</span>
+      <button class="pomo-dur-btn" onclick="pomoAdjustDuration('break', -5)">−</button>
+      <span id="pomoBreakMin" style="min-width:42px;text-align:center;font-weight:700;">5 мин</span>
+      <button class="pomo-dur-btn" onclick="pomoAdjustDuration('break', 5)">+</button>
+    </div>
   </div>
   <div class="pomo-sessions" id="pomoSessions">Сессий сегодня: 0</div>
 </div>
@@ -13149,6 +13195,103 @@ model Post {
 </div>
 
 <script></script><script>
+// ===== QUIZ ANSWERS (объявлено первым — используется в обработчиках на DOMContentLoaded) =====
+const QUIZ_ANSWERS = {
+  // JS Строки
+  'strings': {
+    quiz: { 'q-str-1': 'b', 'q-str-2': 'b' },
+    practice: {
+      id: 'practice-strings',
+      check: (val) => {
+        const v = val.toLowerCase().replace(/\s+/g, ' ').trim();
+        return (v.includes('trim()') && v.includes('touppercase()')) ||
+               (v.includes('.trim') && v.includes('.touppercase'));
+      },
+      hint: 'Используй .trim() и .toUpperCase() в функции'
+    }
+  },
+  // CSS Тумблер
+  'toggle': {
+    quiz: { 'q-tog-1': 'b', 'q-tog-2': 'b' },
+    practice: {
+      id: 'practice-toggle',
+      check: (val) => {
+        const v = val.toLowerCase().replace(/\s+/g, ' ').trim();
+        return v.includes('input:checked') && v.includes('.slider') &&
+               (v.includes('background') || v.includes('background-color'));
+      },
+      hint: 'Должно быть: input:checked + .slider { background-color: ... }'
+    }
+  },
+
+  // TypeScript дженерики
+  'ts-generics': {
+    quiz: { 'q-tsg-1': 'b', 'q-tsg-2': 'b' },
+    practice: {
+      id: 'practice-ts-generics',
+      check: (val) => {
+        const v = val.toLowerCase().replace(/\s+/g, ' ').trim();
+        return v.includes('function identity') && v.includes('<t>') &&
+               v.includes(': t') && v.includes('return');
+      },
+      hint: 'function identity<T>(arg: T): T { return arg; }'
+    }
+  },
+  // TypeScript основы
+  'ts-basics': {
+    quiz: { 'q-ts-basics-1': 'b', 'q-ts-basics-2': 'b' },
+    practice: {
+      id: 'practice-ts-basics',
+      check: (val) => {
+        const v = val.toLowerCase().replace(/\s+/g, ' ').trim();
+        return v.includes('function add') && v.includes(': number') &&
+               v.includes('return') && (v.includes('a + b') || v.includes('a+b'));
+      },
+      hint: 'function add(a: number, b: number): number { return a + b; }'
+    }
+  },
+  // TypeScript интерфейсы
+  'ts-interfaces': {
+    quiz: { 'q-ts-if-1': 'b', 'q-ts-if-2': 'b' },
+    practice: {
+      id: 'practice-ts-interfaces',
+      check: (val) => {
+        const v = val.toLowerCase().replace(/\s+/g, ' ').trim();
+        return v.includes('interface product') && v.includes('id') &&
+               v.includes('name') && v.includes('price') && v.includes('discount?');
+      },
+      hint: 'interface Product { id: number; name: string; price: number; discount?: number; }'
+    }
+  },
+  // React компоненты
+  'react-components': {
+    quiz: { 'q-rc-1': 'b', 'q-rc-2': 'b' },
+    practice: {
+      id: 'practice-react-components',
+      check: (val) => {
+        const v = val.toLowerCase().replace(/\s+/g, ' ').trim();
+        return v.includes('function card') && (v.includes('title') && v.includes('description')) &&
+               (v.includes('<h2>') || v.includes('<h2 ') || v.includes('h2>'));
+      },
+      hint: 'function Card({ title, description }) { return (<div><h2>{title}</h2><p>{description}</p></div>); }'
+    }
+  },
+  // React хуки
+  'react-hooks': {
+    quiz: { 'q-rh-1': 'b', 'q-rh-2': 'b' },
+    practice: {
+      id: 'practice-react-hooks',
+      check: (val) => {
+        const v = val.toLowerCase().replace(/\s+/g, ' ').trim();
+        return v.includes('usestate') && v.includes('name') &&
+               (v.includes('setname') || v.includes('set')) &&
+               (v.includes('<input') || v.includes('input'));
+      },
+      hint: 'const [name, setName] = useState(""); ... <input onChange={e => setName(e.target.value)} />'
+    }
+  }
+};
+
 // ===== ТАБЫ =====
 // ===== DARK MODE =====
 function toggleDark() {
@@ -13192,7 +13335,7 @@ function resetProgress() {
   const fillEl = document.getElementById('prog-fill');
   const lblEl = document.getElementById('prog-label');
   if (fillEl) fillEl.style.width = '0%';
-  if (lblEl) lblEl.textContent = `Прогресс: 0 / ${all.length} тем изучено (0%) · v45`;
+  if (lblEl) lblEl.textContent = `Прогресс: 0 / ${all.length} тем изучено (0%) · v48`;
   updateTabBadges();
   updatePdcBars();
   showToast('Прогресс сброшен — перезагрузи страницу чтобы вернуть заблокированные темы');
@@ -18451,9 +18594,49 @@ function pgKeydown(e) {
     if (tagMatch && !before.endsWith('/') && !voidTags.has(tagMatch[1].toLowerCase())) {
       const tagName = tagMatch[1];
       e.preventDefault();
-      insertSnippet(ta, '>' + '|' + '</' + tagName + '>');
+      // Спецслучай: <script> → сразу предлагаем src=""
+      if (tagName.toLowerCase() === 'script' && !/\ssrc=/.test(tagMatch[2] || '')) {
+        insertSnippet(ta, ' src="|"></scri' + 'pt>');
+      } else {
+        insertSnippet(ta, '>' + '|' + '</' + tagName + '>');
+      }
       hideAc();
       return;
+    }
+  }
+
+  // ===== AUTO-INSERT QUOTES: type = → auto-adds "" with cursor inside =====
+  // Срабатывает в HTML внутри тега (атрибуты) и в JS/CSS при обычном присваивании
+  if (e.key === '=' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+    const pos = ta.selectionStart;
+    const before = ta.value.substring(0, pos);
+    const after = ta.value.substring(ta.selectionEnd);
+
+    // Не трогаем если это часть ==, ===, !=, <=, >=, += и т.п. — уже есть = рядом
+    const prevChar = before.slice(-1);
+    const nextChar = after.charAt(0);
+    const isComparisonOrCompound = /[=!<>+\-*/%&|^]/.test(prevChar) || nextChar === '=';
+
+    if (!isComparisonOrCompound) {
+      // В HTML — только если мы похожи на атрибут (внутри открытого тега)
+      let shouldInsert = false;
+      if (lang === 'html') {
+        const lastOpenTag = before.lastIndexOf('<');
+        const lastCloseTag = before.lastIndexOf('>');
+        const insideTag = lastOpenTag > lastCloseTag;
+        const attrNameMatch = before.match(/[a-zA-Z-]+$/);
+        shouldInsert = insideTag && !!attrNameMatch;
+      } else {
+        // В JS/CSS — после идентификатора (переменная = ..., свойство: не трогаем, только =)
+        shouldInsert = /[a-zA-Z0-9_$]\s*$/.test(before);
+      }
+
+      if (shouldInsert) {
+        e.preventDefault();
+        insertSnippet(ta, '="|"');
+        hideAc();
+        return;
+      }
     }
   }
 
@@ -18721,8 +18904,12 @@ function updateFontScale() {
 }
 
 // ===== ПОМОДОРО =====
-let pomoState = { running: false, mode: 'work', secondsLeft: 25*60, sessions: 0, interval: null };
-const POMO_DURATIONS = { work: 25*60, break: 5*60 };
+let POMO_DURATIONS = { work: 25*60, break: 5*60 };
+try {
+  const savedDur = JSON.parse(localStorage.getItem('pomo_durations') || 'null');
+  if (savedDur && savedDur.work && savedDur.break) POMO_DURATIONS = savedDur;
+} catch(e) {}
+let pomoState = { running: false, mode: 'work', secondsLeft: POMO_DURATIONS.work, sessions: 0, interval: null };;
 const CIRCUMFERENCE = 2 * Math.PI * 39; // ~245
 
 
@@ -19482,9 +19669,31 @@ function pomoTick() {
 
 function pomoReset() {
   clearInterval(pomoState.interval);
-  pomoState = { running: false, mode: 'work', secondsLeft: 25*60, sessions: pomoState.sessions, interval: null };
+  pomoState = { running: false, mode: 'work', secondsLeft: POMO_DURATIONS.work, sessions: pomoState.sessions, interval: null };
   document.getElementById('pomoStartBtn').textContent = '▶ Старт';
   pomoRender();
+}
+
+// Изменение длительности фокуса/перерыва кнопками +/- (шаг 5 минут)
+function pomoAdjustDuration(mode, deltaMinutes) {
+  const newSeconds = Math.max(60, POMO_DURATIONS[mode] + deltaMinutes * 60);
+  POMO_DURATIONS[mode] = newSeconds;
+  try { localStorage.setItem('pomo_durations', JSON.stringify(POMO_DURATIONS)); } catch(e) {}
+
+  pomoUpdateDurationLabels();
+
+  // Если таймер сейчас не запущен и мы меняем длительность активного режима — обновляем обратный отсчёт сразу
+  if (!pomoState.running && pomoState.mode === mode) {
+    pomoState.secondsLeft = newSeconds;
+    pomoRender();
+  }
+}
+
+function pomoUpdateDurationLabels() {
+  const workEl = document.getElementById('pomoWorkMin');
+  const breakEl = document.getElementById('pomoBreakMin');
+  if (workEl) workEl.textContent = Math.round(POMO_DURATIONS.work / 60) + ' мин';
+  if (breakEl) breakEl.textContent = Math.round(POMO_DURATIONS.break / 60) + ' мин';
 }
 
 function pomoRender() {
@@ -19559,6 +19768,7 @@ function pgMobileUndo(e) {
 document.addEventListener('DOMContentLoaded', () => {
   loadTemplate('blank');
   pomoRender();
+  if (typeof pomoUpdateDurationLabels === 'function') pomoUpdateDurationLabels();
 });
 
 document.addEventListener('keydown', (e) => {
@@ -20222,101 +20432,6 @@ function ghFileIcon(name) {
 }
 
 // ===== ТРЕНАЖЕР: логика проверки тестов =====
-const QUIZ_ANSWERS = {
-  // JS Строки
-  'strings': {
-    quiz: { 'q-str-1': 'b', 'q-str-2': 'b' },
-    practice: {
-      id: 'practice-strings',
-      check: (val) => {
-        const v = val.toLowerCase().replace(/\s+/g, ' ').trim();
-        return (v.includes('trim()') && v.includes('touppercase()')) ||
-               (v.includes('.trim') && v.includes('.touppercase'));
-      },
-      hint: 'Используй .trim() и .toUpperCase() в функции'
-    }
-  },
-  // CSS Тумблер
-  'toggle': {
-    quiz: { 'q-tog-1': 'b', 'q-tog-2': 'b' },
-    practice: {
-      id: 'practice-toggle',
-      check: (val) => {
-        const v = val.toLowerCase().replace(/\s+/g, ' ').trim();
-        return v.includes('input:checked') && v.includes('.slider') &&
-               (v.includes('background') || v.includes('background-color'));
-      },
-      hint: 'Должно быть: input:checked + .slider { background-color: ... }'
-    }
-  },
-
-  // TypeScript дженерики
-  'ts-generics': {
-    quiz: { 'q-tsg-1': 'b', 'q-tsg-2': 'b' },
-    practice: {
-      id: 'practice-ts-generics',
-      check: (val) => {
-        const v = val.toLowerCase().replace(/\s+/g, ' ').trim();
-        return v.includes('function identity') && v.includes('<t>') &&
-               v.includes(': t') && v.includes('return');
-      },
-      hint: 'function identity<T>(arg: T): T { return arg; }'
-    }
-  },
-  // TypeScript основы
-  'ts-basics': {
-    quiz: { 'q-ts-basics-1': 'b', 'q-ts-basics-2': 'b' },
-    practice: {
-      id: 'practice-ts-basics',
-      check: (val) => {
-        const v = val.toLowerCase().replace(/\s+/g, ' ').trim();
-        return v.includes('function add') && v.includes(': number') &&
-               v.includes('return') && (v.includes('a + b') || v.includes('a+b'));
-      },
-      hint: 'function add(a: number, b: number): number { return a + b; }'
-    }
-  },
-  // TypeScript интерфейсы
-  'ts-interfaces': {
-    quiz: { 'q-ts-if-1': 'b', 'q-ts-if-2': 'b' },
-    practice: {
-      id: 'practice-ts-interfaces',
-      check: (val) => {
-        const v = val.toLowerCase().replace(/\s+/g, ' ').trim();
-        return v.includes('interface product') && v.includes('id') &&
-               v.includes('name') && v.includes('price') && v.includes('discount?');
-      },
-      hint: 'interface Product { id: number; name: string; price: number; discount?: number; }'
-    }
-  },
-  // React компоненты
-  'react-components': {
-    quiz: { 'q-rc-1': 'b', 'q-rc-2': 'b' },
-    practice: {
-      id: 'practice-react-components',
-      check: (val) => {
-        const v = val.toLowerCase().replace(/\s+/g, ' ').trim();
-        return v.includes('function card') && (v.includes('title') && v.includes('description')) &&
-               (v.includes('<h2>') || v.includes('<h2 ') || v.includes('h2>'));
-      },
-      hint: 'function Card({ title, description }) { return (<div><h2>{title}</h2><p>{description}</p></div>); }'
-    }
-  },
-  // React хуки
-  'react-hooks': {
-    quiz: { 'q-rh-1': 'b', 'q-rh-2': 'b' },
-    practice: {
-      id: 'practice-react-hooks',
-      check: (val) => {
-        const v = val.toLowerCase().replace(/\s+/g, ' ').trim();
-        return v.includes('usestate') && v.includes('name') &&
-               (v.includes('setname') || v.includes('set')) &&
-               (v.includes('<input') || v.includes('input'));
-      },
-      hint: 'const [name, setName] = useState(""); ... <input onChange={e => setName(e.target.value)} />'
-    }
-  }
-};
 
 function checkQuiz(id) {
   const cfg = QUIZ_ANSWERS[id];
@@ -21486,6 +21601,119 @@ STRICT RULES:
   out = out.replace(/^```(?:html)?\n?/i, '').replace(/```\s*$/i, '');
   return out;
 }
+
+
+// ===== CUSTOM CSS (настройки → свой CSS на всю страницу) =====
+function applyCustomCss(css) {
+  const tag = document.getElementById('customCssStyleTag');
+  if (tag) tag.textContent = css;
+}
+
+function saveCustomCss() {
+  const val = document.getElementById('customCssInput').value;
+  try {
+    localStorage.setItem('custom_css', val);
+    const status = document.getElementById('customCssStatus');
+    if (status) {
+      status.style.display = 'block';
+      status.textContent = '✅ Сохранено и применяется при каждой загрузке';
+      setTimeout(() => { status.style.display = 'none'; }, 2500);
+    }
+  } catch(e) {}
+}
+
+function clearCustomCss() {
+  document.getElementById('customCssInput').value = '';
+  applyCustomCss('');
+  localStorage.removeItem('custom_css');
+}
+
+function restoreCustomCss() {
+  try {
+    const saved = localStorage.getItem('custom_css');
+    if (saved) {
+      const inp = document.getElementById('customCssInput');
+      if (inp) inp.value = saved;
+      applyCustomCss(saved);
+    }
+  } catch(e) {}
+}
+document.addEventListener('DOMContentLoaded', restoreCustomCss);
+
+
+// ===== УНИВЕРСАЛЬНЫЙ DRAG для плавающих окон (чат ИИ, настройки) =====
+function makeDraggable(panelEl, handleEl) {
+  if (!panelEl || !handleEl) return;
+  let isDragging = false;
+  let startX, startY, startLeft, startTop;
+
+  handleEl.style.cursor = 'move';
+
+  function onPointerDown(e) {
+    // Не начинаем drag если клик был по интерактивному элементу внутри шапки (select, button, input)
+    if (e.target.closest('select, button, input, textarea, a')) return;
+
+    isDragging = true;
+    const rect = panelEl.getBoundingClientRect();
+    const point = e.touches ? e.touches[0] : e;
+    startX = point.clientX;
+    startY = point.clientY;
+    startLeft = rect.left;
+    startTop = rect.top;
+
+    // Переключаем позиционирование на left/top, убирая right/bottom — чтобы можно было свободно двигать
+    panelEl.style.left = startLeft + 'px';
+    panelEl.style.top = startTop + 'px';
+    panelEl.style.right = 'auto';
+    panelEl.style.bottom = 'auto';
+
+    document.addEventListener('mousemove', onPointerMove);
+    document.addEventListener('mouseup', onPointerUp);
+    document.addEventListener('touchmove', onPointerMove, { passive: false });
+    document.addEventListener('touchend', onPointerUp);
+    e.preventDefault();
+  }
+
+  function onPointerMove(e) {
+    if (!isDragging) return;
+    const point = e.touches ? e.touches[0] : e;
+    const dx = point.clientX - startX;
+    const dy = point.clientY - startY;
+
+    let newLeft = startLeft + dx;
+    let newTop = startTop + dy;
+
+    // Не даём утащить окно полностью за пределы экрана
+    const w = panelEl.offsetWidth, h = panelEl.offsetHeight;
+    newLeft = Math.max(-w + 60, Math.min(newLeft, window.innerWidth - 60));
+    newTop = Math.max(0, Math.min(newTop, window.innerHeight - 40));
+
+    panelEl.style.left = newLeft + 'px';
+    panelEl.style.top = newTop + 'px';
+    if (e.cancelable) e.preventDefault();
+  }
+
+  function onPointerUp() {
+    isDragging = false;
+    document.removeEventListener('mousemove', onPointerMove);
+    document.removeEventListener('mouseup', onPointerUp);
+    document.removeEventListener('touchmove', onPointerMove);
+    document.removeEventListener('touchend', onPointerUp);
+  }
+
+  handleEl.addEventListener('mousedown', onPointerDown);
+  handleEl.addEventListener('touchstart', onPointerDown, { passive: false });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const aiWin = document.getElementById('aiChatWin');
+  const aiHead = aiWin ? aiWin.querySelector('.ai-chat-head') : null;
+  if (aiWin && aiHead) makeDraggable(aiWin, aiHead);
+
+  const settingsPanel = document.getElementById('settingsMini');
+  const settingsHandle = document.getElementById('settingsDragHandle');
+  if (settingsPanel && settingsHandle) makeDraggable(settingsPanel, settingsHandle);
+});
 
 </script>
 </body>
