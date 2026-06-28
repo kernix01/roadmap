@@ -3511,6 +3511,8 @@
   <button class="top-btn" onclick="toggleDark()" id="darkBtn"><iconify-icon icon="tabler:moon-stars" width="14" height="14" style="vertical-align:middle"></iconify-icon> Тёмная</button>
   <button class="top-btn" id="bmFilterBtn" onclick="toggleBmFilter()" title="Показать только закладки">🔖 Закладки</button>
   <button class="top-btn" onclick="startMockInterview()" title="Вопросы по отмеченным темам">🎙️ Мок-интервью</button>
+  <button class="top-btn" onclick="exportProgressJson()" title="Скачать прогресс в JSON">⬇ Экспорт</button>
+  <button class="top-btn" onclick="importProgressJson()" title="Импортировать прогресс из JSON">⬆ Импорт</button>
   <div style="position:relative;display:inline-block;">
     <button class="top-btn" onclick="toggleTranslateMenu()" title="Перевести текущую вкладку">🌐 Перевод
       <span id="translateLangBadge" style="display:none;margin-left:5px;background:var(--accent);color:#fff;border-radius:6px;padding:1px 6px;font-size:10px;font-weight:700;"></span>
@@ -4052,6 +4054,34 @@ function handleClick(btn) {
       </div>
     </div>
 
+    <div class="block" id="block-html-core-web-vitals">
+      <div class="block-title" onclick="scrollToBlock('block-html-core-web-vitals')">Core Web Vitals — скорость глазами пользователя <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">Core Web Vitals — метрики Google про то, как пользователь ощущает страницу: быстро ли появился главный контент, не прыгает ли layout, быстро ли сайт реагирует.</div>
+      <div class="code">&lt;!-- LCP: главный элемент первого экрана должен загрузиться быстро --&gt;
+&lt;img src="hero.webp"
+     alt="Главный экран проекта"
+     width="1200"
+     height="700"
+     fetchpriority="high"&gt;
+
+&lt;!-- CLS: всегда резервируй место под медиа --&gt;
+&lt;img src="card.webp" alt="Карточка" width="360" height="240" loading="lazy"&gt;
+
+&lt;!-- INP: не вешай тяжёлую работу прямо на клик --&gt;
+&lt;button&gt;Открыть меню&lt;/button&gt;</div>
+      <div class="explain">
+        <strong>LCP</strong> — как быстро загрузился главный видимый контент: hero-картинка, большой заголовок, первый блок.<br>
+        <strong>CLS</strong> — прыгает ли страница при загрузке. Лечится <code>width/height</code>, стабильными контейнерами и аккуратной загрузкой шрифтов.<br>
+        <strong>INP</strong> — насколько быстро страница реагирует на действия. Не делай тяжёлые циклы и большие расчёты прямо в обработчиках клика.<br>
+        <strong>Lighthouse</strong> в Chrome DevTools показывает эти метрики и подсказывает, что исправить.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-html-cwv-1" onchange="updateProgress(this)"><span>LCP — главный контент первого экрана должен грузиться быстро</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-html-cwv-2" onchange="updateProgress(this)"><span>CLS — задаю размеры картинкам и не допускаю прыжков layout</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-html-cwv-3" onchange="updateProgress(this)"><span>INP — не блокирую интерфейс тяжёлым JS в кликах</span></label>
+      </div>
+    </div>
+
     <div class="block" id="block-inputs">
       <div class="block-title" onclick="scrollToBlock('block-inputs')">Инпуты — все типы полей формы <span class="badge must">основа</span><span class="anchor-icon">🔗</span></div>
       <div class="tip">У &lt;input&gt; больше 20 типов. Правильный type включает удобную клавиатуру на телефоне, валидацию и нужный пикер.</div>
@@ -4199,6 +4229,35 @@ function handleClick(btn) {
         <label class="item"><input type="checkbox" class="prog-cb" data-pid="pcb52" onchange="updateProgress(this)"><span>&lt;dialog&gt; + showModal() — нативная модалка с фоном</span></label>
         <label class="item"><input type="checkbox" class="prog-cb" data-pid="pcb53" onchange="updateProgress(this)"><span>Esc закрывает dialog автоматически</span></label>
         <label class="item"><input type="checkbox" class="prog-cb" data-pid="pcb54" onchange="updateProgress(this)"><span>::backdrop — стилизуем затемнение под dialog</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-html-popover">
+      <div class="block-title" onclick="scrollToBlock('block-html-popover')">Popover API — попапы и подсказки без JS <span class="badge good">modern</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">Popover API — нативный способ открыть маленькую панель, меню или подсказку. Браузер сам умеет закрывать её по Esc и клику снаружи.</div>
+      <div class="code">&lt;button popovertarget="menu"&gt;Открыть меню&lt;/button&gt;
+
+&lt;div id="menu" popover&gt;
+  &lt;a href="/profile"&gt;Профиль&lt;/a&gt;
+  &lt;a href="/settings"&gt;Настройки&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+  [popover] {
+    border: 0;
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 0 16px 40px rgba(0,0,0,.18);
+  }
+&lt;/style&gt;</div>
+      <div class="explain">
+        <strong>popover</strong> — делает элемент всплывающей панелью. Он скрыт, пока его не откроют.<br>
+        <strong>popovertarget</strong> — связывает кнопку с popover-элементом по id, без обработчика click.<br>
+        <strong>Когда использовать:</strong> выпадающее меню, тултип, фильтр, быстрые настройки. Для полноценного подтверждения действия чаще лучше <code>&lt;dialog&gt;</code>.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-html-popover-1" onchange="updateProgress(this)"><span>Понимаю popover и popovertarget</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-html-popover-2" onchange="updateProgress(this)"><span>Знаю отличие popover от dialog</span></label>
       </div>
     </div>
 
@@ -5626,6 +5685,44 @@ img.fit-scale    { object-fit: scale-down; }  /* contain, но не увелич
       <div class="items">
         <label class="item"><input type="checkbox" class="prog-cb" data-pid="pcb152c" onchange="updateProgress(this)"><span>@layer — управляю каскадом без войн за !important</span></label>
         <label class="item"><input type="checkbox" class="prog-cb" data-pid="pcb152d" onchange="updateProgress(this)"><span>CSS Nesting — понимаю нативную вложенность без SCSS</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-css-2026-native-apis">
+      <div class="block-title" onclick="scrollToBlock('block-css-2026-native-apis')">CSS 2026: @scope, scroll-driven и View Transitions <span class="badge must">modern</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">Современный CSS всё чаще заменяет маленькие JS-библиотеки: локальные стили, анимации от прокрутки и переходы между экранами можно делать нативно.</div>
+      <div class="code"><span class="cm">/* @scope — стили живут только внутри .profile-card */</span>
+<span class="kw">@scope</span> (.profile-card) {
+  <span class="tag">.title</span> { color: <span class="str">#6366f1</span>; }
+  <span class="tag">button</span> { border-radius: <span class="num">8px</span>; }
+}
+
+<span class="cm">/* Scroll-driven animation — прогресс зависит от прокрутки */</span>
+<span class="tag">.progress-line</span> {
+  transform-origin: left;
+  animation: grow linear;
+  animation-timeline: scroll();
+}
+
+<span class="kw">@keyframes</span> grow {
+  from { transform: scaleX(<span class="num">0</span>); }
+  to   { transform: scaleX(<span class="num">1</span>); }
+}
+
+<span class="cm">/* View Transitions — плавная смена экранов/страниц */</span>
+<span class="kw">::view-transition-old</span>(root),
+<span class="kw">::view-transition-new</span>(root) {
+  animation-duration: <span class="num">220ms</span>;
+}</div>
+      <div class="explain">
+        <strong>@scope</strong> ограничивает область действия селекторов. Это похоже на локальные стили компонента, но без CSS Modules.<br>
+        <strong>Scroll-driven animations</strong> привязывают анимацию к прокрутке страницы. Для прогресс-баров и мягких эффектов часто не нужен Intersection Observer.<br>
+        <strong>View Transitions API</strong> помогает делать плавные переходы между состояниями интерфейса. Отлично подходит для SPA и небольших интерактивных страниц.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-css-modern-1" onchange="updateProgress(this)"><span>@scope — локальная область CSS-селекторов</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-css-modern-2" onchange="updateProgress(this)"><span>Scroll-driven animations — анимации от прокрутки без JS</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-css-modern-3" onchange="updateProgress(this)"><span>View Transitions — плавные переходы между состояниями UI</span></label>
       </div>
     </div>
 </div>
@@ -7802,6 +7899,75 @@ src/
       </div>
     </div>
 
+    <div class="block" id="block-react-zustand-persist">
+      <div class="block-title" onclick="scrollToBlock('block-react-zustand-persist')">Zustand middleware: persist и devtools <span class="badge must">коммерческий код</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">В реальных проектах стор часто должен переживать перезагрузку страницы: тема, корзина, настройки, токен-состояние интерфейса. Для этого в Zustand есть middleware.</div>
+      <div class="code"><span class="kw">import</span> { create } <span class="kw">from</span> <span class="str">'zustand'</span>;
+<span class="kw">import</span> { persist, devtools } <span class="kw">from</span> <span class="str">'zustand/middleware'</span>;
+
+<span class="kw">const</span> useSettingsStore = <span class="fn">create</span>()(
+  <span class="fn">devtools</span>(
+    <span class="fn">persist</span>(
+      (set) =&gt; ({
+        theme: <span class="str">'dark'</span>,
+        setTheme: (theme) =&gt; <span class="fn">set</span>({ theme })
+      }),
+      { name: <span class="str">'settings-storage'</span> } <span class="cm">// ключ в localStorage</span>
+    )
+  )
+);
+
+<span class="cm">// После перезагрузки theme восстановится автоматически</span>
+<span class="kw">const</span> theme = <span class="fn">useSettingsStore</span>(s =&gt; s.theme);</div>
+      <div class="explain">
+        <strong>persist</strong> сохраняет часть стора в localStorage/sessionStorage и поднимает её при старте приложения.<br>
+        <strong>devtools</strong> подключает стор к Redux DevTools — удобно смотреть изменения состояния по шагам.<br>
+        <strong>partialize</strong> можно использовать, если нужно сохранять не весь стор, а только безопасные поля.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-react-zustand-persist-1" onchange="updateProgress(this)"><span>persist — автоматическое сохранение стора в localStorage</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-react-zustand-persist-2" onchange="updateProgress(this)"><span>devtools — отладка Zustand через Redux DevTools</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-react-19-compiler-actions">
+      <div class="block-title" onclick="scrollToBlock('block-react-19-compiler-actions')">React 19: Compiler, useActionState, useFormStatus <span class="badge good">modern</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">React движется к меньшему количеству ручной оптимизации и более удобной работе с формами. Старые хуки не исчезли, но новые проекты пишутся иначе.</div>
+      <div class="code"><span class="cm">// React Compiler снижает потребность в ручном useMemo/useCallback</span>
+<span class="cm">// Идея: компилятор сам понимает, что можно мемоизировать безопасно.</span>
+
+<span class="cm">// useActionState — состояние формы вокруг action</span>
+<span class="kw">function</span> <span class="fn">Signup</span>() {
+  <span class="kw">const</span> [state, formAction, pending] = <span class="fn">useActionState</span>(signupAction, {
+    error: <span class="kw">null</span>
+  });
+
+  <span class="kw">return</span> (
+    &lt;<span class="tag">form</span> <span class="attr">action</span>={formAction}&gt;
+      &lt;<span class="tag">input</span> <span class="attr">name</span>=<span class="str">"email"</span> /&gt;
+      {state.error &amp;&amp; &lt;<span class="tag">p</span>&gt;{state.error}&lt;/<span class="tag">p</span>&gt;}
+      &lt;<span class="tag">button</span> <span class="attr">disabled</span>={pending}&gt;Создать&lt;/<span class="tag">button</span>&gt;
+    &lt;/<span class="tag">form</span>&gt;
+  );
+}
+
+<span class="cm">// useFormStatus читают дочерние кнопки формы</span>
+<span class="kw">function</span> <span class="fn">SubmitButton</span>() {
+  <span class="kw">const</span> { pending } = <span class="fn">useFormStatus</span>();
+  <span class="kw">return</span> &lt;<span class="tag">button</span> <span class="attr">disabled</span>={pending}&gt;{pending ? <span class="str">'Ждём...'</span> : <span class="str">'Отправить'</span>}&lt;/<span class="tag">button</span>&gt;;
+}</div>
+      <div class="explain">
+        <strong>React Compiler</strong> автоматизирует часть мемоизации. Но в легаси-коде <code>useMemo</code>, <code>useCallback</code> и <code>React.memo</code> всё ещё встречаются постоянно.<br>
+        <strong>useActionState</strong> связывает action формы с состоянием результата: ошибка, успех, pending.<br>
+        <strong>useFormStatus</strong> удобен для кнопки отправки внутри формы: она может знать, что форма сейчас отправляется.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-react19-1" onchange="updateProgress(this)"><span>React Compiler — идея автоматической мемоизации</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-react19-2" onchange="updateProgress(this)"><span>useActionState — состояние результата формы</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-react19-3" onchange="updateProgress(this)"><span>useFormStatus — pending-состояние внутри формы</span></label>
+      </div>
+    </div>
+
     <div class="block" id="block-react-testing">
       <div class="block-title" onclick="scrollToBlock('block-react-testing')">Тестирование: Vitest + React Testing Library <span class="badge good">уровень middle</span><span class="anchor-icon">🔗</span></div>
       <div class="tip">Vitest — современная и быстрая замена Jest, особенно для проектов на Vite (использует тот же движок и конфиг). React Testing Library — стандарт для тестирования React-компонентов.</div>
@@ -8217,6 +8383,41 @@ dist/</div>
         <label class="item"><input type="checkbox" class="prog-cb" data-pid="pcb314" onchange="updateProgress(this)"><span>.env.local в .gitignore — защита секретов</span></label>
       </div>
     </div>
+
+    <div class="block" id="block-vite-ssr-islands">
+      <div class="block-title" onclick="scrollToBlock('block-vite-ssr-islands')">SSR, Islands и новые сборщики <span class="badge rec">обзор</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">Это не надо учить первым делом. Но полезно понимать слова из вакансий: SSR, SSG, Islands, Rspack, Turbopack.</div>
+      <div class="code"><span class="cm">// CSR — обычный React/Vite в браузере</span>
+Браузер скачал JS → React построил страницу
+
+<span class="cm">// SSR — сервер сразу отдаёт готовый HTML</span>
+Запрос → сервер рендерит страницу → браузер быстрее видит контент
+
+<span class="cm">// SSG — страницы собраны заранее</span>
+npm run build → готовые HTML-файлы → очень быстрый хостинг
+
+<span class="cm">// Islands Architecture — JS только там, где нужен</span>
+Header = HTML
+Article = HTML
+CartButton = интерактивный JS-остров
+
+<span class="cm">// Современные инструменты</span>
+Vite      — быстрый dev-сервер
+Astro     — islands + контентные сайты
+Rspack    — быстрый webpack-compatible сборщик
+Turbopack — сборщик в экосистеме Next.js</div>
+      <div class="explain">
+        <strong>CSR</strong> проще всего для старта: Vite + React. Минус — первый экран может ждать JS.<br>
+        <strong>SSR</strong> помогает SEO и скорости первого контента, но требует серверной части.<br>
+        <strong>Islands</strong> — идея Astro: большая часть страницы статичная, интерактивными становятся только нужные куски.<br>
+        <strong>Не прыгай слишком рано:</strong> сначала уверенный JS/React, потом SSR и архитектуры.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-vite-ssr-1" onchange="updateProgress(this)"><span>Понимаю разницу CSR, SSR и SSG</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-vite-ssr-2" onchange="updateProgress(this)"><span>Понимаю идею Islands: JS только для интерактивных частей</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-vite-ssr-3" onchange="updateProgress(this)"><span>Слышал про Astro, Rspack, Turbopack и понимаю зачем они нужны</span></label>
+      </div>
+    </div>
   </div>
 
 
@@ -8514,6 +8715,35 @@ Base URL: https://api.mistral.ai/v1
         <strong>Где взять ключ:</strong> зарегистрируйся у провайдера → раздел API Keys → создай новый ключ.<br>
         <strong>Безопасность:</strong> ключ хранится в localStorage только твоего браузера. Никому не передаётся кроме выбранного провайдера напрямую.<br>
         <strong>После сохранения</strong> выбери «⚙ Своя модель» в выпадающем списке в окне чата.
+      </div>
+    </div>
+
+    <div class="block" id="block-ai-prompt-engineering">
+      <div class="block-title" onclick="scrollToBlock('block-ai-prompt-engineering')">Prompt Engineering для обучения коду <span class="badge good">практика</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">Хороший промпт — это не "сделай красиво", а понятная задача: роль, контекст, ограничения, формат ответа и критерий проверки.</div>
+      <div class="code"><span class="cm">// Плохой запрос</span>
+Сделай мне сайт.
+
+<span class="cm">// Хороший запрос</span>
+Ты frontend-ментор. Я учу HTML/CSS/JS.
+Задача: помоги сделать адаптивную карточку товара.
+Ограничения: без фреймворков, только HTML/CSS, объясняй коротко.
+Формат: сначала план на 3 шага, потом маленький кусок кода.
+Проверка: скажи, какие ошибки чаще всего бывают в такой верстке.
+
+<span class="cm">// Для проверки своего кода</span>
+Проверь этот код как mentor: найди баги, лишнюю сложность,
+проблемы адаптива и предложи улучшения без полного переписывания.</div>
+      <div class="explain">
+        <strong>Роль</strong> задаёт стиль ответа: ментор, ревьюер, интервьюер, заказчик.<br>
+        <strong>Контекст</strong> экономит время: что ты уже сделал, какие файлы есть, что именно не работает.<br>
+        <strong>Ограничения</strong> защищают от лишней сложности: без React, без библиотек, только подсказки, не полный ответ.<br>
+        <strong>Проверка</strong> заставляет ИИ искать ошибки, а не просто соглашаться.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-ai-prompt-1" onchange="updateProgress(this)"><span>Умею давать ИИ роль, контекст и ограничения</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-ai-prompt-2" onchange="updateProgress(this)"><span>Прошу проверку кода без полного переписывания</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-ai-prompt-3" onchange="updateProgress(this)"><span>Использую ИИ как ментора, а не как кнопку "сделай всё"</span></label>
       </div>
     </div>
   </div>
@@ -9005,6 +9235,81 @@ Base URL: https://api.mistral.ai/v1
         <label class="item"><input type="checkbox" class="prog-cb" data-pid="pcb351" onchange="updateProgress(this)"><span>Рекурсия — базовый случай + рекурсивный вызов</span></label>
         <label class="item"><input type="checkbox" class="prog-cb" data-pid="pcb352" onchange="updateProgress(this)"><span>Мемоизация — кэш для дорогих рекурсий</span></label>
         <label class="item"><input type="checkbox" class="prog-cb" data-pid="pcb353" onchange="updateProgress(this)"><span>Обход вложенных структур через рекурсию</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-algo-data-structures">
+      <div class="block-title" onclick="scrollToBlock('block-algo-data-structures')">Структуры данных: Stack, Queue, Tree, Graph <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">Структура данных — это способ хранить данные так, чтобы нужные операции были удобными и быстрыми.</div>
+      <div class="code"><span class="cm">// Stack — стопка: последний вошёл, первый вышел</span>
+const stack = [];
+stack.push('modal-open');
+stack.push('tooltip-open');
+stack.pop(); <span class="cm">// tooltip-open</span>
+
+<span class="cm">// Queue — очередь: первый вошёл, первый вышел</span>
+const queue = [];
+queue.push('task-1');
+queue.push('task-2');
+queue.shift(); <span class="cm">// task-1</span>
+
+<span class="cm">// Tree — дерево: DOM, меню, файловая система</span>
+const menu = {
+  title: 'Frontend',
+  children: [
+    { title: 'HTML', children: [] },
+    { title: 'CSS', children: [] }
+  ]
+};
+
+<span class="cm">// Graph — граф: связи между сущностями</span>
+const graph = new Map([
+  ['home', ['about', 'catalog']],
+  ['catalog', ['product']],
+  ['product', ['cart']]
+]);</div>
+      <div class="explain">
+        <strong>Stack</strong> нужен для undo/redo, истории переходов, закрытия вложенных окон.<br>
+        <strong>Queue</strong> нужна для очередей задач, загрузок, сообщений.<br>
+        <strong>Tree</strong> встречается постоянно: DOM, комментарии, категории, меню.<br>
+        <strong>Graph</strong> — связи: маршруты, друзья, зависимости пакетов, ссылки между страницами.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-algo-ds-1" onchange="updateProgress(this)"><span>Stack и Queue — понимаю разницу LIFO/FIFO</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-algo-ds-2" onchange="updateProgress(this)"><span>Tree — понимаю на примере DOM и меню</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-algo-ds-3" onchange="updateProgress(this)"><span>Graph — понимаю как набор узлов и связей</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-algo-advanced-concepts">
+      <div class="block-title" onclick="scrollToBlock('block-algo-advanced-concepts')">AST и Bloom Filter <span class="badge rec">на будущее</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">Это не база для старта, но эти слова часто встречаются в инструментах: линтеры, сборщики, поиск, антиспам, кэш.</div>
+      <div class="code"><span class="cm">// AST — дерево кода</span>
+const x = 2 + 3;
+
+<span class="cm">// Упрощённо парсер видит так:</span>
+VariableDeclaration
+  name: "x"
+  value:
+    BinaryExpression
+      left: 2
+      operator: "+"
+      right: 3
+
+<span class="cm">// Bloom Filter — быстрый "возможно есть / точно нет"</span>
+if (bloom.has(email)) {
+  <span class="cm">// возможно уже встречался, проверим в базе</span>
+} else {
+  <span class="cm">// точно не встречался</span>
+}</div>
+      <div class="explain">
+        <strong>AST</strong> используют Babel, ESLint, TypeScript, Prettier: они читают код как дерево и могут его проверять или переписывать.<br>
+        <strong>Bloom Filter</strong> экономит память и быстро отвечает: "точно нет" или "возможно да". Минус — бывают ложные срабатывания.<br>
+        <strong>Смысл блока:</strong> не учить глубоко сейчас, а понимать, что происходит под капотом инструментов.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-algo-advanced-1" onchange="updateProgress(this)"><span>Понимаю AST как дерево кода для линтеров и сборщиков</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-algo-advanced-2" onchange="updateProgress(this)"><span>Понимаю Bloom Filter на уровне "точно нет / возможно да"</span></label>
       </div>
     </div>
   </div>
@@ -9588,6 +9893,45 @@ Next.js → Node.js
         <label class="item"><input type="checkbox" class="prog-cb" data-pid="pcb449" onchange="updateProgress(this)"><span>Собираю :root с переменными цветов и шрифтов в начале</span></label>
         <label class="item"><input type="checkbox" class="prog-cb" data-pid="pcb450" onchange="updateProgress(this)"><span>Каждый элемент проверяю через Inspect — не угадываю</span></label>
         <label class="item"><input type="checkbox" class="prog-cb" data-pid="pcb451" onchange="updateProgress(this)"><span>Проверяю адаптивность — мобильный макет тоже есть в Figma</span></label>
+      </div>
+    </div>
+
+    <div class="figma-block" id="figma-design-tokens">
+      <div class="block-title">Design Tokens: цвета, отступы, шрифты <span class="badge figma">система</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip-violet">Design Tokens — это общие переменные дизайна. В Figma они называются Variables/Styles, в CSS — custom properties.</div>
+      <div class="code"><span class="cm">/* CSS-переменные из макета Figma */</span>
+:root {
+  --color-primary: #7c3aed;
+  --color-bg: #0f172a;
+  --color-text: #e5e7eb;
+
+  --font-main: Inter, system-ui, sans-serif;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-xl: 24px;
+
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+}
+
+.button {
+  background: var(--color-primary);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+}</div>
+      <div class="explain">
+        <strong>Зачем токены:</strong> если главный цвет поменялся в макете, ты меняешь одну переменную, а не 40 классов.<br>
+        <strong>Что выносить:</strong> основные цвета, размеры текста, отступы, скругления, тени, ширину контейнера.<br>
+        <strong>Как работать:</strong> сначала собери токены из Figma, потом верстай компоненты через <code>var(--...)</code>.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-figma-tokens-1" onchange="updateProgress(this)"><span>Понимаю Design Tokens как переменные дизайна</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-figma-tokens-2" onchange="updateProgress(this)"><span>Переношу цвета, шрифты и отступы из Figma в :root</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-figma-tokens-3" onchange="updateProgress(this)"><span>Компоненты верстаю через var(--...), а не через хаотичные значения</span></label>
       </div>
     </div>
 
@@ -11036,6 +11380,90 @@ app.<span class="fn">post</span>(<span class="str">'/users'</span>, (req, res) =
       </div>
     </div>
 
+    <div class="block" id="block-node-cors-security">
+      <div class="block-title" onclick="scrollToBlock('block-node-cors-security')">CORS и Security Headers <span class="badge must">часто ломается</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">Когда фронтенд на одном домене, а API на другом, браузер включает CORS-проверку. Это не ошибка JS, а защита браузера.</div>
+      <div class="code"><span class="cm">// Express + cors</span>
+<span class="kw">import</span> cors <span class="kw">from</span> <span class="str">'cors'</span>;
+<span class="kw">import</span> helmet <span class="kw">from</span> <span class="str">'helmet'</span>;
+
+app.<span class="fn">use</span>(<span class="fn">cors</span>({
+  origin: <span class="str">'https://my-frontend.ru'</span>,
+  credentials: <span class="kw">true</span>,
+  methods: [<span class="str">'GET'</span>, <span class="str">'POST'</span>, <span class="str">'PUT'</span>, <span class="str">'DELETE'</span>]
+}));
+
+app.<span class="fn">use</span>(<span class="fn">helmet</span>({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: [<span class="str">"'self'"</span>],
+      scriptSrc: [<span class="str">"'self'"</span>]
+    }
+  }
+}));</div>
+      <div class="explain">
+        <strong>Access-Control-Allow-Origin</strong> говорит браузеру, какому фронтенду можно читать ответ API.<br>
+        <strong>credentials: true</strong> нужен, если запросы ходят с cookie. Тогда нельзя ставить <code>origin: '*'</code>.<br>
+        <strong>CSP, HSTS, X-Content-Type-Options</strong> — security headers. В Express их часто ставят через <code>helmet</code>.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-node-cors-1" onchange="updateProgress(this)"><span>CORS — понимаю почему браузер блокирует чужой origin</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-node-cors-2" onchange="updateProgress(this)"><span>credentials + cookie требуют точный origin, не *</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-node-cors-3" onchange="updateProgress(this)"><span>Helmet — базовые security headers для Express</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-node-zod-advanced">
+      <div class="block-title" onclick="scrollToBlock('block-node-zod-advanced')">Zod: refine и transform <span class="badge good">практика</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">Базовая схема проверяет типы. В реальном коде часто нужны дополнительные правила: совпадение паролей, очистка строк, превращение строки в число.</div>
+      <div class="code"><span class="kw">const</span> registerSchema = z.<span class="fn">object</span>({
+  email: z.<span class="fn">string</span>().<span class="fn">trim</span>().<span class="fn">toLowerCase</span>().<span class="fn">email</span>(),
+  password: z.<span class="fn">string</span>().<span class="fn">min</span>(<span class="num">8</span>),
+  confirm: z.<span class="fn">string</span>(),
+  age: z.<span class="fn">string</span>().<span class="fn">transform</span>(Number)
+}).<span class="fn">refine</span>(
+  data =&gt; data.password === data.confirm,
+  { path: [<span class="str">'confirm'</span>], message: <span class="str">'Пароли не совпадают'</span> }
+);
+
+<span class="kw">const</span> result = registerSchema.<span class="fn">safeParse</span>(req.body);</div>
+      <div class="explain">
+        <strong>transform</strong> меняет значение после проверки: например, строку <code>"18"</code> превращает в число <code>18</code>.<br>
+        <strong>refine</strong> добавляет правило, которое зависит от нескольких полей сразу.<br>
+        <strong>path</strong> показывает, к какому полю привязать ошибку, чтобы фронтенд подсветил правильный input.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-node-zod-advanced-1" onchange="updateProgress(this)"><span>transform — преобразование данных после проверки</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-node-zod-advanced-2" onchange="updateProgress(this)"><span>refine — кастомная проверка, например совпадение паролей</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-node-api-styles">
+      <div class="block-title" onclick="scrollToBlock('block-node-api-styles')">REST, GraphQL, gRPC, tRPC и SSE <span class="badge good">архитектура API</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">REST — база. Но в командах встречаются и другие подходы: GraphQL для гибких запросов, gRPC для микросервисов, tRPC для TypeScript fullstack, SSE для стриминга.</div>
+      <div class="explain">
+        <strong>REST</strong> — ресурсы и HTTP-методы: GET, POST, PUT/PATCH, DELETE. Лучший старт для новичка.<br>
+        <strong>GraphQL</strong> — клиент сам выбирает поля через Query/Mutation, а сервер описывает resolver-функции.<br>
+        <strong>gRPC + Protobuf</strong> — бинарный протокол для общения сервисов между собой. Быстрее JSON, но сложнее старт.<br>
+        <strong>tRPC</strong> — сквозная типизация между frontend и backend в TypeScript-проектах без ручной OpenAPI-схемы.<br>
+        <strong>SSE</strong> — Server-Sent Events. Нативный поток с сервера к клиенту: ленты, прогресс, генерация текста ИИ. Для чата чаще WebSocket.
+      </div>
+      <div class="code"><span class="cm">// SSE: сервер отправляет поток событий</span>
+app.<span class="fn">get</span>(<span class="str">'/events'</span>, (req, res) =&gt; {
+  res.<span class="fn">setHeader</span>(<span class="str">'Content-Type'</span>, <span class="str">'text/event-stream'</span>);
+  res.<span class="fn">write</span>(<span class="str">'data: hello\\n\\n'</span>);
+});
+
+<span class="cm">// Клиент</span>
+<span class="kw">const</span> events = <span class="kw">new</span> <span class="fn">EventSource</span>(<span class="str">'/events'</span>);
+events.<span class="fn">onmessage</span> = (e) =&gt; console.<span class="fn">log</span>(e.data);</div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-node-api-styles-1" onchange="updateProgress(this)"><span>REST — база API через HTTP-методы</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-node-api-styles-2" onchange="updateProgress(this)"><span>GraphQL, gRPC и tRPC — понимаю где применяются</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-node-api-styles-3" onchange="updateProgress(this)"><span>SSE — односторонний поток событий с сервера</span></label>
+      </div>
+    </div>
+
     <div class="block" id="block-node-websockets">
       <div class="block-title" onclick="scrollToBlock('block-node-websockets')">WebSockets — реальное время (Socket.io) <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
       <div class="tip">REST API работает по принципу "запрос → ответ". Но чаты, уведомления в реальном времени и live-обновления (например, совместное редактирование) требуют постоянного соединения — для этого WebSockets.</div>
@@ -11307,6 +11735,70 @@ orders: id, user_id, product, amount
         <label class="item"><input type="checkbox" class="prog-cb" data-pid="pcb564" onchange="updateProgress(this)"><span>Знаю когда индекс помогает, а когда нет</span></label>
       </div>
     </div>
+
+    <div class="block" id="block-sql-transactions-isolation">
+      <div class="block-title" onclick="scrollToBlock('block-sql-transactions-isolation')">Транзакции и уровни изоляции <span class="badge good">важно</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">Транзакция — это группа запросов, которые должны выполниться целиком. Если один шаг сломался, всё откатывается назад.</div>
+      <div class="code"><span class="cm">-- Перевод денег: либо оба запроса, либо ни одного</span>
+<span class="kw">BEGIN</span>;
+
+<span class="kw">UPDATE</span> accounts
+<span class="kw">SET</span> balance = balance - <span class="num">1000</span>
+<span class="kw">WHERE</span> id = <span class="num">1</span>;
+
+<span class="kw">UPDATE</span> accounts
+<span class="kw">SET</span> balance = balance + <span class="num">1000</span>
+<span class="kw">WHERE</span> id = <span class="num">2</span>;
+
+<span class="kw">COMMIT</span>;   <span class="cm">-- сохранить изменения</span>
+<span class="cm">-- ROLLBACK; -- отменить всё внутри транзакции</span>
+
+<span class="cm">-- Уровень изоляции: насколько транзакции видят друг друга</span>
+<span class="kw">BEGIN</span>;
+<span class="kw">SET TRANSACTION ISOLATION LEVEL</span> SERIALIZABLE;
+<span class="cm">-- важные запросы...</span>
+<span class="kw">COMMIT</span>;</div>
+      <div class="explain">
+        <strong>ACID</strong> — база защищает данные: атомарность, согласованность, изоляция, надёжность.<br>
+        <strong>Read Committed</strong> — дефолт в PostgreSQL: видишь только закоммиченные данные.<br>
+        <strong>Repeatable Read / Serializable</strong> — строже, но дороже по производительности. Нужны для денег, бронирований, остатков товара.<br>
+        <strong>PgBouncer</strong> — пулер соединений перед PostgreSQL. Помогает не убить базу тысячами подключений.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-sql-tx-1" onchange="updateProgress(this)"><span>BEGIN / COMMIT / ROLLBACK — понимаю базовый цикл транзакции</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-sql-tx-2" onchange="updateProgress(this)"><span>Понимаю зачем нужны уровни изоляции</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-sql-tx-3" onchange="updateProgress(this)"><span>Слышал про PgBouncer как пулер соединений</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-sql-nosql-redis">
+      <div class="block-title" onclick="scrollToBlock('block-sql-nosql-redis')">Redis и NoSQL — когда не только SQL <span class="badge rec">обзор</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">SQL остаётся базой для большинства проектов. Redis и MongoDB добавляют рядом, когда появляется конкретная задача: кэш, сессии, очереди или гибкие документы.</div>
+      <div class="code"><span class="cm"># Redis — быстрые данные в памяти</span>
+SET user:42 "Alex"
+GET user:42
+EXPIRE user:42 3600       <span class="cm"># удалить через час</span>
+
+<span class="cm"># Список как простая очередь задач</span>
+LPUSH jobs "send-email"
+RPOP jobs
+
+<span class="cm"># Частые сценарии</span>
+cache:homepage
+session:user:42
+rate-limit:ip:127.0.0.1
+queue:emails</div>
+      <div class="explain">
+        <strong>Redis</strong> — супербыстрое key-value хранилище в памяти. Часто используют для кэша, сессий, лимитов запросов и очередей.<br>
+        <strong>MongoDB</strong> — документо-ориентированная база. Удобна, когда структура данных часто меняется.<br>
+        <strong>Главное правило:</strong> сначала PostgreSQL/SQL. NoSQL добавляй не «потому что модно», а когда есть реальная причина.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-sql-redis-1" onchange="updateProgress(this)"><span>Понимаю Redis как быстрый key-value кэш</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-sql-redis-2" onchange="updateProgress(this)"><span>Знаю сценарии: сессии, rate limit, очереди, кэш</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-sql-redis-3" onchange="updateProgress(this)"><span>Понимаю: NoSQL не заменяет SQL по умолчанию</span></label>
+      </div>
+    </div>
 </div><!-- /sec-sql -->
 
   <!-- ===================== DEVOPS / СЕРВЕРЫ ===================== -->
@@ -11465,6 +11957,86 @@ jobs:
         <label class="item"><input type="checkbox" class="prog-cb" data-pid="pcb580" onchange="updateProgress(this)"><span>.github/workflows/*.yml — где живут GitHub Actions</span></label>
         <label class="item"><input type="checkbox" class="prog-cb" data-pid="pcb581" onchange="updateProgress(this)"><span>on: push — автоматический запуск при пуше в ветку</span></label>
         <label class="item"><input type="checkbox" class="prog-cb" data-pid="pcb582" onchange="updateProgress(this)"><span>Настроил автоматический lint + build хотя бы в одном своём проекте</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-devops-compose-nginx">
+      <div class="block-title" onclick="scrollToBlock('block-devops-compose-nginx')">Docker Compose и Nginx reverse proxy <span class="badge rec">обзор</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">Dockerfile собирает один контейнер. Docker Compose запускает сразу несколько: сайт, сервер, базу, Redis. Nginx принимает запросы снаружи и прокидывает их внутрь.</div>
+      <div class="code"><span class="cm"># docker-compose.yml</span>
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file: .env
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: example
+
+  redis:
+    image: redis:7
+
+<span class="cm"># nginx.conf — reverse proxy</span>
+server {
+  listen 80;
+  server_name example.com;
+
+  location / {
+    proxy_pass http://app:3000;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  }
+}</div>
+      <div class="explain">
+        <strong>depends_on</strong> — показывает порядок запуска контейнеров.<br>
+        <strong>env_file</strong> — подключает переменные окружения без хардкода в коде.<br>
+        <strong>Reverse proxy</strong> — Nginx стоит перед приложением: принимает HTTP/HTTPS, отдаёт статику, проксирует запросы на Node-сервер.<br>
+        <strong>Пока цель простая:</strong> понять схему, не зубрить DevOps.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-devops-compose-1" onchange="updateProgress(this)"><span>Понимаю: Compose запускает несколько сервисов одной командой</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-devops-compose-2" onchange="updateProgress(this)"><span>Понимаю роль Nginx как reverse proxy перед приложением</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-devops-compose-3" onchange="updateProgress(this)"><span>Знаю зачем env_file и почему секреты не пишут в коде</span></label>
+      </div>
+    </div>
+
+    <div class="block" id="block-devops-message-brokers">
+      <div class="block-title" onclick="scrollToBlock('block-devops-message-brokers')">Очереди сообщений: RabbitMQ и Kafka <span class="badge rec">обзор</span><span class="anchor-icon">🔗</span></div>
+      <div class="tip">Очередь нужна, когда задача тяжёлая или её можно сделать позже: письмо, генерация PDF, обработка картинки, уведомления.</div>
+      <div class="code"><span class="cm">// Без очереди: пользователь ждёт всё сразу</span>
+POST /order
+  сохранить заказ
+  отправить письмо
+  пересчитать аналитику
+  ответить пользователю
+
+<span class="cm">// С очередью: быстрый ответ, тяжёлое делает worker</span>
+POST /order
+  сохранить заказ
+  addJob("send-email", orderId)
+  addJob("update-analytics", orderId)
+  ответить пользователю
+
+<span class="cm">// Worker работает отдельно</span>
+while (true) {
+  const job = queue.take();
+  process(job);
+}</div>
+      <div class="explain">
+        <strong>RabbitMQ</strong> — классические очереди задач: взять сообщение, обработать, подтвердить.<br>
+        <strong>Kafka</strong> — поток событий для больших систем: события хранятся, их могут читать разные сервисы.<br>
+        <strong>Для новичка:</strong> достаточно понять идею producer → queue → worker. Реально понадобится позже, когда будет backend-проект.
+      </div>
+      <div class="items">
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-devops-queue-1" onchange="updateProgress(this)"><span>Понимаю зачем выносить тяжёлые задачи в очередь</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-devops-queue-2" onchange="updateProgress(this)"><span>Знаю цепочку producer → queue → worker</span></label>
+        <label class="item"><input type="checkbox" class="prog-cb" data-pid="wdg-devops-queue-3" onchange="updateProgress(this)"><span>Отличаю RabbitMQ для задач и Kafka для потоков событий на базовом уровне</span></label>
       </div>
     </div>
 </div><!-- /sec-devops -->
@@ -13336,6 +13908,72 @@ function toggleDark() {
   const isDark = document.body.classList.toggle('dark');
   document.getElementById('darkBtn').innerHTML = isDark ? '<iconify-icon icon="tabler:sun" width="14" height="14" style="vertical-align:middle"></iconify-icon> Светлая' : '<iconify-icon icon="tabler:moon-stars" width="14" height="14" style="vertical-align:middle"></iconify-icon> Тёмная';
   localStorage.setItem('darkMode', isDark ? '1' : '0');
+}
+
+// ===== EXPORT / IMPORT PROGRESS =====
+function getProgressSnapshot() {
+  const progress = {};
+  const quizzes = {};
+  Object.keys(localStorage).forEach(key => {
+    if (key.startsWith('prog_')) progress[key.slice(5)] = localStorage.getItem(key);
+    if (key.startsWith('quiz_passed_')) quizzes[key.slice(12)] = localStorage.getItem(key);
+  });
+  return {
+    app: 'WebDevGym',
+    version: 49,
+    exportedAt: new Date().toISOString(),
+    progress,
+    quizzes,
+    darkMode: localStorage.getItem('darkMode') || '0'
+  };
+}
+
+function exportProgressJson() {
+  const data = getProgressSnapshot();
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const date = new Date().toISOString().slice(0, 10);
+  a.href = url;
+  a.download = `webdevgym-progress-${date}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  showToast('Прогресс скачан в JSON');
+}
+
+function importProgressJson() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'application/json,.json';
+  input.onchange = () => {
+    const file = input.files && input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(String(reader.result || '{}'));
+        if (!data || data.app !== 'WebDevGym') throw new Error('bad file');
+
+        Object.entries(data.progress || {}).forEach(([pid, value]) => {
+          if (value === '1') localStorage.setItem('prog_' + pid, '1');
+          else localStorage.removeItem('prog_' + pid);
+        });
+        Object.entries(data.quizzes || {}).forEach(([quizId, value]) => {
+          if (value === '1') localStorage.setItem('quiz_passed_' + quizId, '1');
+        });
+        if (data.darkMode === '1' || data.darkMode === '0') localStorage.setItem('darkMode', data.darkMode);
+
+        restoreProgressCheckboxes();
+        showToast('Прогресс импортирован');
+      } catch (e) {
+        showToast('Не получилось импортировать JSON прогресса');
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
 }
 
 // ===== RESET PROGRESS =====
